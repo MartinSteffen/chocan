@@ -1,3 +1,6 @@
+package database;
+import java.sql.*;
+
 public class DBChocAn
 {
 
@@ -5,7 +8,7 @@ public class DBChocAn
     private Connection connection;
     private Statement  statement;
  
-    private openChocAn() throws SQLException
+    private void openChocAn() throws SQLException
     {
      
 	try
@@ -24,11 +27,11 @@ public class DBChocAn
 		throw new SQLException("NoDBDriverFound.");
 	    }
           
-	catch(SQLExeption err)
+	catch(SQLException err)
 	    {
 		System.err.println("SQLException: ");
 		System.err.println(err.getMessage());
-		throw new SQLExeption("OpenChocAnFailed");
+		throw new SQLException("OpenChocAnFailed");
 	    }
     }
 
@@ -82,9 +85,9 @@ public class DBChocAn
 	    }
     }
 
-    public Mitglied getMitglied(int id) throws Exeption
+    public Mitglied getMitglied(int id) throws Exception
     {
-	String findbyid = "SELECT * FROM Mitglied WHERE id = "+id"";
+	String findbyid = "SELECT * FROM Mitglied WHERE id = "+id;
  	
 	ResultSet r=null;
 	statement=null;
@@ -98,8 +101,8 @@ public class DBChocAn
 	
 	catch (Exception err)
 	    {
-		System.out.println(err.getmessage());
-		throw new Exeption("GetMitgliedFailedException");
+		System.out.println(err.getMessage());
+		throw new Exception("GetMitgliedFailedException");
 	    }
 
 	if (r.next()==true)
@@ -136,14 +139,14 @@ public class DBChocAn
     public synchronized void newMitglied(Mitglied xyz) throws Exception 
     { 
     	int id;
-	try { id=genId() }
+	try { id=genId();} 
 	catch (Exception err) 
 	    { 
 		System.err.println("There is no ID available");
 		throw new Exception ("NoIdAvailableException");
 	    }
 	
-	setId(id);  
+	xyz.setId(id);  
 	try 
 	    { 
 		openChocAn(); 
@@ -195,7 +198,7 @@ public class DBChocAn
     public int genId() throws Exception
     {
 	int newid=1;
-	String findbyid = "SELECT * FROM Mitglied WHERE id = "+id"";
+	String findbyid = "SELECT * FROM Mitglied WHERE id = "+newid;
 	ResultSet r=null;
 	statement=null;
 	
@@ -203,8 +206,8 @@ public class DBChocAn
 	    
 	while(newid<1000000)
 	    {
-		findbyid = "SELECT * FROM Mitglied WHERE id = "+newid"";
-		r=statement.executeQuery(findbyid)
+		findbyid = "SELECT * FROM Mitglied WHERE id = "+newid;
+		r=statement.executeQuery(findbyid);
 
 		    if(r.next()==true)
 			{

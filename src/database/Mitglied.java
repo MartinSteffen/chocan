@@ -1,4 +1,5 @@
 package database;
+import java.util.Date;
 public class Mitglied extends Person
 {
     protected int id;
