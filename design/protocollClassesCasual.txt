@@ -1,22 +1,22 @@
-** Klassen die im Packet <ChocAn>.protocoll auftauchen und Verknüpfungen **
+** Klassen die im Packet <ChocAn>.protocol auftauchen und Verknüpfungen **
 
 Es wird von der Datenabnk die Klasse Mitglied zur Verfügung gestellt.
 
 Diese enthält sämtliche wichtigen Member und Methoden zum Lesen und
 Schreiben der Member, ferner zum auslesen eines Mitglieds aus der Datenbank
-anhand einer Kundennummer und Rückschreiben auf den Selben Eintrag. Ausserdem
-kann ein neuer Mitgliedeintrag in der Datenbank aus einer Instanz von
-Mitglied heraus getätigt werden.
+anhand einer Kundennummer und Rückschreiben auf den selben Eintrag. Ausserdem
+kann ein neuer Mitgliedeintrag in die Datenbank aus einer Instanz von
+Mitglied heraus erfolgen.
 
-Das Packet <ChocAn>.protocoll soll eine Objekt von Mitglied auf den Monitor
-dem Benutzer zur Verfügung stellen. Entweder um einen neuen Eintrag in der
+Das Packet <ChocAn>.protocoll soll ein Objekt vom Typ Mitglied zur
+Manipulation : Entweder um einen neuen Eintrag in der
 Datenbank zu erzeugen oder einen bestehenden auszulesen und evtl. zu
 verändern.
 
 Dabei wird mit AWT Klassen gearbeitet.
 
-Es existiert in der Klasse Mitglied der Standartkonstruktor. 
-Die benutzeten Methoden werfen Exeptions.
+Es existiert in der Klasse Mitglied der Standardkonstruktor. 
+Die benuzten Methoden der Klasse Mitglied werfen Exeptions.
 
 Im Packet ~.protocoll wird die Klasse Mitglied vererbt an die Klassen
    * MitgliedToBe
@@ -31,8 +31,6 @@ Beide Klassen definieren Konstruktoren und Methoden, mit
 denen die OberflächenKlassen dann Arbeiten.
 
 
-
-
 import java.lang.*
 import java.awt.*
 import java.awt.event.* 
@@ -44,12 +42,12 @@ import <ChocAn.Database.Mitglied.*>
 
 <scope> class MitgliedToBe extends Mitglied {
 //Private Members
-	  private const int PossibleEntries = 11;
+	  private int PossibleEntries = 11;
 	  private int AuthenticEntries = 0;
 
 //Methods : package
-	  package void Authentic() {AuthenticEntries++;}
-	  package void NotAuthentic() {AuthenticEntrie--;}
+	  protected void Authentic() {AuthenticEntries++;}
+	  protected void NotAuthentic() {AuthenticEntrie--;}
 	  	  
 /* Konstruktor */
         MitgliedToBe(){ 
