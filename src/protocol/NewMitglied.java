@@ -36,6 +36,8 @@ public final class NewMitglied extends MitgliedMakro{
      *Versucht die database.Mitglied Instanz in die Datenbank zu schreiben
      */
   protected void specialButtonClicked(){
+    checkAllTextField();
+    if(queryValidity()){
       try{
 	  if(savingstatus == false){
 	    getMitglied().setAustritt( getMitglied().getEintritt() );
@@ -58,6 +60,8 @@ public final class NewMitglied extends MitgliedMakro{
 	  InfoLabel.setText("Speicherung fehlgeschlagen!");
 	  javax.swing.JOptionPane.showInternalMessageDialog(this.getParent(), new String[]{"Datenbankkapazität erschöpft oder Verbindung fehlgeschlagen!"},"Datenbank Fehler",0); 
       }
+    }
+else   javax.swing.JOptionPane.showInternalMessageDialog(this.getParent(), new String[]{"Es existieren noch fehlerhafte Eintraege!"},"Fehler",0);
   };//ende SpecialButtonClicked
 
     protected void actByValidity(boolean condition){

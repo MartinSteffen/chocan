@@ -131,7 +131,8 @@ public final class ShowMitglied extends MitgliedMakro{
 
   protected void changeButtonAction(){
     setChanging(true);
-    if(changing == true) {
+    checkAllTextField();
+    if((changing == true) && queryValidity) {
       try{
 	Database.changeMitglied( getMitglied() );
       }

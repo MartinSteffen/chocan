@@ -776,8 +776,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
     }//ende initcomponents()
 
 
-    /**abstract additionalinit: zusätzliche Initialisierungen
-     *
+    /**
      *Abgeleitete Klassen muessen evtl zusätzliche
      *Initialisierungen haben.
      *Kurze Methode, die von initcomponents() aufgerufen wird.
@@ -785,8 +784,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
     protected abstract void additionalinit();
 
 
-    /**init: Initialisierung der Oberfläche
-     *
+    /**
      *Fügt dem Fenster alle Grundelgenden Komponenten 
      *hinzu. zusätzlich hinzuzufügende komponenten stehen in 
      *@see#additionalinit
@@ -920,6 +918,21 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	TelefonText.setContentvalid(valid);
 	AustrittsdatumText.setContentvalid(valid);
 	EintrittsdatumText.setContentvalid(valid);
+    }
+
+  /**
+   */
+  protected void checkAllTextField(){
+	NameText.checkValid();
+	VornameText.checkValid();
+	StrasseText.checkValid();
+	MitgliedsnummerText.checkValid();
+	NummerText.checkValid();
+	OrtText.checkValid();
+	PLZText.checkValid();
+	TelefonText.checkValid();
+	AustrittsdatumText.checkValid();
+	EintrittsdatumText.checkValid();
     }
 
 
