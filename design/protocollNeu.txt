@@ -1,0 +1,131 @@
+** Verfeinerung 2. Schritt die Prozeduren NEU, AENDERN und ANZEIGEN **
+
+NEU
+
+unspecified NEU()
+{
+  Instanziere Objekt MITGLIED ohne Einträge;	
+
+  Zeige MASKE auf dem Bildschirm an;
+
+  FOR (i=1; (i < zu ändernde Daten) & (EINGABE != ESC); i++){
+  
+	while (EINGABE unzulässig or keine EINGABE)
+	      lese DATUM(i);
+
+	Aktualisiere MASKE;      
+	}
+
+   Frage nach Speichern;
+   IF (ANTWORT = True){
+
+	 Kundennummer in INSTANZ aufnehmen;
+	 
+	 Schreibe INSTANZ in Datenbank;}
+
+   Kehre zurück zu INITIAL;
+}
+
+
+=========================
+
+
+AENDERN
+
+unspecified AENDERN()
+{
+  Kundennummer in Datenbank := FALSE;
+
+  while ((Kundennummer in Datenbank = FALSE) & (EINGABE != ESC))
+  {
+    HOLE Kundennummer von Benutzer;
+    PRÜFE ob Kundennummer in Datenbank;
+    IF (Kundennummer in Datenbank = FALSE) Fehlermeldung;
+    }
+
+ IF (EINGABE != ESC) {
+  
+  Instanzier Objekt MITGLIED anhand von Kundennummer;
+
+  Zeige MASKE auf dem Bildschirm an;
+
+  int Position=0;
+
+  while ((EINGABE != F12) & (EINGABE != ESC))
+  {
+     IF (EINGABE = Pfeil oben) --Position;
+     IF (EINGABE = Pfeil unten) ++Positon;
+
+     IF (EINGABE = ENTER) ÄNDERE(DATUM(Position));
+
+     IF (Postion < 0) Position= Anzahl von Daten - 1;
+     IF (Position > Anzahl von Daten - 1) Position = 0;
+
+     Aktualisiere MASKE;
+     }
+
+   IF (EINGABE = F12) Schreibe Instanz in Datenbank;
+
+   Kehre zurück zu INITIAL;
+}
+}
+
+-----
+AENDERN (overload)
+
+unspecified AENDERN(Kundennummer)
+{
+
+  Instanzier Objekt MITGLIED anhand von Kundennummer;
+
+  Zeige MASKE auf dem Bildschirm an;
+
+  int Position=0;
+
+  while ((EINGABE != F12) & (EINGABE != ESC))
+  {
+     IF (EINGABE = Pfeil oben) --Position;
+     IF (EINGABE = Pfeil unten) ++Positon;
+
+     IF (EINGABE = ENTER) ÄNDERE(DATUM(Position));
+
+     IF (Postion < 0) Position= Anzahl von Daten - 1;
+     IF (Position > Anzahl von Daten - 1) Position = 0;
+
+     Aktualisiere MASKE;
+     }
+
+   IF (EINGABE = F12) Schreibe Instanz in Datenbank;
+
+   Kehre zurück zu INITIAL;
+}
+
+
+=================
+
+ANZEIGEN
+
+unspecified ANZEIGE()
+{
+
+  Kundennummer in Datenbank := FALSE;
+
+  while ((Kundennummer in Datenbank = FALSE) & (EINGABE != ESC))
+  {
+    HOLE Kundennummer von Benutzer;
+    PRÜFE ob Kundennummer in Datenbank;
+    IF (Kundennummer in Datenbank = FALSE) Fehlermeldung;
+    }	
+
+ IF (EINGABE != ESC) {
+    
+    Instanziere Objekt MITGLIED anhand von Kundennummer;
+    
+    while ((EINGABE!=ESC) & (EINGABE!=ENTER) & (EINGABE!=F3)) 
+     Zeige MASKE auf dem Bildschirm an;
+    
+    } 
+    IF (EINGABE = F3) AENDERN(Kundennummer);
+
+    Kehre zurück zu INITIAL;
+}

@@ -1,0 +1,82 @@
+** erster Verfeinerungsschritt für Spezifikation zu Packet "protocoll" **
+
+Bezogen wird sich auf Handgezeichnete Skizzen : "Grobe Struktur der 
+Funktionalität von protocoll"
+
+Hieraus geht hervor das von einem Anfangszustand ausgegangen werden kann, wir 
+nennen diesen INITIAL
+
+INITIAL 
+
+gibt auf den Bildschirm einen Einfachen Text aus, der die 4 
+Wahlmöglichkeiten des Benutzers darstellt und die erwarteten Tastaturbefehle.
+Die 4 Möglichkeiten sind : NEUen Datensatz eingeben
+			   AENDERN eines bestehenden Datensatzes
+			   ANZEIGEN eines bestehenden Datensatzes
+			   Zustand verlassen
+
+Eingaben die nichts mit den Angebenen Tastaturbefhlen zu tun haben werden 
+ignoriert.
+
+
+void INITIAL();
+
+void INITIAL()
+{
+   while (EINGABE != Zustand verlassen)
+    {
+	Zeige die 4 Möglichen Tasteneingaben an;
+
+       IF (EINGABE = NEUen Datensatz eingeben) rufe NEU auf;
+       IF (EINGABE = AENDERN eines bestehenden Datensatzes) rufe AENDERN auf;
+       IF (EINGABE = ANZEIGEN eines bestehenden Datensatzes) rufe ANZEIGEN auf;
+       }
+}
+
+
+=============================
+
+
+NEU
+
+Soll eine MASKE anzeigen, die alle Daten aus dem Datensatz Mitglied mit leeren
+Einträgen anzeigt. Bis auf Kundennummer und Austrittsdatum müssen alle Daten 
+Eingegeben werden. Kundennummer und Austrittsdatum können nicht eingegeben 
+werden.
+Jeder Eintrag wird mit ENTER bestätigt und anschließend sofort überprüft. Ist 
+die Eingabe unzulässig wird die Eingabe an selbiger Stelle fortgesetzt. Sonst 
+ins nächste leere Feld gewächselt. Sind alle Felder gefüllt, kann mit 
+Betätigung der ENTER Taste der Datensatz in die Datenbank geschrieben werden. 
+Vorher wird aber das Austrittsdatum auf kleinergleich dem Eintrittsdatum 
+gesetzt und die Kundennummer zugewiesen. Mit ESC und der bestätigung einer 
+Nachfrage kann die Eingabe zu jedem Zeitpunkt verlassen werden und zu INITIAL 
+zurückgekehrt werden.
+
+
+============================
+
+AENDERN
+
+Fordert vom Benutzer eine Kundennummer,solange bis solch eine in der Datenbank 
+existiert oder mit ESC abgebrochen wird. 
+Zeigt den zur Kundennummer gehörenden Datensatz Mitglied in der selben Maske 
+wie bei NEU an. Erlaubt aber alle Daten bis auf Kundennummer mit den 
+Cursortasten anzuwählen. Über die ENTER Taste kann das angewählte Datum 
+geändert werden. ESC verlässt die Änderung des Datums und kehrt zur MASKE 
+zurück ohne Änderungen zu übernehmen.
+Erneutes ENTER drücken bewirkt eine Überprüfung des neuen 
+Datums. Ist die Änderung "zulässig" kann wie vorher in der Maske gearbeitet 
+werden, sonst wird der Änderungszustand an selbiger Stelle fortgesetzt.
+F12 speichert die Änderungen in die Datenbank ESC kehrt zu INITIAL zurück.
+
+
+=============================
+
+ANZEIGEN
+
+Fordert vom Benutzer eine Kundennummer,solange bis solch eine in der Datenbank 
+existiert oder mit ESC abgebrochen wird.
+Zeigt den zur Kundennummer gehörenden Datensatz Mitglied in der selben Maske 
+wie bei NEU an aber ohne jegliche Änderungen oder Einträge zuzulassen.
+Mit F3 wird zu AENDERN gewechselt, die Kundennummer wird übernommen. ESC und 
+ENTER kehren zu INITIAL zurück
