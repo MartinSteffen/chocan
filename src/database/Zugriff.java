@@ -3,7 +3,7 @@ import java.sql.*;
 import java.util.*;
 
 public class Zugriff {
-    String url="jdbc:postgresql://sokrates/ChocAn";
+    static String url="jdbc:postgresql://sokrates/ChocAn";
     protected void RechnungSchreiben(Rechnungen r) {
 	// - bindet den Postgres-Treiber ein, gibt ggf 
 	//   ClassNotFoundException zurück.
@@ -101,7 +101,7 @@ public class Zugriff {
 	//   zurück.
 	// - Baut eine Verbindung zur Datenbank "ChocAn" auf
 	// - Versucht, aus der Tabelle "Standardleistungen" die Reihe zur 
-	//   entsprechenden LeistNr abzufraben und schreibt die Daten in das
+	//   entsprechenden LeistNr abzufragen und schreibt die Daten in das
 	//   Objekt s. SQLExceptions werden ggf geworfen.
 	// - Verbindung zur Datenbank schließen.
        	Connection con;
@@ -225,7 +225,7 @@ public class Zugriff {
 	// - Verbindung trennen.
     { ClearDB(); CreateStdLeist();}
 
-    protected void ClearDB() {
+    protected static void ClearDB() {
 	Connection con;
 	try { 
 	    Class.forName("org.postgresql.Driver");
@@ -254,7 +254,7 @@ public class Zugriff {
 	    System.err.println(ex.getMessage());
 	}
     }
-    protected void CreateStdLeist() {
+    protected static void CreateStdLeist() {
 	Connection con;
 	String createString;
 	createString = "create table LEISTUNGEN (LEISTNR INTEGER,  BESCHREIBUNG VARCHAR(50), PREIS FLOAT)";
