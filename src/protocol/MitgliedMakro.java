@@ -45,18 +45,16 @@ public abstract class MitgliedMakro extends JInternalFrame{
     /**Dummy: Zu bearbeitendes Objekt des Typs Mitglied*/
     private database.Mitglied mitglied;
 
-    /**setMitglied(database.Mitglied dummy): festlegen von mitglied
-     *
-     *@param dummy Objekt vom Typ Mitglied, auf welchem geerbeitet werden soll
-     *
+    /**
      *Eine Instanz von MitgliedMakro arbeitet immer auf einem Objekt Mitglied
+     *@param dummy Objekt vom Typ Mitglied, auf welchem geerbeitet werden soll
      */
     protected final void setMitglied(database.Mitglied dummy){
 	mitglied = dummy;
     }
 
+
     /**
-     * 
      *@return Liefert das vom Makro bearbeitete Objekt zurück
      */
     protected final database.Mitglied getMitglied(){
@@ -107,7 +105,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
    *@param doneEntries integer auf den authenticEntries gesetzt werden soll.
    */
   protected void setauthenticEntries(int doneEntries){
-      presetEntries = doneEntries;
+    presetEntries = doneEntries;
     authenticEntries = doneEntries;
   }
 
@@ -128,8 +126,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
     }
 
 
-  /** queryValidity()
-   *
+  /** 
    *@return </code>true<code> wenn entriesToBeDone = authenticEntries.
    */
   protected boolean queryValidity(){
@@ -139,11 +136,9 @@ public abstract class MitgliedMakro extends JInternalFrame{
 
 
     /** Handlungen bezogen auf die Anzahl korrekter einträge
-     *
-     *@see #entryIsAuthentic(boolean)
-     *
      *Wird von entryIsAuthentic aufgerufen. Ist geeignet um eine
      *Handlung einzuleiten, wenn alle Feldeinräge richtig sind.
+     *@see #entryIsAuthentic(boolean)
      */
     protected abstract void actByValidity(boolean condition);
 
@@ -161,8 +156,8 @@ public abstract class MitgliedMakro extends JInternalFrame{
     private JLabel MitgliedsnummerLabel;
     private JLabel AustrittsdatumLabel;
 
-    /** InfoLabel
-     *
+  //InfoLabel
+  /**
      *Label das im unteren Teils des Fensters erscheint
      *und einen informierenden Text ausgibt
      */

@@ -1,46 +1,75 @@
-package protocol;
+ackage protocol;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+
+/** Oberflaeche in der ein bestehendes Mitglied aus der Datenbank bearbeitet 
+ *werden kann. Sowohl anzeigen als auch aendern ist moeglich. 
+ *@see MitgliedMakro
+ *
+ *@author Bogumil Bartczak
+ *@version 1.0
+ */
 public final class ShowMitglied extends MitgliedMakro{
 
     private boolean loaded;
-    private boolean changing = false;
+  private boolean changing = false; //true wenn geaendert werden soll
     private String Titel;
     private javax.swing.JButton ChangeButton;
     private database.DBChocAn Database;
 
+  /**
+   *@param pane Hauptfenster in dem Innere Fenster geoeffnet werden.
+   *@param caller Inneres Fenster welches ShowMitglied Instanziiert.
+   */
   public ShowMitglied (javax.swing.JDesktopPane pane, javax.swing.JInternalFrame caller){
     setMakroEnvironment(pane, caller);
-    setMitglied(new database.Mitglied());
+    setMitglied(new database.Mitglied()); //wenn Datenbank anschluss moeglich
+    // Muss hier geandert werden!
     
     initMitgliedMakro();
     pane.add(this);
     this.moveToFront();
     this.setVisible(true);
     setChanging(false);
+    setAllTextValidity(true);
+    setauthenticEntries(9); // Alle Texfelder gefuellt
     this.requestFocus();
   }
 
+  /**
+   *Definiert zusaetzlichen Button mit Listeners.
+   *Bennenung des SpecialButton aus MitgliedMakro und anfaengliches sperren
+   *aller Textfelder
+   *
+   *@see MitgliedMakro
+   */
   protected void additionalinit(){
       ChangeButton = new javax.swing.JButton();
       ChangeButton.setBounds(375,250,235,40);
       ChangeButton.registerKeyboardAction(new ActionListener(){
 	      public void actionPerformed(ActionEvent e){
-		  setChanging(true);
+		changeButtonAction();
 	      }
 	  },KeyStroke.getKeyStroke(10,0),0);
       ChangeButton.addMouseListener(new MouseAdapter(){
 	      public void mouseClicked(MouseEvent m){
-			  setChanging(true);}});
+			  changeButtonAction();}});
       getContentPane().add(ChangeButton);
 
       baptizeSpecialButton("Nächster");
       enableSpecialButton(true);
   }
 
+  /** "Schaltet" zwischen aendern und nur anzeigen einer database.Mitglied 
+   *Instanz um. 
+   *Der zusaetzliche nicht in MitgliedMakro definierte Button wird beeinflusst.
+   *
+   *@param enableChanging <code>true</code> das Objekt Mitglied soll geandert werden. <code>false</code> Objekt Mitglied soll nur angezeigt werden.
+   *@see MitgliedMakro
+   */
     protected void setChanging(boolean enableChanging){
 	if((enableChanging == true) && (changing == false)) {
 	    this.setSize(700,500);
@@ -58,9 +87,9 @@ public final class ShowMitglied extends MitgliedMakro{
     /**
      *Über ein Dialog wird die Mitgliedsnummer eingelesen, dann Eintrag aus der
      *Datenbank gelesen. Dialog kann nur verlassen werden, wenn Datenfeld 
-     *vorhanden oder wenn abbruch angefordert wird.
+     *vorhanden oder wenn Abruch angefordert wird.
      *
-     *@return <code> true </code> wenn Mitglied aus der datenbank geholt wurde <code false </code> bei Abbruch;
+     *@return <code> true </code> wenn Mitglied aus der datenbank geholt wurde <code false </code> bei Abbruch.
      */
     protected boolean fetchMitglied(){
 	database.Mitglied newmitglied;
@@ -96,6 +125,20 @@ public final class ShowMitglied extends MitgliedMakro{
 
     protected void specialButtonClicked(){ fetchMitglied(); }
     
-    protected void actByValidity(boolean condition){ }
+    protected void actByValidity(boolean condition){
+      ChangeButton.setEnabled(condition);
+ }
 
+  protected void changeButtonAction(){
+    setChanging(true);
+    if(changing == true) {
+      try{
+	Database.changeMitglied( getMitglied() );
+      }
+      catch(java.sql.SQLException e){
+	 InfoLabel.setText("Speicherung Fehlschlag!");
+	  javax.swing.JOptionPane.showInternalMessageDialog(this.getParent(), new String[]{"Datenbankzugriff fehlgeschlagen!"});
+      }//ende catch
+    }
+  }//ende changeButtonAction
 }//Ende 
