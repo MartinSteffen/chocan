@@ -53,7 +53,7 @@ public class Zugriff {
 	    ResultSet Tables = dbmd.getTables(null,null,null,tableType);
 	    boolean TabExists=false;
 	    while(Tables.next()) {
-		if (Tabelle==Tables.getString("TABLE_NAME")) TabExists=true;
+		if (Tabelle.compareTo(Tables.getString("TABLE_NAME"))==0) TabExists=true;
 	    }
 	    if (!TabExists) NeuRechTab(q,Jahr);
 
@@ -173,6 +173,49 @@ public class Zugriff {
 	}
     }
 
+    public void ZeigeDB() {
+	// Liest die Eintraege aus den Arztrechnungstabellen aus und gibt sie
+	// auf der Standardausgabe aus (dient nur zum Ueberpruefen)
+	Connection con;
+	try { 
+	    Class.forName("org.postgresql.Driver");
+	} catch(java.lang.ClassNotFoundException e) {
+	    System.err.print("ClassNotFoundException: ");
+	    System.err.println(e.getMessage());
+	}
+	
+	try {
+	  con = DriverManager.getConnection(url, "postgres", "");
+	  DatabaseMetaData dbmd = con.getMetaData();
+	  String[] tableType = { "TABLE" };
+	  ResultSet Tables = dbmd.getTables(null,null,null,tableType);
+	  Statement stmt;
+	  while(Tables.next()) {
+	    stmt = con.createStatement();
+	    if (Tables.getString("TABLE_NAME").length() == 21) { 
+		String st = Tables.getString("TABLE_NAME");
+		System.out.println("Tabellenname: "+st);
+		ResultSet rs = stmt.executeQuery("SELECT * FROM "+Tables.getString("TABLE_NAME"));
+		ResultSetMetaData rsmd = rs.getMetaData();
+		while (rs.next()) {
+		    for (int x=1;x<=rsmd.getColumnCount();x++) {
+			System.out.print(rsmd.getColumnLabel(x)+"="+rs.getString(x)+" ");
+		    }
+		    System.out.println("");
+		}
+		rs.close();
+		stmt.close();
+	    }
+	    
+	  }
+	  Tables.close();
+	  con.close();
+	}
+	catch(SQLException ex) {
+	    System.err.println(ex.getMessage());
+	}
+    }
+    
     public void InitDB()
 	// - bindet den Postgres-Treiber ein, gibt ggf 
 	//   ClassNotFoundException zurück.
