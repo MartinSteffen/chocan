@@ -38,6 +38,7 @@ public final class NewMitglied extends MitgliedMakro{
   protected void specialButtonClicked(){
       try{
 	  if(savingstatus == false){
+	    getMitglied().setAustritt( getMitglied().getEintritt() );
 	      Database.newMitglied(getMitglied());
 	      savingstatus = true;
 	      InfoLabel.setText("Speicherung Erfolgreich");

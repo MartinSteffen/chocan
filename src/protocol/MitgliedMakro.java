@@ -14,6 +14,10 @@ import javax.swing.*;
 
 public abstract class MitgliedMakro extends JInternalFrame{
 
+  /** Datumsformat benutzt fuer Objekt Mitglied
+   */ 
+  protected java.text.SimpleDateFormat DateConcept = new java.text.SimpleDateFormat("d.M.yyyy");
+
     /**Dummy: Zu bearbeitendes Objekt des Typs Mitglied*/
     private database.Mitglied mitglied;
 
@@ -509,11 +513,10 @@ public abstract class MitgliedMakro extends JInternalFrame{
 
 //EintrittsdatumText
 
-	EintrittsdatumText = new MitgliedMakroTextField(){
-		private java.text.DateFormat converterDate = java.text.DateFormat.getDateInstance(); 
+	EintrittsdatumText = new MitgliedMakroTextField(){ 
 	    protected void auslesen(){
 	      try{
-		  mitglied.setEintritt( converterDate.parse( this.getText() ) );
+		  mitglied.setEintritt( DateConcept.parse( this.getText() ) );
 	      }
 	      catch(java.text.ParseException e){
 		  JOptionPane.showInternalMessageDialog(this.getParent(), new String[] {"Ein Datumsfeld muss die Form ", "TT.MM.JJJJ haben!"}, "Inkorrekter Datumseintrag!", 1);
@@ -526,11 +529,11 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	    }//Ende auslesen
 
 	    protected void beschreiben(){
-	      this.setText(converterDate.format(mitglied.getEintritt()));
+	      this.setText(DateConcept.format(mitglied.getEintritt()));
 	    }
 	    protected boolean checkValid(){
 	      try{
-		  java.util.Date d = converterDate.parse( this.getText() );
+		  java.util.Date d = DateConcept.parse( this.getText() );
 	      
 	      if (contentvalid == false){ 
 		  this.setForeground(java.awt.Color.red);
@@ -567,13 +570,12 @@ public abstract class MitgliedMakro extends JInternalFrame{
 
 //AustrittsdatumText
 
-        AustrittsdatumText = new MitgliedMakroTextField(){
-		private java.text.DateFormat converterDate = java.text.DateFormat.getDateInstance(); 
+        AustrittsdatumText = new MitgliedMakroTextField(){ 
 	    protected void auslesen(){
 	      try{
-	      mitglied.setAustritt( converterDate.parse( this.getText() ) );
+	      mitglied.setAustritt( DateConcept.parse( this.getText(), new java.text.ParsePosition(0) ) );
 	      }
-	      catch(java.text.ParseException e){
+	      catch(Exception e){
 		  JOptionPane.showInternalMessageDialog(this.getParent(), new String[] {"Ein Datumsfeld muss die Form ", "TT.MM.JJJJ haben!"}, "Inkorrekter Datumseintrag!", 1);
 		  this.setForeground(java.awt.Color.red);
 		  if(contentvalid == true){
@@ -584,11 +586,11 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	    }//Ende auslesen
 
 	    protected void beschreiben(){
-	      this.setText(converterDate.format(mitglied.getAustritt()));
+	      this.setText(DateConcept.format(mitglied.getAustritt()));
 	    }
 	    protected boolean checkValid(){
 	      try{
-	      java.util.Date d = converterDate.parse( this.getText() );
+	      java.util.Date d = DateConcept.parse( this.getText(),new java.text.ParsePosition(0) );
 	      
 	      if (contentvalid == false){ 
 		  this.setForeground(java.awt.Color.red);
@@ -597,7 +599,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	      }//ende if
 		return contentvalid;
 	      }
-	      catch(java.text.ParseException e){
+	      catch(Exception e){
 		  InfoLabel.setText("Gefordertes Format TT.MM.JJJJ");
 		  InfoLabelClock.start();
 
