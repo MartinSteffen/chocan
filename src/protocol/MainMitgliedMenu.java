@@ -19,14 +19,14 @@ public class MainMitgliedMenu extends JInternalFrame {
     public MainMitgliedMenu(JDesktopPane Caller){
 	Environment = Caller;
 	Environment.add(this);
-	//setBounds((getContentPane().getWidth/2)-170,(getContentPane().getHeight/2)-200, 340,400);
-	int posx = (getContentPane().getWidth()/2)+170;
-	int posy = (getContentPane().getHeight()/2)+200;
-	setBounds(330,200,340,400);
+
+	//int posx = (getContentPane().getWidth()/2)+170;
+	//int posy = (getContentPane().getHeight()/2)+200;
+	setBounds(330,200,320,400);
 	moveToFront();
 	setVisible(true);
 	initMenu();
-	//	setSize(340,400);
+	//setSize(340,400);
 	setTitle("Mitgliederverwaltung Hauptmenue");
 	this.requestFocus();
     }

@@ -23,9 +23,10 @@ public abstract class MitgliedMakro extends JInternalFrame{
 
     /** Frühstes Datum */
     private Calendar Birth = Calendar.getInstance();
-
-    /** Spätestes Datum */
+  private String StartDateString;
+  /** Spätestes Datum */
     private Calendar Death = Calendar.getInstance();
+  private String EndDateString;
 
     /** Setzen des zulässigen Zeitintervalls im Objekt Mitglied. 
      *Eingegebene Daten werden nur dann vom Makro angenommen, wenn
@@ -36,6 +37,8 @@ public abstract class MitgliedMakro extends JInternalFrame{
     protected final void setDateFrame(int startday, int startmonth, int startyear, int endday, int endmonth, int endyear){
     Birth.set(startyear, startmonth, startday );
     Death.set(endyear, endmonth, endday ); 
+    StartDateString = new Integer(startday).toString() + "." + new Integer(startmonth).toString() + "." + new Integer(startyear).toString();
+    EndDateString = new Integer(endday).toString() + "." + new Integer(endmonth).toString() + "." + new Integer(endyear).toString();
     }
 
 
@@ -165,7 +168,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
      */
     protected JLabel InfoLabel;
 	
-    /** Textfelder */
+  /** Textfelder */
     private MitgliedMakroTextField NameText;
     private MitgliedMakroTextField VornameText;
     private MitgliedMakroTextField StrasseText;
@@ -313,14 +316,14 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	InfoLabel = new JLabel();
 	InfoLabel.setFont(new java.awt.Font ("TimesRoman", 0, 11));
 	InfoLabel.setBackground(java.awt.Color.white);
-	InfoLabel.setForeground(java.awt.Color.yellow);
+	InfoLabel.setForeground(java.awt.Color.blue);
 	InfoLabel.setBorder(new javax.swing.border.TitledBorder("InfoTag"));
 
 	getContentPane().add(InfoLabel);
 	InfoLabel.setBounds(30,370,580,60);
 
 	//Timer
-	InfoLabelClock = new javax.swing.Timer(10000,new ActionListener(){ 
+	InfoLabelClock = new javax.swing.Timer(8000,new ActionListener(){ 
 		public void actionPerformed(ActionEvent e){
 		    InfoLabel.setText("");}});
 	InfoLabelClock.setRepeats(false);
@@ -336,12 +339,25 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	    }
 	    protected boolean checkValid(){
 		String temp = this.getText().trim(); 
-	      if ((contentvalid == false) && (temp.length() > 0)){ 
+		if((temp.length() > 0) && (StringTest.stringToTestForDigit(temp))){
+	      if (contentvalid == false){ 
 		contentvalid = true;
 		entryIsAuthentic(contentvalid);
 	      }
-		return contentvalid;
+		}
+		else {
+		  InfoLabel.setText("Keine Zahlen zulaessig !");
+		  InfoLabelClock.restart();
+		  if(contentvalid == true) {
+		    contentvalid = false;
+		    entryIsAuthentic(contentvalid);
+		  }
+		}
+		return contentvalid;		
 	    }
+	    protected void mouseChangedLocation(){
+	      InfoLabel.setText("Textfeldwechsel mit Maus aendern Datensatz nicht !");
+	      InfoLabelClock.restart();}
 	  };
 
 	NameText.setBackground(java.awt.Color.white);
@@ -362,13 +378,26 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	      this.setText(mitglied.getVorname());
 	    }
 	    protected boolean checkValid(){
-		String temp = this.getText().trim(); 
-	      if ((contentvalid == false) && (temp.length() > 0)){ 
+	      String temp = this.getText().trim(); 
+		if((temp.length() > 0) && (StringTest.stringToTestForDigit(temp))){
+		  if (contentvalid == false){ 
 		contentvalid = true;
 		entryIsAuthentic(contentvalid);
-	      }
-		return contentvalid;
+		  }
+		}
+		else {
+		  InfoLabel.setText("Leere Felder und Zahlen unzulaessig ! ");
+		  InfoLabelClock.restart();
+		  if(contentvalid == true) {
+		    contentvalid = false;
+		    entryIsAuthentic(contentvalid);
+		  }
+		}
+	    return contentvalid;
 	    }
+	    protected void mouseChangedLocation(){
+	      InfoLabel.setText("Textfeldwechsel mit Maus aendern Datensatz nicht !");
+	      InfoLabelClock.restart();}
 	  };
 
         VornameText.setBackground(java.awt.Color.white);
@@ -390,12 +419,25 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	    }
 	    protected boolean checkValid(){
 		String temp = this.getText().trim(); 
-	      if ((contentvalid == false)  && (temp.length() > 0)){ 
+		if((temp.length() > 0) && (StringTest.stringToTestForDigit(temp))){
+	      if (contentvalid == false){ 
 		contentvalid = true;
 		entryIsAuthentic(contentvalid);
 	      }
+		}
+		else {
+		  InfoLabel.setText("Leere Felder und Zahlen unzulaessig !");
+		  InfoLabelClock.restart();
+		  if(contentvalid == true) {
+		    contentvalid = false;
+		    entryIsAuthentic(contentvalid);
+		  }
+		}
 		return contentvalid;
 	    }
+	    protected void mouseChangedLocation(){
+	      InfoLabel.setText("Textfeldwechsel mit Maus aendern Datensatz nicht !");
+	      InfoLabelClock.restart();}
 	  };
 
 	StrasseText.setBackground(java.awt.Color.white);
@@ -446,6 +488,9 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	      }
 		return contentvalid;
 	    }
+	    protected void mouseChangedLocation(){
+	      InfoLabel.setText("Textfeldwechsel mit Maus aendern Datensatz nicht !");
+	      InfoLabelClock.restart();}
 	  };
 
         NummerText.setBackground(java.awt.Color.white);
@@ -473,6 +518,9 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	      }
 		return contentvalid;
 	    }
+	    protected void mouseChangedLocation(){
+	      InfoLabel.setText("Textfeldwechsel mit Maus aendern Datensatz nicht !");
+	      InfoLabelClock.restart();}
 	  };
 
         PLZText.setBackground(java.awt.Color.white);
@@ -494,12 +542,25 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	    }
 	    protected boolean checkValid(){
 		String temp = this.getText().trim(); 
-	      if ((contentvalid == false) && (temp.length() > 0)) { 
+		if((temp.length() > 0) && (StringTest.stringToTestForDigit(temp))){
+	      if (contentvalid == false){ 
 		contentvalid = true;
 		entryIsAuthentic(contentvalid);
 	      }
+		}
+		else {
+		  InfoLabel.setText("Leere Felder und  Zahlen unzulaessig !");
+		  InfoLabelClock.restart();
+		  if(contentvalid == true) {
+		    contentvalid = false;
+		    entryIsAuthentic(contentvalid);
+		  }
+		}
 		return contentvalid;
 	    }
+	    protected void mouseChangedLocation(){
+	      InfoLabel.setText("Textfeldwechsel mit Maus aendern Datensatz nicht !");
+	      InfoLabelClock.restart();}
 	  };
 
         OrtText.setBackground(java.awt.Color.white);
@@ -527,6 +588,9 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	      }
 		return contentvalid;
 	    }
+	    protected void mouseChangedLocation(){
+	      InfoLabel.setText("Textfeldwechsel mit Maus aendern Datensatz nicht !");
+	      InfoLabelClock.restart();}
 	  };
 
         TelefonText.setBackground(java.awt.Color.white);
@@ -570,7 +634,9 @@ public abstract class MitgliedMakro extends JInternalFrame{
 			  contentvalid = true;
 			  entryIsAuthentic(contentvalid);}
 		  }//ende if
-		  else {
+		  else { 
+		    InfoLabel.setText("Datum nur aus dem Zeitraum von " + StartDateString + " bis " + EndDateString);
+		    InfoLabelClock.restart();
 		      if( contentvalid ){
 		      contentvalid = false;
 		      this.setForeground(java.awt.Color.red);
@@ -580,7 +646,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	      }
 	      catch(java.text.ParseException e){
 		  InfoLabel.setText("Gefordertes Format TT.MM.JJJJ");
-		  InfoLabelClock.start();
+		  InfoLabelClock.restart();
 		 
 		  this.setForeground(java.awt.Color.red);
 		if(contentvalid == true){
@@ -591,6 +657,9 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	      }//ende catch
 	     		
 	    }//ende checkValid
+	    protected void mouseChangedLocation(){
+	      InfoLabel.setText("Textfeldwechsel mit Maus aendern Datensatz nicht !");
+	      InfoLabelClock.restart();}
 	  };//ende felddefinition
 
 
@@ -636,6 +705,8 @@ public abstract class MitgliedMakro extends JInternalFrame{
 			  entryIsAuthentic(contentvalid);}
 		  }//ende if
 		  else {
+		    InfoLabel.setText("Datum nur aus dem Zeitraum von " + StartDateString + " bis " + EndDateString);
+		    InfoLabelClock.restart();
 		      if( contentvalid ){
 		      contentvalid = false;
 		      this.setForeground(java.awt.Color.red);
@@ -645,7 +716,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	      }
 	      catch(java.text.ParseException e){
 		  InfoLabel.setText("Gefordertes Format TT.MM.JJJJ");
-		  InfoLabelClock.start();
+		  InfoLabelClock.restart();
 		 
 		  this.setForeground(java.awt.Color.red);
 		if(contentvalid == true){
@@ -655,6 +726,9 @@ public abstract class MitgliedMakro extends JInternalFrame{
 		return contentvalid;
 	      }//ende catch
 	    }//ende checkValid
+	    protected void mouseChangedLocation(){
+	      InfoLabel.setText("Textfeldwechsel mit Maus aendern Datensatz nicht !");
+	      InfoLabelClock.restart();}
 	  };//ende felddefinition
 
         AustrittsdatumText.setBackground(java.awt.Color.white);

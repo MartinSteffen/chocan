@@ -76,6 +76,11 @@ public abstract class MitgliedMakroTextField extends JTextField{
 	}
      },KeyStroke.getKeyStroke(9,0),0);
        
+      this.addMouseListener(new MouseAdapter(){
+	  public void mouseClicked(MouseEvent e){
+	    mouseChangedLocation();}
+	  });
+
     this.addFocusListener(new FocusAdapter(){
 	    public void focusGained(FocusEvent e){
 		setForeground(java.awt.Color.green);
@@ -88,6 +93,12 @@ public abstract class MitgliedMakroTextField extends JTextField{
 
   }//ende addListeners()
 
+  /**
+   *Handlung die ausgefuehrt wird wenn mit der Maus auf das Objekt Gecklicked 
+   *wurde.
+   *Standart ist keine Handlung
+   */
+  protected void mouseChangedLocation(){}; 
 
     /** Überprüfung des Feldinhaltes und Reaktionen
      *
