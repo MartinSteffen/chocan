@@ -1,4 +1,4 @@
-package Database;
+package database;
 public class Standardleistungen {
     // Stellt dem Benutzer ein Objekt Standardleistungen zur
     // Verfügung. Unter Angabe einer Leistungsnummer können
@@ -15,20 +15,21 @@ public class Standardleistungen {
 	this.Beschreibung="";
 	this.Preis=0;
 	}
-    public Standardleistungen(integer LeistNr) 
+    public Standardleistungen(long LeistNr) 
 	//Konstruktor
 	// fragt zusätzlich die Daten entsprechend der Nummer aus
 	// der Tabelle "ChocAn/Standardleistungen" und belegt das 
 	// Objekt damit.
 	// Exceptions, die in LadeLeistung() auftreten werden 
 	// hochpropagiert.
-	{ LadeLeistung(this,LeistNr); }
+    { Zugriff z = new Zugriff();
+	    z.LadeLeistung(this,LeistNr); }
     
-    protected SetLeistNr(long LeistNr)
+    protected void SetLeistNr(long LeistNr)
 	{ this.LeistungsNummer=LeistNr; }
-    protected SetPreis(float p)
+    protected void SetPreis(float p)
 	{ this.Preis=p; }
-    protected SetBeschreibung(String b)
+    protected void SetBeschreibung(String b)
 	{ this.Beschreibung=b; }
     
     public long GetLeistNr()
@@ -41,13 +42,14 @@ public class Standardleistungen {
 	// Gibt den Preis zurück
 	{ return Preis; }
     
-    public Laden(int LeistNr)
+    public void Laden(long LeistNr)
 	// holt die Daten aus der Tabelle "Standardleistungen"
 	// und schreibt Leistungsnummer, Beschreibung, Preis
 	// in das Objekt
 	// Exceptions, die in LadeLeistung() auftreten werden 
 	// hochpropagiert.
-	{ LadeLeistung(this,LeistNr); }
+	{ Zugriff z = new Zugriff();
+	z.LadeLeistung(this,LeistNr); }
 }
 
         
