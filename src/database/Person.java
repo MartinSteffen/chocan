@@ -22,6 +22,7 @@ public abstract class Person
     { 
 	try { checkString(s,0); }
 	catch(Exception err){return false;}
+	nachname=s;
 	return true;
     }
 
@@ -29,12 +30,14 @@ public abstract class Person
     { 
 	try { checkString(s,1) ;}
 	catch(Exception err){return false;}
+	vorname=s;
 	return true;
     }
     public boolean setStrasse (String s) 
     { 
 	try { checkString(s,2); }
 	catch(Exception err){return false;}
+	strasse=s;
 	return true;
     }
     
@@ -42,12 +45,14 @@ public abstract class Person
     { 
 	try { checkString(s,3); }
 	catch(Exception err){return false;}
+	hausnummer=s;
 	return true;
     }
     public boolean setPostleitzahl (String s) 
     { 
 	try { checkString(s,4); }
 	catch(Exception err){return false;}
+	postleitzahl=s;
 	return true;
     }
     
@@ -55,30 +60,35 @@ public abstract class Person
     { 
 	try { checkString(s,5); }
 	catch(Exception err){return false;}
+	ort=s;
 	return true; 
     } 
     public boolean setTelefonnummer (String s) 
     { 
 	try { checkString(s,6) ;}
 	catch(Exception err){return false;}
+	telefonnummer=s
 	return true;
     }
     public boolean setBankname(String s) 
     { 
 	try { checkString(s,7); }
 	catch(Exception err){return false;}
+	bankname=s;
 	return true;
     }
     public boolean setBlz(String s) 
     { 
 	try { checkString(s,8); }
 	catch(Exception err){return false;}
+	blz=s;
 	return true;
     }
     public boolean setKontonummer(String s) 
     { 
 	try { checkString(s,9); }
 	catch(Exception err){return false;}
+	kontonummer=s;
 	return true;
     }
 
