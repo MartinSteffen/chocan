@@ -1,0 +1,742 @@
+VERFEINERUNG:
+-------------
+
+I. Schritt
+----------
+
+Das Paket Datenbank besteht aus zwei Modulen:
+1. Benutzerschnittstelle:
+        In der Benutzerschnittstelle werden den anderen Gruppen die Objekt-
+        klassen "Versicherte", "Ärzte" und "Rechnungen" mit entsprechenden
+        Methoden zur Manipulation der Daten, sowie zum Laden und Speichern
+        aus der, und in die Datenbank "ChocAn" zur Verfügung gestellt.
+2. Schnittstelle zur Datenbank:
+        Stellt Methoden zur Verfügung, welche zur Erstellung von Tabellen und
+        Einträgen in der Datenbank, sowie zur Abfrage von Daten dienen.
+        Diese Methoden sin nur für Methoden desselben
+Paketes sichtbar.
+
+==============================================================================
+
+II. Schritt:
+------------
+
+1. Benutzerschnittstelle:
+
+MODUL: Mitglied (public class)
+---------------
+
+// enthaelt die Dateneintraege (private):
+// (hinter den jeweiligen Eintraegen stehen die
+maximal zulaessigen Laengen) 
+
+
+String nachname;      [30]
+String vorname;	      [30]
+String strasse;	      [30]
+String hausnummer;    [5]
+String postleitzahl;  [5]
+String ort;	      [30]
+String telefonnummer; [30]
+String bankname;      [30]
+String blz;	      [30]
+String kontonummer;   [30]
+long   id;	      
+Date   eintritt;
+Date   austritt;
+     
+// Zugriff darauf durch folgende Memberfunktionen
+(public):
+
+// alle set-Funktionen ueberpruefen die oben
+angegebene Laenge
+//(nur die Stringverarbeitenden Funktionen),
+// bei Ueberschreitung wird eine Exeption geworfen:
+"StringToLongExeption"
+// Die Funktionen zum Zugriff auf das Feld "id" sind
+von spezieller Natur 
+
+
+Funktionen zum Setzten der "private" Datenfelder:
+-------------------------------------------------
+
+void setNachname     (String)
+void setVorname      (String)
+void setStrasse      (String)
+void setHausnummer   (String)
+void setPostleitzahl (String)
+void setOrt          (String)
+void setTelefonnummer(String)
+void setBankname     (String)
+void setBlz	     (String)
+void setKontonummer  (String)
+void setEintritt     (Date)
+void setAustritt     (Date)
+
+Funktionen zum Auslesen der "private" Datenfelder:
+--------------------------------------------------
+String getNachname      ()
+String getVorname	()
+String getStrasse	()
+String getHausnummer	()
+String getPostleitzahl	()
+String getOrt		()
+String getTelefonnummer	()
+String getBankname	()
+String getBlz		()
+String getKontonummer	()
+Date   getEintritt	()
+Date   getAustritt	()
+long   getId		()
+
+Funktionen zum Zugriff auf das Feld "id":
+-----------------------------------------
+
+void useThisId(long,Mitglied)
+{
+// Soll einem Mitglied eine bestimmte "id" gegeben
+werden, 
+// kann die folgende Funktion verwendet werden.
+// Es wird die gewuenschte "id" und das "Mitglied"
+uebergeben,
+// ist die "id" frei wird es in das "Mitglied"
+geschrieben.
+// Ist die "id" nicht mehr frei wird eine Exeption
+ausgegeben:
+// "IdNotFreeExeption"
+}
+
+void genAndSetId(Mitglied)
+{
+// Soll einfach eine laufende "id" vergeben werden,
+ist die folgende
+// Funktion zu verwenden.
+// Es wird das "Mitglied" uebergeben,
+// Wird eine freie "id" gefunden, wird sie in das
+"Mitglied" geschrieben,
+// wird keine freie gefunden wird eine Exeption
+ausgegeben:"NoIdAvailableExeption" 
+}
+
+//Funktion zur Konsistenzpruefung eines "Mitglieds"
+(private):
+--------------------------------------------------------------
+
+boolean  checkMitglied(Mitglied)
+{
+// alle Eintraege ungleich "NULL" return TRUE
+// ansonsten return FALSE
+}
+
+
+//Funktionen zum Lesen,Schreiben,Aendern von
+"Mitgliedern":
+-----------------------------------------------------------
+void newMitglied(Mitglied) 
+{
+	1.wenn Mitglied nicht konsistent
+	   (Aufruf der Funktion checkMitglied(Mitglied) )
+	   werfe Exeption "IllegalMitgliedExeption"
+	2.rufe sychronisierte Funktion zum Schreiben in die
+Datenbank auf
+	   (Aufruf der Funktion writeMitglied(Mitglied) )  
+	   trat dabei ein Fehler auf werfe : "WriteExeption"
+}
+
+void changeMitglied(Mitglied)
+{
+	1. (siehe newMitglied(Mitglied) )
+	2. rufe sychronisierte Funktion zum Schreiben in die
+Datenbank auf
+	   (Aufruf overwriteMitglied(Mitglied) )
+	   trat ein Fehler auf werfe : "OverwriteExeption"
+}
+
+void getMitglied(long,Mitglied)
+{
+	// long ist das "id" des Mitglieds,
+	// "Mitglied" ist die Objektreferenz fuer das
+"Mitglied",
+	// in das die Daten geschrieben werden sollen 
+
+	1.ruft Funktion zum Auslesen eines Mitglieds auf
+	  (Aufruf readMitglied(long,Mitglied) )
+	  trat ein Fehler auf werfe :
+"MitgliedNotFoundExeption" 
+}
+
+
+
+MODUL: Mediziner (public class)
+---------------
+
+// enthaelt die Dateneintraege (private):
+// (hinter den jeweiligen Eintraegen stehen die
+maximal zulaessigen Laengen) 
+
+
+String nachname;      [30]
+String vorname;	      [30]
+String strasse;	      [30]
+String hausnummer;    [5]
+String postleitzahl;  [5]
+String ort;	      [30]
+String telefonnummer; [30]
+String bankname;      [30]
+String blz;	      [30]
+String kontonummer;   [30]
+long   id;	      
+String zertifikanz;   [40]
+     
+// Zugriff darauf durch folgende Memberfunktionen
+(public):
+
+// alle set-Funktionen ueberpruefen die oben
+angegebene Laenge
+//(nur die Stringverarbeitenden Funktionen),
+// bei Ueberschreitung wird eine Exeption geworfen:
+"StringToLongExeption"
+// Die Funktionen zum Zugriff auf das Feld "id" sind
+von spezieller Natur 
+
+
+Funktionen zum Setzten der "private" Datenfelder:
+-------------------------------------------------
+
+void setNachname     (String)
+void setVorname      (String)
+void setStrasse      (String)
+void setHausnummer   (String)
+void setPostleitzahl (String)
+void setOrt          (String)
+void setTelefonnummer(String)
+void setBankname     (String)
+void setBlz	     (String)
+void setKontonummer  (String)
+void setZertifikanz  (String)
+
+Funktionen zum Auslesen der "private" Datenfelder:
+--------------------------------------------------
+String getNachname      ()
+String getVorname	()
+String getStrasse	()
+String getHausnummer	()
+String getPostleitzahl	()
+String getOrt		()
+String getTelefonnummer	()
+String getBankname	()
+String getBlz		()
+String getKontonummer	()
+long   getId		()
+String getZertifikanz   ()
+
+Funktionen zum Zugriff auf das Feld "id":
+-----------------------------------------
+
+void useThisId(long,Mediziner)
+{
+// Soll einem Mitglied eine bestimmte "id" gegeben
+werden, 
+// kann die folgende Funktion verwendet werden.
+// Es wird die gewuenschte "id" und das "Mediziner"
+uebergeben,
+// (Aufruf searchMedizinerId(long) )
+// ist die "id" frei wird es in das "Mitglied"
+geschrieben.
+// Ist die "id" nicht mehr frei wird eine Exeption
+ausgegeben:
+// "IdNotFreeExeption"
+}
+
+void genAndSetId(Mediziner)
+{
+// Soll einfach eine laufende "id" vergeben werden,
+ist die folgende
+// Funktion zu verwenden.
+// Es wird das "Mediziner" uebergeben,
+// Wird eine freie "id" gefunden, wird sie in das
+"Mediziner" geschrieben,
+// wird keine freie gefunden wird eine Exeption
+ausgegeben:"NoIdAvailableExeption" 
+}
+
+//Funktion zur Konsistenzpruefung eines "Mediziner"
+(private):
+--------------------------------------------------------------
+
+boolean  checkMediziner(Mediziner)
+{
+// alle Eintraege ungleich "NULL" return TRUE
+// ansonsten return FALSE
+}
+
+
+//Funktionen zum Lesen,Schreiben,Aendern von
+"Mediziner":
+-----------------------------------------------------------
+void newMediziner(Mediziner) 
+{   
+	1.wenn Mediziner nicht konsistent
+	   (Aufruf der Funktion checkMediziner( Mediziner ) )
+	   werfe Exeption "IllegalMedizinerExeption"
+	2.rufe sychronisierte Funktion zum Schreiben in die
+Datenbank auf
+	   (Aufruf der Funktion writeMediziner(Mediziner) )  
+	   trat dabei ein Fehler auf werfe : "WriteExeption"
+}
+
+void changeMediziner(Mediziner)
+{
+	1. (siehe newMediziner(Mediziner) )
+	2. rufe sychronisierte Funktion zum Schreiben in die
+Datenbank auf
+	   (Aufruf overwriteMediziner(Mediziner) )
+	   trat ein Fehler auf werfe : "OverwriteExeption"
+}
+
+void getMediziner(long,Mediziner)
+{
+	// long ist das "id" des Mediziners,
+	// "Mitglied" ist die Objektreferenz fuer das
+"Mediziner",
+	// in das die Daten geschrieben werden sollen 
+
+	1.ruft Funktion zum Auslesen eines Mediziners auf
+	  (Aufruf readMediziner(long,Mediziner) )
+	  trat ein Fehler auf werfe :
+"MedizinerNotFoundExeption" 
+}
+
+}
+
+MODUL:Rechnungen
+----------------
+       public Class Standardleistungen {
+                // Stellt dem Benutzer ein Objekt Standardleistungen zur
+                // Verfügung. Unter Angabe einer Leistungsnummer können
+                // aus der Tabelle "ChocAn/Standardleistungen" eine
+                // Beschreibung und der Preis abgefragt werden.
+
+                long   LeistungsNummer;
+                String Beschreibung;
+                float  Preis;
+                
+                public Standardleistungen(); //Konstruktor
+                public Standardleistungen(integer LeistNr); //Konstruktor
+                   // fragt zusätzlich die Daten entsprechend der Nummer aus
+                   // der Tabelle "ChocAn/Standardleistungen" und belegt das 
+                   // Objekt damit.
+                protected SetLeistNr(int);
+                protected SetPreis(float);
+                protected SetBeschreibung(String);
+
+                public long GetLeistNr();
+                        // Gibt die Leistungsnummer zurück
+                public String GetBeschreibung();
+                        // Gibt die Beschreibung zurück
+                public float GetPreis();
+                        // Gibt den Preis zurück
+                public Laden(int LeistNr);
+                        // holt die Daten aus der Tabelle "Standardleistungen"
+                        // und schreibt Leistungsnummer, Beschreibung, Preis
+                        // in das Objekt
+        }
+
+        protected Class Position extends Standardleistungen {
+                // Das Objekt Position wird im Objekt Rechnungen als ver-
+                // zeigerte Liste implementiert.
+                // Es enthält folgende Felder (plus die geerbten):
+
+                Position Next;  // Referenz auf das nächste Objekt
+                Position Prev;  // Referenz auf das vorige Objekt
+                
+                // Methoden:
+                Position(); //Konstruktor
+
+                protected SetNext(Position);
+                   // 'Next' erhält eine Referenz auf das nächste Objekt
+                protected SetPrev(Position);
+                   // 'Prev' erhält eine Referenz auf das vorige Objekt
+
+                protected Position GetNext();
+                   // liefert eine Referenz auf das nächste Objekt bzw. NULL
+                protected Position GetPrev();
+                   // liefert eine Referenz auf das vorige Objekt bzw. NULL
+
+        }
+        
+        public Class Rechnung {
+                // Felder:
+                long       LaufendeNummer;
+                long       VersichertenNummer;
+                long       ArztNummer;
+                long       ArztRechnNr;
+                Positionen pos;
+                float      Betrag;
+                Date       Rechnungsdatum;
+                Date       Ueberweisungsdatum;
+                
+                public Rechnungen(); // Konstruktor
+
+           // Die folgenden Methoden setzen die Felder des Objekts:
+                protected SetLaufNr();
+                   // Setzt das Feld 'LaufendeNummer'. Darf nicht vom Nutzer
+                   // des Paketes vergeben werden.
+                public SetVersNr(long);
+                public SetArztNr(long);
+                public SetArztRechnNr(long);
+                protected SetBetrag(float);
+                public SetRechnDatum(Date);
+                public SetUebDatum(Date);
+
+           // Die folgenden Methoden geben den Inhalt der Felder zurück:
+                public long GetLaufNr();
+                public long GetVersNr();
+                public long GetArztNr();
+                public long GetArztRechnNr();
+                public float GetBetrag()
+                public Date GetRechnDatum();
+                public Date GetUebDatum();
+        
+           // Bearbeiten der Positionseinträge:
+                public PosEinfügen(long LeistNr,float Preis,String Beschr);
+                public bool NextPos();
+                   // Geht zur Nächsten Position, die dann mit GetLeistNr(),
+                   // GetBeschreibung() und GetPreis() abgefragt werden kann.
+                   // Existiert keine nächste Position wird 'false' zurückge-
+		   // geben
+                public bool PrevPos();
+                   // Geht zur vorigen Position, liefert bei Erfolg 'true'
+                   // ansonsten 'false'.
+                public bool GotoPos(integer);
+                   // Geht zur übergebenen Positionsnummer, falls diese
+		   // existiert
+
+           // Zurückgeben der Positionseinträge:
+                public int GetLeistNr();
+                public float GetPreis();
+                public String GetBeschreibung();
+
+           // Die folgenden Methoden dienen zum Schreiben
+           // der Daten aus dem Objekt in die Datenbank 
+           // "ChocAn" in die Tabellen "Arztrecnungen_Q_JJJJ" und 
+           // "Positionen_Q_JJJJ", Bzw. dem Abfragen dieser Daten aus den 
+           // Tabellen.
+
+                public Neu();
+                   // speichert das aktuelle Objekt als Neueintrag in der 
+		   // Datenbank. Das Quartal Q und das Jahr JJJJ ergeben 
+		   // sich aus dem Rechnungsdatum. Beim Aufruf dieser 
+		   // Funktion wird auch die Rechnungsnummer festgelegt. Für
+		   // den Fall, dass zur Datenbank keine Verbindung aufgebaut
+		   // werden kann, oder sie voll ist, wird eine entsprechende
+		   // Fehlermeldung ausgegeben.
+                   // Existiert eine der Tabellen "Arztrechnungen_Q_JJJJ" oder
+                   // "Positionen_Q_JJJJ" nicht, so wird sie automatisch in
+                   // der Datenbank erzeugt.
+
+                public Laden(long LaufNr, int Quartal, int Jahr);
+                   // Holt die Daten aus der Datenbank und speichert sie im 
+                   // Objekt. Kann keine Verbindung zur Datenbank Hergestellt
+                   // werden, existieren die Tabellen oder die Rechnungsnummer
+                   // nicht, werden entsprechende Exceptions geworfen.
+
+                public Ueberschreiben();
+                   // Ueberschreibt den Datensatz, der sich aus Rechnungsnummer
+                   // und Rechnungsdatum ergibt in den Tabellen
+                   // "Arztrechnungen_Q_JJJJ" und "Positionen_Q_JJJJ".
+                   // Kann keine Verbindung zur Datenbank aufgebaut werden oder
+                   // existiert der Eintrag nicht, wird eine entsprechende 
+                   // Exception ausgegeben.
+        }
+
+
+==============================================================================
+III. Schritt:
+-------------
+
+Im 3. Schritt werden einzelne einfachere Methoden schon "implementiert", andere
+weiter verfeinert. Es wird ebenfalls auf mögliche Fehler(-meldungen) einge-
+gangen. Methoden zum Zugriff auf die Datenbank werden
+eingeführt.
+
+1. Benutzerschnittstelle:
+
+    MODUL Mitgied und MODUL Mediziner s.o.
+------------------------------------------------------------------------------
+MODUL: Rechnungen
+        
+	public Class Standardleistungen {
+           // Stellt dem Benutzer ein Objekt Standardleistungen zur
+           // Verfügung. Unter Angabe einer Leistungsnummer können
+           // aus der Tabelle "ChocAn/Standardleistungen" eine
+           // Beschreibung und der Preis abgefragt werden.
+
+                protected long   LeistungsNummer;
+                protected String Beschreibung;
+                protected float  Preis;
+                
+                public Standardleistungen()
+                   //Konstruktor
+                { this.LeistungsNummer=0;
+                  this.Beschreibung="";
+                  this.Preis=0;
+                }
+                public Standardleistungen(integer LeistNr) 
+                   //Konstruktor
+                   // fragt zusätzlich die Daten entsprechend der Nummer aus
+                   // der Tabelle "ChocAn/Standardleistungen" und belegt das 
+                   // Objekt damit.
+                   // Exceptions, die in LadeLeistung() auftreten werden 
+                   // hochpropagiert.
+                { LadeLeistung(this,LeistNr); }
+                
+                protected SetLeistNr(long LeistNr)
+                { this.LeistungsNummer=LeistNr; }
+                protected SetPreis(float p)
+                { this.Preis=p; }
+                protected SetBeschreibung(String b)
+                { this.Beschreibung=b; }
+
+                public long GetLeistNr()
+                        // Gibt die Leistungsnummer zurück
+                { return LeistungsNummer; }
+                public String GetBeschreibung()
+                        // Gibt die Beschreibung zurück
+                { return Beschreibung; }
+                public float GetPreis()
+                        // Gibt den Preis zurück
+                { return Preis; }
+
+                public Laden(int LeistNr)
+                   // holt die Daten aus der Tabelle "Standardleistungen"
+                   // und schreibt Leistungsnummer, Beschreibung, Preis
+                   // in das Objekt
+                   // Exceptions, die in LadeLeistung() auftreten werden 
+                   // hochpropagiert.
+                { LadeLeistung(this,LeistNr); }
+        }
+
+-----------------------------------------------------------------------------
+
+        protected Class Position extends Standardleistungen {
+           // Das Objekt Position wird im Objekt Rechnungen als ver-
+           // zeigerte Liste implementiert.
+           // Es enthält folgende Felder (plus die geerbten):
+
+                protected Position Next;  // Referenz auf das nächste Objekt
+                protected Position Prev;  // Referenz auf das vorige Objekt
+                
+                // Methoden:
+                Position(); //Konstruktor
+
+                protected SetNext(Position pos)
+                   // 'Next' erhält eine Referenz auf das nächste Objekt
+                { this.next=pos; }
+                protected SetPrev(Position pos)
+                   // 'Prev' erhält eine Referenz auf das vorige Objekt
+                { this.prev=pos; }
+                protected Position GetNext();
+                   // liefert eine Referenz auf das nächste Objekt bzw. NULL
+                { return this.next; }
+                protected Position GetPrev();
+                   // liefert eine Referenz auf das vorige Objekt bzw. NULL
+                { return this.prev; }
+        }
+
+--------------------------------------------------------------------------------
+        
+        public Class Rechnungen {
+                // Felder:
+                protected long     LaufendeNummer;
+                protected long     VersichertenNummer;
+                protected long     ArztNummer;
+                protected long     ArztRechnNr;
+                protected Positionen pos;
+                protected float    Betrag;
+                protected Date     Rechnungsdatum;
+                protected Date     Ueberweisungsdatum;
+                
+                public Rechnungen(); // Konstruktor
+
+           // Die folgenden Methoden setzen die Felder des Objekts:
+                protected SetLaufNr(long LaufNr)
+                   // Setzt das Feld 'LaufendeNummer'. Darf nicht vom Nutzer
+                   // des Paketes vergeben werden.
+                { this.LaufendeNummer=LaufNr; }
+                public SetVersNr(long VersNr)
+                { this.VersichertenNummer=VersNr; }
+                public SetArztNr(long ArztNr)
+                { this.ArztNummer=ArztNr; }
+                public SetArztRechnNr(long Nummer)
+                { this.ArztRechnNr=Nummer; }
+                protected SetBetrag(float b)
+                { this.Betrag=b; }
+                public SetRechnDatum(Date Datum)
+                { this.Rechnungsdatum=new Date(Datum.toString());
+                   // geht das auch eleganter??
+                }
+                public SetUebDatum(Date Datum)
+                { this.Ueberweisungsdatum=new Date(Datum.toString()); 
+                   // geht das auch eleganter??
+                }
+
+           // Die folgenden Methoden geben den Inhalt der Felder zurück:
+                public long GetLaufNr()
+                { return LaufendeNummer; }
+                public long GetVersNr()
+                { return VersichertenNummer; }
+                public long GetArztNr()
+                { return ArztNummer; }
+                public long GetArztRechnNr()
+                { return ArztRechnNr; }
+                public float GetBetrag()
+                { return Betrag; }
+                public Date GetRechnDatum();
+                { return RechnungsDatum; }
+                public Date GetUebDatum();
+                { return Ueberweisungsdatum; }
+        
+           // Bearbeiten der Positionseinträge
+                public PosEinfügen(int LeistNr,float Preis,String Beschr);
+                  // fügt in der verzeigerten Liste ein neues Element ein
+                { Position temp=new Position();
+                  temp.SetLeistNr(LeistNr);
+                  temp.SetBeschreibung(Beschr);
+                  temp.SetPreis(Preis);
+                  this.pos.SetNext(temp); this.pos.Next.SetPrev(this.pos);
+                }
+                public bool NextPos()
+                   // Geht zur Nächsten Position, die dann mit GetLeistNr(),
+                   // GetBeschreibung() und GetPreis() abgefragt werden kann.
+                   // Existiert keine nächste Position wird 'false' zurückge-
+                   // geben.
+                { if (this.pos.next==null) then return false
+                  else
+                        { this.pos=this.pos.GetNext();
+                          return true;}
+                }
+                public bool PrevPos()
+                   // Geht zur vorigen Position, liefert bei Erfolg 'true'
+                   // ansonsten 'false'.
+                { if (this.pos.prev==null) then return false
+                  else
+                        { this.pos=this.pos.GetPrev();
+                          return true;}
+                }
+                public bool GotoPos(integer Position)
+                   // Geht zur übergebenen Positionsnummer, falls diese 
+		   // existiert
+                { position temp=this.pos;
+                  while (this.PrevPos()) {}
+                  for (int i=0;i<=Position && (this.pos.GetNext()!=null);i++)
+                        { this.NextPos(); }
+                  if (i<Position) {this.pos=temp;return false;}
+                  else return true;
+                }
+
+           // Zurückgeben der Positionseinträge:
+                public long GetLeistNr()
+                { return this.pos.GetLeistNr(); }
+                public float GetPreis()
+                { return this.pos.GetPreis(); }
+                public String GetBeschreibung();
+                { return this.pos.GetBeschreibung(); }
+
+           // Die folgenden Methoden dienen zum Schreiben
+           // der Daten aus dem Objekt in die Datenbank 
+           // "ChocAn" in die Tabellen "Arztrecnungen_Q_JJJJ" und 
+           // "Positionen_Q_JJJJ", Bzw. dem Abfragen dieser Daten aus den 
+           // Tabellen.
+
+                public Neu()
+                { try { RechnungSchreiben(this);}}
+                  
+                public Laden(long LaufNr, int Quartal, int Jahr)
+                { try {RechnungLaden(this,LaufNr,Quartal,Jahr);}}
+
+                public Ueberschreiben()
+                { try {RechnungUeberschr(this);}}
+        }
+
+        protected Class Datenbankzugriff {
+        protected RechnungSchreiben(Rechnung r)
+           // - bindet den Postgres-Treiber ein, gibt ggf 
+	   //   ClassNotFoundException zurück.
+           // - Baut eine Verbindung zur Datenbank auf
+           // - Versucht, die Daten aus dem Objekt in die Tabellen
+           //   Arztrechnungen_Q_JJJJ und Positionen_Q_JJJJ zu schreiben
+           //   Dies soll in drei Schritten (als atomarer Block!!) geschehen:
+           //    (Es sollen in diesem Block nicht nur die Daten geschrieben
+           //    werden, sondern ebenfalls eine eindeutige fortlaufende Rech-
+           //    nungsnummer vergeben werden. Eine Möglichkeit besteht darin,
+           //    ein zusätzliches Feld in der Tabelle aufzunehmen: bool "belegt"
+           //    Beim erstellen der Tabellen (s.u.) wird die Tabelle mit einer
+           //    ersten Reihe initialisiert. Das Feld "Rechnungsnummer" erhält
+           //    den Wert 1, "belegt" den Wert false, alle anderen bleiben leer)
+           //   1.Schritt: Abfrage der Reihe mit "belegt" gleich false. Man
+           //    erhält eine freie Rechnungsnummer.
+           //   2.Schritt: Überschreiben der Reihe mit Daten aus dem Objekt mit
+           //    "belegt" = true, sowie der Positionen zur Rechnungsnummer in
+           //    der Tabelle Positionen_Q_JJJJ und r.setRechNr(Rechnungsnummer).
+           //   3.Schritt: Eine neue Reihe mit Rechnungsnummer=Rechnungsnummer+1
+           //    anlegen, "belegt"=false.
+           // - Existieren die Tabellen nicht, so wird die Funktion 
+           //   "NeuRechTab(Q,Jahr)" aufgerufen. Anschließend wir der Schreib-
+           //   versuch wiederholt. Alle anderen SQL-Exceptions werden zurück-
+           //   gegeben.
+           // - Verbindung schließen
+
+        protected RechnungLaden(Rechnung r,long LaufNr, int Quartal, int Jahr)
+           // - bindet den Postgres-Treiber ein, gibt ggf 
+		ClassNotFoundException
+           //   zurück.
+           // - Baut eine Verbindung zur Datenbank "ChocAn" auf
+           // - Versucht, die Daten aus den Tabellen "Arztrechnungen_Q-JJJJ"
+           //   und "Positionen_Q_JJJJ" abzufragen und gibt die Daten des Re-
+           //   sultSets in das Objekt. Wirft bei Nichtauffinden entsprechende
+           //   SQLException.
+           // - Verbindung trennen.
+
+        protected RechnungUeberschr(Rechnung r)
+           // - bindet den Postgres-Treiber ein, gibt ggf 
+		ClassNotFoundException
+           //   zurück.
+           // - Baut eine Verbindung zur Datenbank "ChocAn" auf
+           // - Versucht, die entsprechenden Einträge in der Datenbank zu über-
+           //   schreiben. Wirft bei Nichtauffinden entsprechende SQLException
+           // - Verbindung trennen.
+        
+        protected LadeLeist(Standardleistungen s,long LeisNr)
+           // - bindet den Postgres-Treiber ein, gibt ggf 
+		ClassNotFoundException
+           //   zurück.
+           // - Baut eine Verbindung zur Datenbank "ChocAn" auf
+           // - Versucht, aus der Tabelle "Standardleistungen" die Reihe zur 
+		entsprechenden LeistNr abzufraben und schreibt die Daten in das
+           //   Objekt s. SQLExceptions werden ggf geworfen.
+           // - Verbindung zur Datenbank schließen.
+
+        protected NeuRechTab(int q, int Jahr)
+           // - bindet den Postgres-Treiber ein, gibt ggf 
+		ClassNotFoundException
+           //   zurück.
+           // - Baut eine Verbindung zur Datenbank "ChocAn" auf
+           // - Versucht zwei Neue Tabellen "Arztrechnungen_Q_JJJ" und
+           //   "Positionen_Q_JJJJ" zu erstellen. Zusätzlich wird in der 
+	   //	Tabelle "Arztrechnungen_Q_JJJJ" die erste Reihe 
+	   //   eingefügt (s.o.). Es wird ggf. eine SQLException geworfen.
+           // - Verbindung trennen.
+        
+        public InitDB()
+           // - bindet den Postgres-Treiber ein, gibt ggf 
+		ClassNotFoundException zurück.
+           // - Baut eine Verbindung zur Datenbank "ChocAn" auf
+           // - Löscht den Inhalt der Datenbank und initialisiert die Datenbank
+           //   mit den nötigen Tabellen und einigen vordefinierten Einträgen.
+           // - Verbindung trennen.
+        }
+
+
+
+
