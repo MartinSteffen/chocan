@@ -1,0 +1,77 @@
+Gruppe: Gunnar Schaefer & Stefan Schaefer - zustaendig fuer Rechnungen
+
+
+Es wird eine graphische Oberflaeche fuer die Aerzte zur Eingabe von
+Rechnungen erstellt. Diese Oberflaeche hat 10 Felder, die vom
+jeweiligen Arzt ausgefuellt werden. Die ersten vier Felder muessen auf
+jeden Fall ausgefuellt werden: Arzt-Nummer (Integer), Patienten Nummer
+(Integer), Behandlungs-Datum (Datum), Code-Nummer der ersten
+erbrachten Leistung (Integer). Weitere erbrachte Leistungen (ebenfalls
+Integers) koennen in die restlichen sechs Felder eingetragen
+werden. Alle auszufuellenden Felder sind entsprechen gekennzeichnet
+und beschriftet, so dass keine Unklarheiten bestehen. 
+
+
+Im Folgenden wird der genaue Ablauf der Eingabe beschrieben. Alle
+erwaehnten Tabellen befinden sich in der Datenbank "choc". In das
+erste Feld, in dem zu Begin auch schon der Cursor steht, wird die
+Arzt-Nummer eingegeben und mit Enter bestaetigt. Es wird ueberprueft,
+ob die eingegebene Arzt-Nummer mit einer Arzt-Nummer in der Tabelle
+"aerzte" uebereinstimmt. Ist dies der Fall, so erscheinen unterhalb der
+Arzt-Nummer noch der Name und die Adresse des Arztes, und der Cursor
+springt in das Feld fuer die Patienten-Nummer. War die eingegebene
+Arzt-Nummer ungueltig, bleibt der Cursor im Arzt-Nummern-Feld, so dass
+die Eingabe korrigiert werden kann. Nun wird die Patienten-Nummer
+eingegeben und mit Enter bestaetigt. Stimmt die Patienten-Nummer mit
+einer in der Tabelle "patienten" vorhandenen Patienten-Nummer ueberein,
+erscheinen der Name und die Anschrift des Patienten, und der Cursor
+springt in das Feld fuer das Behandlungs-Datum. Bei einer ungueltigen
+Eingabe bleibt der Cursor im Patienten-Nummern-Feld, und die Eingabe
+kann korrigiert werden. Jetzt wird das Behandlungs-Datum eingegeben,
+mit Enter bestaetigt, und es finden folgende Ueberpruefungen an Hand
+der Tabelle "patienten" statt: 1. die Behandlung muss am oder vor dem
+aktuellen Tag erfolgt sein; 2. der Patient muss vor oder an dem
+Behandlungs-Datum der Versicherung beigetreten sein; 3. der Patient
+darf nicht vor oder an dem Behandlungs-Datum aus der Versicherung
+ausgetreten sein; 4. falls das aktuelle Datum innerhalb der ersten 3
+Wochen eines Quartals liegt, dann muss die Behandlung nach dem Begin
+des vorherigen Quartals erfolgt sein, sonst muss die Behandlung nach
+dem Begin des aktuellen Quartals erfolgt sein. Sind alle Bedingungen
+erfuellt, springt der Cursor in das Feld fuer die Code-Nummer der
+ersten erbrachten Leistung. Sonst bleibt er im Datums-Feld und das
+Datum kann korrigiert werden. Die Code-Nummer der ersten erbrachten
+Leistung wird nun eingegeben und mit Enter bestaetigt. Es wird
+ueberprueft, ob die eingegebene Code-Nummer mit einer Code-Nummer in
+der Tabelle "behandlungen" uebereinstimmt. Wenn dies der Fall ist,
+springt der Cursor ins Feld fuer die naechste Code-Nummer und sowohl
+Beschreibung als auch Preis der ersten Leistung werden angezeigt. Wenn
+keine Uebereinstimmung vorliegt, bleibt der Cursor im Feld fuer die
+erste Code-Nummer und die Eingabe kann korrigiert werden. So wird nun
+mit den restlichen Feldern fuer weitere erbrachte Leistungen
+fortgefahren, wobei jeder Code nur einmal vorkommen darf. Im unteren
+Bereich des Formulars wird ausserdem der Gesamt-Rechnungsbetrag
+angezeigt, welcher laufend aktualisiert wird. Des Weiteren besteht
+nachdem eine gueltige Eingabe fuer den ersten Leistungs-Code gemacht
+wurde, die Moeglichkeit, die Rechnung mit einem Maus-Klick auf einen
+entsprechend gekennzeichneten Button abzuschicken, allerdings nur
+dann, wenn auch der letzte eingegebene Code gueltig ist. Weiterhin
+besteht waehrend der gesamten Eingabe die Moeglichkeit mit Tab in das
+vorherige Feld zu gelangen und mit Esc das gesamte Formular zu
+loeschen.
+
+Es stehen folgende Code-Nummern fuer vom Arzt erbrachte Leistungen zur
+Verfuegung:
+
+0815 - Haende schuetteln - DM 21.83
+4711 - Fett absaugen - DM 481.65
+1583 - Magen auspumpen - DM 123.45
+9834 - neues Gebiss - DM 934.99
+2223 - Pickel ausdruecken - DM 89.63
+3858 - Hormonbehandlung - DM 257.30
+9999 - Gehirn OP - DM 3777.04
+
+
+Jedes vollstaendig und korrekt ausgefuellte Rechnungs-Formular wird,
+dem Behandlungs-Datum entsprechend, in "choc" in einer der
+quartalsweise erstellten Rechnungs-Tabellen "rechnungen_Quartal_Jahr"
+abgelegt.
