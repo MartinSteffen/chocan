@@ -34,7 +34,7 @@ public class Zugriff {
 	String query;
 	int q = r.GetQuartal();
 	int Jahr = r.GetJahr();
-	String Tabelle = "ARZTRECHNUNGEN_"+q+"_"+Jahr;
+	String Tabelle = "arztrechnungen_"+q+"_"+Jahr;
 	query = "SELECT NUMMER FROM "+Tabelle+" WHERE BELEGT = FALSE";
 	Statement stmt;
 	try { 
@@ -125,7 +125,7 @@ public class Zugriff {
 		s.SetPreis(rs.getFloat(3));
 		s.SetBeschreibung(rs.getString(2));
 	    }
-	    if (!Result) s.SetBeschreibung("ungueltige Leistungsnummer!");
+	    if (!Result) s.SetBeschreibung("");
 	    rs.close();
 	    stmt.close();
 	    con.close();
