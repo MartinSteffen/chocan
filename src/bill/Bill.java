@@ -1,4 +1,9 @@
-//author Gunnar Schaefer
+/**
+*@author Gunnar Schaefer
+*
+*This class provides doctors with a graphical interface to enter,
+*process and archive their bills.
+*/
 
 import java.lang.*;
 import java.util.*;
@@ -313,7 +318,8 @@ public class Bill extends JFrame {
 
     lblSum.setText("");
     getContentPane().add(lblSum);
-    lblSum.setBounds(610, 470, 0, 20);
+    lblSum.setBounds(610, 470, 60, 20);
+    lblSum.setHorizontalAlignment(SwingConstants.RIGHT);
 
 
     btnClear.addMouseListener(new MouseAdapter() {
@@ -624,13 +630,15 @@ public class Bill extends JFrame {
 
 
   private void calculateSum(MouseEvent evt) {
-    float sum = Float.parseFloat(lblTreatCost1.getText());
-    sum += Float.parseFloat(lblTreatCost2.getText());
-    sum += Float.parseFloat(lblTreatCost3.getText());
-    sum += Float.parseFloat(lblTreatCost4.getText());
-    sum += Float.parseFloat(lblTreatCost5.getText());
-    sum += Float.parseFloat(lblTreatCost6.getText());
-    sum += Float.parseFloat(lblTreatCost7.getText());
+    float sum = Float.parseFloat(lblTreatCost1.getText())
+              + Float.parseFloat(lblTreatCost2.getText())
+              + Float.parseFloat(lblTreatCost3.getText())
+              + Float.parseFloat(lblTreatCost4.getText())
+              + Float.parseFloat(lblTreatCost5.getText())
+              + Float.parseFloat(lblTreatCost6.getText())
+              + Float.parseFloat(lblTreatCost7.getText());
+
+    sum = (float) Math.round(sum * 100) / 100;
 
     lblSum.setText(Float.toString(sum));
   }
