@@ -1,0 +1,93 @@
+
+Gruppe: Gunnar Schaefer & Stefan Schaefer - zustaendig fuer Rechnungen
+
+Das Oberflaechen-Modul stellt die Funktionen zum Einlesen der Daten
+zur Verfuegung. Es gibt zehn Eingabefelder. Zu den ersten zwei gehoert
+jeweils ein Ausgabefeld. Zum dritten Feld, Datumseintrag, gibt es
+keins und zu den Feldern vier bis zehn gibt es jeweils zwei Felder,
+eins fuer den Preis und eins fuer die Erklaerung. Ausserdem gibt es
+einen save- und einen clear-Button.
+
+
+protected int readDocNum ()
+        { int y; string x;
+          try { lese x von Feld1 ein;
+                y := convert x to int;
+                return y;
+                }
+          catch (fehlermeldung vom konvertieren) 
+                { return "piep" ;
+                }
+        }
+
+protected int readPatientNum ()
+        { int y; string x;
+          try { lese x von Feld2 ein;
+                y := convert x to int;
+                return y;
+                }
+          catch (fehlermeldung vom konvertieren) 
+                { return "piep" ;
+                }
+        }
+
+protected Calendar readTreatDate ()
+        { Calendar y; string x;
+          try { lese x von Feld3 ein;
+                y := convert x to Calendar;
+                return y;
+                }
+          catch (fehlermeldung vom konvertieren) 
+                { return "piep" ;
+                }
+        }
+
+protected int readTreatCode ()
+        { int y; string x;
+          try { y := convert x to int;
+                return y;
+                }
+          catch (fehlermeldung vom konvertieren) 
+                { return "piep" ;
+                }
+        }
+protected void writeDocInfo (docNum)
+        {
+                object := getDocInfo (docNum)   
+                ausgabe ins entsprechende Feld
+        }
+// object entspricht arzt-objekt aus Name, Adresse
+
+protected void writePatientInfo (patientNum)
+        {
+                object := getPatientInfo (patientNum)
+                ausgabe ins entsprechende Feld
+        }
+// object entspricht patienten-objekt aus Name, Adresse
+        
+protected void writeTreatInfo (treatNum)
+        {
+                object := getTreatInfo (treatNum)
+                ausgabe in die entsprechenden Felder
+        }
+// object entspricht Preis + Erklaerung 
+
+
+
+protected void doctorModul ()
+        {
+                int docNum := readDocNum ();
+                writeDocInfo (docNum);
+        }
+
+protected void patientModul ()
+        {
+                int patientNum := readPatientNum ();
+                writePatientInfo (patientNum);
+        }
+
+protected void treatmentModul ()
+        {
+                int treatCode := readTreatCode ();
+                writeTreatInfo (treatCode);
+        }
