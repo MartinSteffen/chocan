@@ -24,10 +24,15 @@ public class Bill extends JFrame {
     txtDocNum = new JTextField();
     lblDocNum = new JLabel();
     lblDocName = new JLabel();
+    lblDocStreet = new JLabel();
+    lblDocZipAndCity = new JLabel();
+    txtDocNum.grabFocus();
 
     txtPatientNum = new JTextField();
     lblPatientNum = new JLabel();
     lblPatientName = new JLabel();
+    lblPatientStreet = new JLabel();
+    lblPatientZipAndCity = new JLabel();
 
     txtDay = new JTextField();
     txtMonth = new JTextField();
@@ -97,6 +102,12 @@ public class Bill extends JFrame {
     getContentPane().add(lblDocName);
     lblDocName.setBounds(20, 80, 230, 20);
 
+    getContentPane().add(lblDocStreet);
+    lblDocStreet.setBounds(20, 100, 230, 20);
+
+    getContentPane().add(lblDocZipAndCity);
+    lblDocZipAndCity.setBounds(20, 120, 230, 20);
+
 
     txtPatientNum.addFocusListener(new FocusAdapter() {
       public void focusLost(FocusEvent evt) {
@@ -117,6 +128,12 @@ public class Bill extends JFrame {
     lblPatientName.setText("<Patientenname>");
     getContentPane().add(lblPatientName);
     lblPatientName.setBounds(310, 80, 230, 20);
+
+    getContentPane().add(lblPatientStreet);
+    lblPatientStreet.setBounds(310, 100, 230, 20);
+
+    getContentPane().add(lblPatientZipAndCity);
+    lblPatientZipAndCity.setBounds(310, 120, 230, 20);
 
 
     txtDay.addFocusListener(new FocusAdapter() {
@@ -235,31 +252,24 @@ public class Bill extends JFrame {
     lblTreatDescripts.setLocation(180, 220);
     lblTreatDescripts.setSize(lblTreatDescripts.getPreferredSize());
 
-    lblTreatDescript1.setText("");
     getContentPane().add(lblTreatDescript1);
     lblTreatDescript1.setBounds(180, 250, 290, 20);
 
-    lblTreatDescript2.setText("");
     getContentPane().add(lblTreatDescript2);
     lblTreatDescript2.setBounds(180, 280, 290, 20);
 
-    lblTreatDescript3.setText("");
     getContentPane().add(lblTreatDescript3);
     lblTreatDescript3.setBounds(180, 310, 290, 20);
 
-    lblTreatDescript4.setText("");
     getContentPane().add(lblTreatDescript4);
     lblTreatDescript4.setBounds(180, 340, 290, 20);
 
-    lblTreatDescript5.setText("");
     getContentPane().add(lblTreatDescript5);
     lblTreatDescript5.setBounds(180, 370, 290, 20);
 
-    lblTreatDescript6.setText("");
     getContentPane().add(lblTreatDescript6);
     lblTreatDescript6.setBounds(180, 400, 290, 20);
 
-    lblTreatDescript7.setText("");
     getContentPane().add(lblTreatDescript7);
     lblTreatDescript7.setBounds(180, 430, 290, 20);
 
@@ -269,37 +279,30 @@ public class Bill extends JFrame {
     lblTreatCosts.setLocation(535, 220);
     lblTreatCosts.setSize(lblTreatCosts.getPreferredSize());
 
-    lblTreatCost1.setText("");
     getContentPane().add(lblTreatCost1);
     lblTreatCost1.setBounds(610, 250, 60, 20);
     lblTreatCost1.setHorizontalAlignment(SwingConstants.RIGHT);
 
-    lblTreatCost2.setText("");
     getContentPane().add(lblTreatCost2);
     lblTreatCost2.setBounds(610, 280, 60, 20);
     lblTreatCost2.setHorizontalAlignment(SwingConstants.RIGHT);
 
-    lblTreatCost3.setText("");
     getContentPane().add(lblTreatCost3);
     lblTreatCost3.setBounds(610, 310, 60, 20);
     lblTreatCost3.setHorizontalAlignment(SwingConstants.RIGHT);
 
-    lblTreatCost4.setText("");
     getContentPane().add(lblTreatCost4);
     lblTreatCost4.setBounds(610, 340, 60, 20);
     lblTreatCost4.setHorizontalAlignment(SwingConstants.RIGHT);
 
-    lblTreatCost5.setText("");
     getContentPane().add(lblTreatCost5);
     lblTreatCost5.setBounds(610, 370, 60, 20);
     lblTreatCost5.setHorizontalAlignment(SwingConstants.RIGHT);
 
-    lblTreatCost6.setText("");
     getContentPane().add(lblTreatCost6);
     lblTreatCost6.setBounds(610, 400, 60, 20);
     lblTreatCost6.setHorizontalAlignment(SwingConstants.RIGHT);
 
-    lblTreatCost7.setText("");
     getContentPane().add(lblTreatCost7);
     lblTreatCost7.setBounds(610, 430, 60, 20);
     lblTreatCost7.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -317,7 +320,6 @@ public class Bill extends JFrame {
     btnSum.setLocation(470, 470);
     btnSum.setSize(btnSum.getPreferredSize());
 
-    lblSum.setText("");
     getContentPane().add(lblSum);
     lblSum.setBounds(610, 470, 60, 20);
     lblSum.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -359,7 +361,7 @@ public class Bill extends JFrame {
 
 
   private void getDocInfo(FocusEvent evt) {
-    if(clearFlag == false) {
+    if(flag == false) {
       try {
         docNum = Long.parseLong(txtDocNum.getText());
       } catch (NumberFormatException ex) {
@@ -372,14 +374,16 @@ public class Bill extends JFrame {
       // Mediziner einArzt = new Mediziner(docNum);
       // lblArztname.setText( einArzt.getNachname() );
       lblStatus.setText("Status:");
-      lblDocName.setText("Peter Logen-Zack");
+      lblDocName.setText("Peter" + " " + "Logen-Zack");
+      lblDocStreet.setText("Hauptstraße" + " " + "13");
+      lblDocZipAndCity.setText("23455" + " " + "Virginia Beach");
     }
-    clearFlag = false;
+    flag = false;
   }
 
 
   private void getPatientInfo(FocusEvent evt) {
-    if(clearFlag == false) {
+    if(flag == false) {
       try {
         patientNum = Long.parseLong(txtPatientNum.getText());
       } catch (NumberFormatException ex) {
@@ -392,14 +396,16 @@ public class Bill extends JFrame {
       // Mitglied einPatient = new Mitglied (patientNum);
       // lblPatientenname.setText( einPatient.getNachname() );
       lblStatus.setText("Status:");
-      lblPatientName.setText("Detlev Breithanst");
+      lblPatientName.setText("Detlev" + " " + "Breithanst");
+      lblPatientStreet.setText("Nebenstraße" + " " + "12");
+      lblPatientZipAndCity.setText("90210" + " " + "Beverly Hills");
     }
-    clearFlag = false;
+    flag = false;
   }
 
 
   private void checkDay(FocusEvent evt) {
-    if(clearFlag == false) {
+    if(flag == false) {
       try {
         day = Integer.parseInt(txtDay.getText());
       } catch (NumberFormatException ex) {
@@ -416,12 +422,12 @@ public class Bill extends JFrame {
       }
       lblStatus.setText("Status:");
     }
-    clearFlag = false;
+    flag = false;
   }
 
 
   private void checkMonth(FocusEvent evt) {
-    if(clearFlag == false) {
+    if(flag == false) {
       try {
         month = Integer.parseInt(txtMonth.getText());
       } catch (NumberFormatException e) {
@@ -438,12 +444,12 @@ public class Bill extends JFrame {
       }
       lblStatus.setText("Status:");
     }
-    clearFlag = false;
+    flag = false;
   }
 
 
   private void checkYear(FocusEvent evt) {
-    if(clearFlag == false) {
+    if(flag == false) {
       try {
         year = Integer.parseInt(txtYear.getText());
       } catch (NumberFormatException e) {
@@ -470,12 +476,12 @@ public class Bill extends JFrame {
         txtDay.grabFocus();
       }
     }
-    clearFlag = false;
+    flag = false;
   }
 
 
   private void getTreatInfo1(FocusEvent evt) {
-    if(clearFlag == false) {
+    if(flag == false) {
       try {
         treatCode1 = Long.parseLong(txtTreatCode1.getText());
       } catch (NumberFormatException ex) {
@@ -486,43 +492,48 @@ public class Bill extends JFrame {
         }
       Standardleistungen S = new Standardleistungen(treatCode1);
       if (S.GetBeschreibung() == "") {
-	lblStatus.setText("Status: ungültige Behandlungsnummer");
+      	lblStatus.setText("Status: ungültige Behandlungsnummer");
         txtTreatCode1.setText("");
         txtTreatCode1.grabFocus();
       }
       else {
         lblTreatDescript1.setText(S.GetBeschreibung());
         lblTreatCost1.setText(Float.toString(S.GetPreis()));
-	lblStatus.setText("Status:");
+      	lblStatus.setText("Status:");
       }
     }
-    clearFlag = false;
+    flag = false;
   }
 
 
   private void getTreatInfo2(FocusEvent evt) {
-    if(clearFlag == false) {
+    if(flag == false) {
       try {
         treatCode2 = Long.parseLong(txtTreatCode2.getText());
       } catch (NumberFormatException ex) {
-          lblStatus.setText("Status: ungültige Behandlungsnummer");
-          txtTreatCode2.setText("");
-          txtTreatCode2.grabFocus();
-          return;
+	//          lblStatus.setText("Status: ungültige Behandlungsnummer");
+	//          txtTreatCode2.setText("");
+	//          txtTreatCode2.grabFocus();
+	//          return;
         }
-      // Objekt der Klasse Behandlungen instanziieren mit Parameter treatCode
-      // Behandlungen eineBehandlung = new Behandlungen(treatCode);
-      // lblTreatDesscript2.setText(eineBehandlung.getNachname());
-      lblStatus.setText("Status:");
-      lblTreatDescript2.setText("Fett absaugen");
-      lblTreatCost2.setText("481.65");
+      Standardleistungen S = new Standardleistungen(treatCode2);
+      if (S.GetBeschreibung() == "") {
+      	lblStatus.setText("Status: ungültige Behandlungsnummer");
+        txtTreatCode2.setText("");
+        txtTreatCode2.grabFocus();
+      }
+      else {
+        lblTreatDescript2.setText(S.GetBeschreibung());
+        lblTreatCost2.setText(Float.toString(S.GetPreis()));
+      	lblStatus.setText("Status:");
+      }
     }
-    clearFlag = false;
+    flag = false;
   }
 
 
   private void getTreatInfo3(FocusEvent evt) {
-    if(clearFlag == false) {
+    if(flag == false) {
       try {
         treatCode3 = Long.parseLong(txtTreatCode3.getText());
       } catch (NumberFormatException ex) {
@@ -531,19 +542,24 @@ public class Bill extends JFrame {
           txtTreatCode3.grabFocus();
           return;
         }
-      // Objekt der Klasse Behandlungen instanziieren mit Parameter treatCode
-      // Behandlungen eineBehandlung = new Behandlungen(treatCode);
-      // lblTreatDesscript3.setText(eineBehandlung.getNachname());
-      lblStatus.setText("Status:");
-      lblTreatDescript3.setText("Magen auspumpen");
-      lblTreatCost3.setText("123.45");
+      Standardleistungen S = new Standardleistungen(treatCode3);
+      if (S.GetBeschreibung() == "") {
+      	lblStatus.setText("Status: ungültige Behandlungsnummer");
+        txtTreatCode3.setText("");
+        txtTreatCode3.grabFocus();
+      }
+      else {
+        lblTreatDescript3.setText(S.GetBeschreibung());
+        lblTreatCost3.setText(Float.toString(S.GetPreis()));
+      	lblStatus.setText("Status:");
+      }
     }
-    clearFlag = false;
+    flag = false;
   }
 
 
   private void getTreatInfo4(FocusEvent evt) {
-    if(clearFlag == false) {
+    if(flag == false) {
       try {
         treatCode4 = Long.parseLong(txtTreatCode4.getText());
       } catch (NumberFormatException ex) {
@@ -552,19 +568,24 @@ public class Bill extends JFrame {
           txtTreatCode4.grabFocus();
           return;
         }
-      // Objekt der Klasse Behandlungen instanziieren mit Parameter treatCode
-      // Behandlungen eineBehandlung = new Behandlungen(treatCode);
-      // lblTreatDesscript4.setText(eineBehandlung.getNachname());
-      lblStatus.setText("Status:");
-      lblTreatDescript4.setText("neues Gebiss");
-      lblTreatCost4.setText("934.99");
+      Standardleistungen S = new Standardleistungen(treatCode4);
+      if (S.GetBeschreibung() == "") {
+      	lblStatus.setText("Status: ungültige Behandlungsnummer");
+        txtTreatCode4.setText("");
+        txtTreatCode4.grabFocus();
+      }
+      else {
+        lblTreatDescript4.setText(S.GetBeschreibung());
+        lblTreatCost4.setText(Float.toString(S.GetPreis()));
+      	lblStatus.setText("Status:");
+      }
     }
-    clearFlag = false;
+    flag = false;
   }
 
 
   private void getTreatInfo5(FocusEvent evt) {
-    if(clearFlag == false) {
+    if(flag == false) {
       try {
         treatCode5 = Long.parseLong(txtTreatCode5.getText());
       } catch (NumberFormatException ex) {
@@ -573,19 +594,24 @@ public class Bill extends JFrame {
           txtTreatCode5.grabFocus();
           return;
         }
-      // Objekt der Klasse Behandlungen instanziieren mit Parameter treatCode
-      // Behandlungen eineBehandlung = new Behandlungen(treatCode);
-      // lblTreatDesscript5.setText(eineBehandlung.getNachname());
-      lblStatus.setText("Status:");
-      lblTreatDescript5.setText("Pickel ausdrücken");
-      lblTreatCost5.setText("89.63");
+      Standardleistungen S = new Standardleistungen(treatCode5);
+      if (S.GetBeschreibung() == "") {
+      	lblStatus.setText("Status: ungültige Behandlungsnummer");
+        txtTreatCode5.setText("");
+        txtTreatCode5.grabFocus();
+      }
+      else {
+        lblTreatDescript5.setText(S.GetBeschreibung());
+        lblTreatCost5.setText(Float.toString(S.GetPreis()));
+      	lblStatus.setText("Status:");
+      }
     }
-    clearFlag = false;
+    flag = false;
   }
 
 
   private void getTreatInfo6(FocusEvent evt) {
-    if(clearFlag == false) {
+    if(flag == false) {
       try {
         treatCode6 = Long.parseLong(txtTreatCode6.getText());
       } catch (NumberFormatException ex) {
@@ -594,19 +620,24 @@ public class Bill extends JFrame {
           txtTreatCode6.grabFocus();
           return;
         }
-      // Objekt der Klasse Behandlungen instanziieren mit Parameter treatCode
-      // Behandlungen eineBehandlung = new Behandlungen(treatCode);
-      // lblTreatDesscript6.setText(eineBehandlung.getNachname());
-      lblStatus.setText("Status:");
-      lblTreatDescript6.setText("Hormonbehandlung");
-      lblTreatCost6.setText("257.30");
+      Standardleistungen S = new Standardleistungen(treatCode6);
+      if (S.GetBeschreibung() == "") {
+      	lblStatus.setText("Status: ungültige Behandlungsnummer");
+        txtTreatCode6.setText("");
+        txtTreatCode6.grabFocus();
+      }
+      else {
+        lblTreatDescript6.setText(S.GetBeschreibung());
+        lblTreatCost6.setText(Float.toString(S.GetPreis()));
+      	lblStatus.setText("Status:");
+      }
     }
-    clearFlag = false;
+    flag = false;
   }
 
 
   private void getTreatInfo7(FocusEvent evt) {
-    if(clearFlag == false) {
+    if(flag == false) {
       try {
         treatCode7 = Long.parseLong(txtTreatCode7.getText());
       } catch (NumberFormatException ex) {
@@ -615,39 +646,55 @@ public class Bill extends JFrame {
           txtTreatCode7.grabFocus();
           return;
         }
-      // Objekt der Klasse Behandlungen instanziieren mit Parameter treatCode
-      // Behandlungen eineBehandlung = new Behandlungen(treatCode);
-      // lblTreatDesscript7.setText(eineBehandlung.getNachname());
-      lblStatus.setText("Status:");
-      lblTreatDescript7.setText("Gehirn OP");
-      lblTreatCost7.setText("3777.04");
+      Standardleistungen S = new Standardleistungen(treatCode7);
+      if (S.GetBeschreibung() == "") {
+      	lblStatus.setText("Status: ungültige Behandlungsnummer");
+        txtTreatCode7.setText("");
+        txtTreatCode7.grabFocus();
+      }
+      else {
+        lblTreatDescript7.setText(S.GetBeschreibung());
+        lblTreatCost7.setText(Float.toString(S.GetPreis()));
+      	lblStatus.setText("Status:");
+      }
     }
-    clearFlag = false;
+    flag = false;
   }
 
 
   private void calculateSum(MouseEvent evt) {
-    sum = Float.parseFloat(lblTreatCost1.getText())
-        + Float.parseFloat(lblTreatCost2.getText())
-        + Float.parseFloat(lblTreatCost3.getText())
-        + Float.parseFloat(lblTreatCost4.getText())
-        + Float.parseFloat(lblTreatCost5.getText())
-        + Float.parseFloat(lblTreatCost6.getText())
-        + Float.parseFloat(lblTreatCost7.getText());
+    flag = true;
 
+    try {
+      sum  = Float.parseFloat(lblTreatCost1.getText());
+      sum += Float.parseFloat(lblTreatCost2.getText());
+      sum += Float.parseFloat(lblTreatCost3.getText());
+      sum += Float.parseFloat(lblTreatCost4.getText());
+      sum += Float.parseFloat(lblTreatCost5.getText());
+      sum += Float.parseFloat(lblTreatCost6.getText());
+      sum += Float.parseFloat(lblTreatCost7.getText());
+    } catch (NumberFormatException ex) {}
+      
     sum = (float) Math.round(sum * 100) / 100;
-
     lblSum.setText(Float.toString(sum));
+
+    lblStatus.setText("Status:");
+    btnSum.grabFocus();    
+    flag = false;
   }
 
 
   private void clearForm(MouseEvent evt) {
-    clearFlag = true;
+    flag = true;
 
     txtDocNum.setText("");
     lblDocName.setText("<Arztname>");
+    lblDocStreet.setText("");
+    lblDocZipAndCity.setText("");
     txtPatientNum.setText("");
     lblPatientName.setText("<Patientenname");
+    lblPatientStreet.setText("");
+    lblPatientZipAndCity.setText("");
     txtDay.setText("");
     txtMonth.setText("");
     txtYear.setText("");
@@ -676,15 +723,17 @@ public class Bill extends JFrame {
     lblStatus.setText("Status:");
 
     txtDocNum.grabFocus();
-    clearFlag = false;
+    flag = false;
   }
 
 
   private void storeForm(MouseEvent evt) {
-    Rechnungen R = new Rechnungen();
-    R.SetArztNr(docNum);
+    flag = true;
+
+    Rechnungen R = new Rechnungen();  //Objekt instanziieren
+
+    R.SetArztNr(docNum);  //Felder füllen
     R.SetVersNr(patientNum);
-    R.SetBetrag(sum);
     R.SetRechnDatum(treatDate);
     R.SetLeistX(0, treatCode1);
     R.SetLeistX(1, treatCode2);
@@ -693,11 +742,18 @@ public class Bill extends JFrame {
     R.SetLeistX(4, treatCode5);
     R.SetLeistX(5, treatCode6);
     R.SetLeistX(6, treatCode7);
-    R.Neu();
+    R.SetBetrag(sum);
+
+    R.Neu();  //Rechnung speichern
+
+    lblStatus.setText("Rechnungs-Nummer: " + R.GetLaufNr());
+    btnStore.grabFocus();    
+    flag = false;
   }
 
 
   private void exitForm(WindowEvent evt) {
+    //    ZeigeDB();
     System.exit (0);
   }
 
@@ -711,9 +767,13 @@ public class Bill extends JFrame {
   private JTextField txtDocNum;
   private JLabel lblDocName;
   private JLabel lblDocNum;
+  private JLabel lblDocStreet;
+  private JLabel lblDocZipAndCity;
   private JTextField txtPatientNum;
   private JLabel lblPatientName;
   private JLabel lblPatientNum;
+  private JLabel lblPatientStreet;
+  private JLabel lblPatientZipAndCity;
   private JTextField txtDay;
   private JTextField txtMonth;
   private JTextField txtYear;
@@ -748,12 +808,14 @@ public class Bill extends JFrame {
   private JButton btnStore;
   private JLabel lblStatus;
 
-  private boolean clearFlag;
   private int day;
   private int month;
   private int year;
+  private boolean flag;
+
   private long docNum;
   private long patientNum;
+  private GregorianCalendar treatDate;
   private long treatCode1;
   private long treatCode2;
   private long treatCode3;
@@ -762,5 +824,4 @@ public class Bill extends JFrame {
   private long treatCode6;
   private long treatCode7;
   private float sum;
-  private GregorianCalendar treatDate;
 }
