@@ -9,6 +9,7 @@ import java.lang.*;
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
+import database.*;
 
 
 public class Bill extends JFrame {
@@ -346,7 +347,7 @@ public class Bill extends JFrame {
     getContentPane().add(btnStore);
     btnStore.setLocation(280, 510);
     btnStore.setSize(btnStore.getPreferredSize());
-    
+
 
     lblStatus.setText("Status:");
     getContentPane().add(lblStatus);
@@ -359,10 +360,8 @@ public class Bill extends JFrame {
 
   private void getDocInfo(FocusEvent evt) {
     if(clearFlag == false) {
-      long docNum;
       try {
         docNum = Long.parseLong(txtDocNum.getText());
-        lblStatus.setText("Status:");
       } catch (NumberFormatException ex) {
           lblStatus.setText("Status: ungültige Arztnummer");
           txtDocNum.setText("");
@@ -372,6 +371,7 @@ public class Bill extends JFrame {
       // Objekt der Klasse Mediziner instanziieren mit Parameter docNum
       // Mediziner einArzt = new Mediziner(docNum);
       // lblArztname.setText( einArzt.getNachname() );
+      lblStatus.setText("Status:");
       lblDocName.setText("Peter Logen-Zack");
     }
     clearFlag = false;
@@ -380,10 +380,8 @@ public class Bill extends JFrame {
 
   private void getPatientInfo(FocusEvent evt) {
     if(clearFlag == false) {
-      long patientNum;
       try {
         patientNum = Long.parseLong(txtPatientNum.getText());
-        lblStatus.setText("Status:");
       } catch (NumberFormatException ex) {
           lblStatus.setText("Status: ungültige Patientennummer");
           txtPatientNum.setText("");
@@ -393,6 +391,7 @@ public class Bill extends JFrame {
       // Objekt der Klasse Mitglied instanziieren mit Parameter patientNum
       // Mitglied einPatient = new Mitglied (patientNum);
       // lblPatientenname.setText( einPatient.getNachname() );
+      lblStatus.setText("Status:");
       lblPatientName.setText("Detlev Breithanst");
     }
     clearFlag = false;
@@ -461,7 +460,7 @@ public class Bill extends JFrame {
       }
       lblStatus.setText("Status:");
       
-      GregorianCalendar treatDate = new GregorianCalendar(year,month-1,day);
+      treatDate = new GregorianCalendar(year,month-1,day);
       GregorianCalendar currentDate = new GregorianCalendar();
       if (treatDate.after(currentDate)) {
         lblStatus.setText("Status: ungültiges Datum");
@@ -477,21 +476,25 @@ public class Bill extends JFrame {
 
   private void getTreatInfo1(FocusEvent evt) {
     if(clearFlag == false) {
-      long treatCode;
       try {
-        treatCode = Long.parseLong(txtTreatCode1.getText());
-        lblStatus.setText("Status:");
+        treatCode1 = Long.parseLong(txtTreatCode1.getText());
       } catch (NumberFormatException ex) {
           lblStatus.setText("Status: ungültige Behandlungsnummer");
           txtTreatCode1.setText("");
           txtTreatCode1.grabFocus();
           return;
         }
-      // Objekt der Klasse Behandlungen instanziieren mit Parameter treatCode
-      // Behandlungen eineBehandlung = new Behandlungen(treatCode);
-      // lblTreatDesscript1.setText(eineBehandlung.getNachname());
-      lblTreatDescript1.setText("Hände schütteln");
-      lblTreatCost1.setText("21.83");
+      Standardleistungen S = new Standardleistungen(treatCode1);
+      if (S.GetBeschreibung() == "") {
+	lblStatus.setText("Status: ungültige Behandlungsnummer");
+        txtTreatCode1.setText("");
+        txtTreatCode1.grabFocus();
+      }
+      else {
+        lblTreatDescript1.setText(S.GetBeschreibung());
+        lblTreatCost1.setText(Float.toString(S.GetPreis()));
+	lblStatus.setText("Status:");
+      }
     }
     clearFlag = false;
   }
@@ -499,10 +502,8 @@ public class Bill extends JFrame {
 
   private void getTreatInfo2(FocusEvent evt) {
     if(clearFlag == false) {
-      long treatCode;
       try {
-        treatCode = Long.parseLong(txtTreatCode2.getText());
-        lblStatus.setText("Status:");
+        treatCode2 = Long.parseLong(txtTreatCode2.getText());
       } catch (NumberFormatException ex) {
           lblStatus.setText("Status: ungültige Behandlungsnummer");
           txtTreatCode2.setText("");
@@ -512,6 +513,7 @@ public class Bill extends JFrame {
       // Objekt der Klasse Behandlungen instanziieren mit Parameter treatCode
       // Behandlungen eineBehandlung = new Behandlungen(treatCode);
       // lblTreatDesscript2.setText(eineBehandlung.getNachname());
+      lblStatus.setText("Status:");
       lblTreatDescript2.setText("Fett absaugen");
       lblTreatCost2.setText("481.65");
     }
@@ -521,10 +523,8 @@ public class Bill extends JFrame {
 
   private void getTreatInfo3(FocusEvent evt) {
     if(clearFlag == false) {
-      long treatCode;
       try {
-        treatCode = Long.parseLong(txtTreatCode3.getText());
-        lblStatus.setText("Status:");
+        treatCode3 = Long.parseLong(txtTreatCode3.getText());
       } catch (NumberFormatException ex) {
           lblStatus.setText("Status: ungültige Behandlungsnummer");
           txtTreatCode3.setText("");
@@ -534,6 +534,7 @@ public class Bill extends JFrame {
       // Objekt der Klasse Behandlungen instanziieren mit Parameter treatCode
       // Behandlungen eineBehandlung = new Behandlungen(treatCode);
       // lblTreatDesscript3.setText(eineBehandlung.getNachname());
+      lblStatus.setText("Status:");
       lblTreatDescript3.setText("Magen auspumpen");
       lblTreatCost3.setText("123.45");
     }
@@ -543,10 +544,8 @@ public class Bill extends JFrame {
 
   private void getTreatInfo4(FocusEvent evt) {
     if(clearFlag == false) {
-      long treatCode;
       try {
-        treatCode = Long.parseLong(txtTreatCode4.getText());
-        lblStatus.setText("Status:");
+        treatCode4 = Long.parseLong(txtTreatCode4.getText());
       } catch (NumberFormatException ex) {
           lblStatus.setText("Status: ungültige Behandlungsnummer");
           txtTreatCode4.setText("");
@@ -556,6 +555,7 @@ public class Bill extends JFrame {
       // Objekt der Klasse Behandlungen instanziieren mit Parameter treatCode
       // Behandlungen eineBehandlung = new Behandlungen(treatCode);
       // lblTreatDesscript4.setText(eineBehandlung.getNachname());
+      lblStatus.setText("Status:");
       lblTreatDescript4.setText("neues Gebiss");
       lblTreatCost4.setText("934.99");
     }
@@ -565,10 +565,8 @@ public class Bill extends JFrame {
 
   private void getTreatInfo5(FocusEvent evt) {
     if(clearFlag == false) {
-      long treatCode;
       try {
-        treatCode = Long.parseLong(txtTreatCode5.getText());
-        lblStatus.setText("Status:");
+        treatCode5 = Long.parseLong(txtTreatCode5.getText());
       } catch (NumberFormatException ex) {
           lblStatus.setText("Status: ungültige Behandlungsnummer");
           txtTreatCode5.setText("");
@@ -578,6 +576,7 @@ public class Bill extends JFrame {
       // Objekt der Klasse Behandlungen instanziieren mit Parameter treatCode
       // Behandlungen eineBehandlung = new Behandlungen(treatCode);
       // lblTreatDesscript5.setText(eineBehandlung.getNachname());
+      lblStatus.setText("Status:");
       lblTreatDescript5.setText("Pickel ausdrücken");
       lblTreatCost5.setText("89.63");
     }
@@ -587,10 +586,8 @@ public class Bill extends JFrame {
 
   private void getTreatInfo6(FocusEvent evt) {
     if(clearFlag == false) {
-      long treatCode;
       try {
-        treatCode = Long.parseLong(txtTreatCode6.getText());
-        lblStatus.setText("Status:");
+        treatCode6 = Long.parseLong(txtTreatCode6.getText());
       } catch (NumberFormatException ex) {
           lblStatus.setText("Status: ungültige Behandlungsnummer");
           txtTreatCode6.setText("");
@@ -600,6 +597,7 @@ public class Bill extends JFrame {
       // Objekt der Klasse Behandlungen instanziieren mit Parameter treatCode
       // Behandlungen eineBehandlung = new Behandlungen(treatCode);
       // lblTreatDesscript6.setText(eineBehandlung.getNachname());
+      lblStatus.setText("Status:");
       lblTreatDescript6.setText("Hormonbehandlung");
       lblTreatCost6.setText("257.30");
     }
@@ -609,10 +607,8 @@ public class Bill extends JFrame {
 
   private void getTreatInfo7(FocusEvent evt) {
     if(clearFlag == false) {
-      long treatCode;
       try {
-        treatCode = Long.parseLong(txtTreatCode7.getText());
-        lblStatus.setText("Status:");
+        treatCode7 = Long.parseLong(txtTreatCode7.getText());
       } catch (NumberFormatException ex) {
           lblStatus.setText("Status: ungültige Behandlungsnummer");
           txtTreatCode7.setText("");
@@ -622,6 +618,7 @@ public class Bill extends JFrame {
       // Objekt der Klasse Behandlungen instanziieren mit Parameter treatCode
       // Behandlungen eineBehandlung = new Behandlungen(treatCode);
       // lblTreatDesscript7.setText(eineBehandlung.getNachname());
+      lblStatus.setText("Status:");
       lblTreatDescript7.setText("Gehirn OP");
       lblTreatCost7.setText("3777.04");
     }
@@ -630,13 +627,13 @@ public class Bill extends JFrame {
 
 
   private void calculateSum(MouseEvent evt) {
-    float sum = Float.parseFloat(lblTreatCost1.getText())
-              + Float.parseFloat(lblTreatCost2.getText())
-              + Float.parseFloat(lblTreatCost3.getText())
-              + Float.parseFloat(lblTreatCost4.getText())
-              + Float.parseFloat(lblTreatCost5.getText())
-              + Float.parseFloat(lblTreatCost6.getText())
-              + Float.parseFloat(lblTreatCost7.getText());
+    sum = Float.parseFloat(lblTreatCost1.getText())
+        + Float.parseFloat(lblTreatCost2.getText())
+        + Float.parseFloat(lblTreatCost3.getText())
+        + Float.parseFloat(lblTreatCost4.getText())
+        + Float.parseFloat(lblTreatCost5.getText())
+        + Float.parseFloat(lblTreatCost6.getText())
+        + Float.parseFloat(lblTreatCost7.getText());
 
     sum = (float) Math.round(sum * 100) / 100;
 
@@ -684,7 +681,19 @@ public class Bill extends JFrame {
 
 
   private void storeForm(MouseEvent evt) {
-
+    Rechnungen R = new Rechnungen();
+    R.SetArztNr(docNum);
+    R.SetVersNr(patientNum);
+    R.SetBetrag(sum);
+    R.SetRechnDatum(treatDate);
+    R.SetLeistX(0, treatCode1);
+    R.SetLeistX(1, treatCode2);
+    R.SetLeistX(2, treatCode3);
+    R.SetLeistX(3, treatCode4);
+    R.SetLeistX(4, treatCode5);
+    R.SetLeistX(5, treatCode6);
+    R.SetLeistX(6, treatCode7);
+    R.Neu();
   }
 
 
@@ -743,4 +752,15 @@ public class Bill extends JFrame {
   private int day;
   private int month;
   private int year;
+  private long docNum;
+  private long patientNum;
+  private long treatCode1;
+  private long treatCode2;
+  private long treatCode3;
+  private long treatCode4;
+  private long treatCode5;
+  private long treatCode6;
+  private long treatCode7;
+  private float sum;
+  private GregorianCalendar treatDate;
 }
