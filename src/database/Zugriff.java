@@ -173,7 +173,7 @@ public class Zugriff {
 	}
     }
 
-    public void ZeigeDB() {
+    public static void ZeigeDB() {
 	// Liest die Eintraege aus den Arztrechnungstabellen aus und gibt sie
 	// auf der Standardausgabe aus (dient nur zum Ueberpruefen)
 	Connection con;
@@ -216,7 +216,7 @@ public class Zugriff {
 	}
     }
     
-    public void InitDB()
+    public static void InitDB()
 	// - bindet den Postgres-Treiber ein, gibt ggf 
 	//   ClassNotFoundException zurück.
 	// - Baut eine Verbindung zur Datenbank "ChocAn" auf
