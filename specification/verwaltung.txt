@@ -1,0 +1,93 @@
+** Packet Spezifikation für Packet "protocoll" **
+
+UEBERBLICK:
+==========
+Das Packet ist in erster Linie Verbindungsglied zwischen Benutzer udn Datenbank zur Manipulation 
+der Datensätze "Mitglied" (siehe unten DATENSATZ)
+
+Eingabegerät für den Benutzer soll die Tastatur sein.
+Ausgaben zum Benutzer erfolgen auf den Bildschirm.
+
+
+DATENSATZ "Mitglied":
+====================
+Beschreibung des Datensatzes der über die Versicherten verwaltet werden soll:
+
+Feldname		Typ		Bedingungen
+------------------      -----------     ----------------------------------------------------------
+persönliche Daten:
+Kundennummer		double		>0, wird vor der Datensatzeingabe von einer
+					Funktion zurückgegeben, die dafür sorgt, dass
+					bei paralleler Eingabe mehrerer Datensätze keine
+					Kundennummer doppelt vergeben werden kann. Die 
+					Kundennummer kann weder bei der Eingabe, noch bei
+					der Modifikation eines Datensatzes verändert werden.
+Name			String [40]		
+Vorname			String [40]		
+Geburtsdatum		Date
+Geburtsort		String [40]
+Nationalität		String [20]
+
+Kontaktdaten:
+Strasse			String [40]
+Hausnummer		int		>0
+PLZ			double		>0
+Ort			String [40]
+Telefon			double		Eingabevorschrift: Vorwahl+Nummer ohne Trennung und Sonder-
+					zeichen, nur als Zahlen(Ziffern-)folge.
+
+Versichertendaten:
+Eintrittsdatum		Date		Eintrittsdatum <= Austrittsdatum
+Austrittsdatum		Date		Wenn Eintrittsdatum = Austrittsdatum, dann ist das Mitglied
+					Mitglied und versichert. Wenn das Austrittsdatum > Eintritts-
+					datum, dann ist das Mitlied zum Austrittsdatum ausgetreten
+					bzw. wird dann zu diesem Datum austreten.
+						
+
+Der Benutzer hat folgende Möglichkeiten:
+
+    1. Datensatz neu eingeben
+    2. Datensatz ändern 
+    3. Datensatz anzeigen
+
+1. Datensatz neu eingeben
+
+Nach einem Tastaturaufruf des Benutzers, wird eine Maske angezeigt die vom Benutzer komplettiert
+werden muss. Die zu ergänzenden Felder sind die Daten von Name bis Eintrittsdatum. Gemäß Oben 
+(DATENSATZ) beschriebenem Typ erfolgt eine Überprüfung auf Typkonsistenz und ob die Bedingungen 
+erfüllt sind, z.B. die PLZ > 0 ist. Ist dies nicht erfüllt wird eine Korrektur gefordert.
+Die Übernahme (Schreiben) der Daten in die Datenbank erfolgt nur wenn alle Daten vervollständigt
+wurden und die Bestätigungstaste betätigt wird.
+Die Kundennummer wird bei Eintritt in die Maske aus einer speziellen "Vergabefunktion" geholt; Ist 
+die mögliche Speicherkapazität erreicht so erfolgt die Ausgebe einer Fehlermeldung und die Aktion 
+wird abgebrochen. 
+Das Austrittsdatum ist nach Bestätigung der Dateneingabe gleich dem Eintrittsdatum.
+Die Maske kann durch einen Kundenabbruch (z.B. ESC) verlassen werden ohne das Daten übernommen 
+werden. Bevor die Daten Bestätigt sind kann in der Maske zwischen den Eintragsfelder gesprungen 
+werden, um Korrekturen vorzunehmen.
+
+
+2. Datensatz ändern
+
+Nach einem Tastaturaufruf des Benutzers und anschliessender Eingabe einer Kundennummer (Tastatur)
+erfolgt die Ausgabe eines Datensatzes in einer Maske, welche erlaubt die Datenfelder Name bis 
+Austrittsdatum zu ändern. Das Felde Kundennummer ist nie veränderbar! Änderungen werden nur 
+akzeptiert wenn sie die Typkonsistent sind und die Bedingungen erfüllen. Vor allem darf 
+Eintrittsdatum nicht größer sein als Austrittsdatum. Zwischen den Datenfeldern kann ohne Änderungen
+vorzunehmen gesprungen werden. Die Maske wird verlassen mit der Bestätigungstaste oder über einen
+Benutzerabbruch ohne Übernahme der Änderungen. Wenn die Änderungen akzeptiert werden führt das 
+Verlassen der Maske mit der Bestätigungstaste zur Aufnahme der Daten in die Datenbank.
+Existiert kein Datensatz zur Eingegebenen Kundennummer wird eine Fehlermeldung ausgegeben und es 
+erfolgt keine Änderung der Anzeige.
+
+
+3. Datensatz anzeigen
+
+Nach einem Tastaturaufruf des Benutzers und anschließender Eingabe einer Kundennummer (Tastatur) 
+erfolgt die Ausgabe des zur Kundennummer zugehörigen Datensatzes in einer Maske die keine 
+Änderungen erlaubt. Existiert kein Datensatz zur Eingegebenen Kundennummer wird eine Fehlermeldung  
+ausgegeben und es erfolgt keine Änderung der Anzeige. Über einen bestimmten Tasturbefehl, kann der
+Benutzer für den aktuelle Datensatz in die Änderung des Datensatzes wechseln (s.o. 2. Datensatz 
+ändern). Über die Bestätigungstaste oder einen Benutzerabbruch wird die Maske verlassen.
+                               
+
