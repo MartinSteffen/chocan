@@ -40,6 +40,8 @@ System.out.println(him1.getNachname());
 System.out.println(him1.getVorname()); 
 System.out.println(him1.getId());
 System.out.println(him1.getBankname());
+System.out.println(him1.getEintritt());
+System.out.println(him1.getAustritt());
 try {him1 = DBChocAn.getMitglied(2);}
 catch ( Exception err ) {System.out.println(err);}
 System.out.println(him1.getNachname());
