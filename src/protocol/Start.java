@@ -22,7 +22,7 @@ public class Start extends JFrame {
     this.setBackground(new java.awt.Color(204, 204, 255));
     content.add(desktop, BorderLayout.CENTER);
     setBounds(10,10,1000,800);
-    setSize(getMaximumSize());
+    //setSize(getMaximumSize());
     protocol.Menu test = new protocol.Menu(desktop);     
     setVisible(true);
     
