@@ -1,0 +1,285 @@
+Projektpraktikum Softwaresysteme - ChocAn
+Gruppe: Datenbank
+	Arne Bretsch: orne72@yahoo.com
+	Sascha Gädtke: sascha.gaedtke@gmx.de
+=============================================================================
+SPEZIFIKATION:
+-------------
+
+Die Gruppe Datenbank ist zuständig für das Design der Datenbank, in der alle
+für ChocAn relevanten Daten abgelegt werden sollen. Desweiteren werden
+Funktionen zur Erfassung, Manipulation und Abfrage dieser Daten zur Verfügung
+gestellt.
+
+1. Datenbank
+============
+
+Die Datenbank gliedert sich in drei große Hauptbereiche:
+	a) Versichertendaten
+	b) (Arzt-)Rechnungen
+	c) Daten der Vertrags- Ärzte/Dienstleister
+	[d) möglicherweise: Tabelle mit Standardleistungen]
+
+Im einzelnen wird die Datenbank also folgende Einträge erfassen:
+
+Versicherte:
+------------
+{
+		LaufendeVersichertenNummer	(Schlüssel)
+Name:		Nachname
+		Vorname
+Kontakt/
+Adresse:	Straße
+		Hausnummer
+		Postleitzahl
+		Ort
+		Telefon
+Familienverh.:	Geburtsdatum
+		Geburtsort
+		Familienstand
+Bankverbindung: Bankname
+		BLZ
+		Kontonummer
+Abgleich:	Eintrittsdatum
+		Austrittsdatum
+}
+
+-----------------------------------------------------------------------------
+
+Ärzte:
+------
+{
+		LaufendeArztNummer	(Schlüssel)
+Name:		Nachname/Praxisname
+		Vorname
+Beschreibung:	Tätigkeitsschlüssel*
+		Fachbereich/Tätigkeit	(z.B. Zahnarzt, Krankengymnast,...)
+Kontakt/
+Adresse:	Straße
+		Hausnummer
+		Postleitzahl
+		Ort
+		Telefon
+Bankverbindung: Bankname
+		BLZ
+		Kontonummer
+}
+
+-----------------------------------------------------------------------------
+
+(Arzt-)rechnungen:
+------------------
+{
+		LaufendeRechnungsnummer		(Schlüssel)
+		LaufendeVersichertenNummer	(Zuordnung zum Versicherten)
+		LaufendeArztnummer		(Zuordnung zum Arzt)
+
+		Rechnungsnummer			(Wievielte Rechnung dieses Arztes?)
+		Eingliederungsdatum
+		Gesamtbetrag
+
+Positionen:	Datum				(Wann wurde Leistung erbracht?)
+		LaufendeLeisungsNummer*		(Aus Liste mit Std.Leistungen)
+		LeistungsBeschreibung
+		Einzelbetrag
+Abgleich:	Rechnungsdatum			(vom System gesetzt)
+		Datum(bezahlt)
+}
+
+-----------------------------------------------------------------------------
+
+Standardleistungen:
+-------------------
+{
+		LaufendeLeistungsNummer		(Schlüssel)
+		LeistungsBeschreibung
+		Einzelbetrag
+}
+
+*): 	Die mit "*" versehenen Eintäge sollen mit vordefinierten Werten belegt 
+	werden.
+
+Die Feldtypen werden den Aanforderungen der anderen Gruppen entsprechen.
+
+=============================================================================
+
+2.Funktionen zur Erfassung, Manipulation und Abfrage der Daten:
+===============================================================
+
+Folgende komplexe Datentypen / Objekte werden für die Handhabung der Daten
+im Programm zur Verfügung gestellt:
+
+Versicherte
+{
+	LaufendeVersichertenNummer
+	Nachname
+	Vorname
+	Straße
+	Hausnummer
+	Postleitzahl
+	Ort
+	Telefon
+	Geburtsdatum
+	Geburtsort
+	Familienstand
+	Bankname
+	BLZ
+	Kontonummer
+	Eintrittsdatum
+	Austrittsdatum
+}
+
+Ärzte
+{
+	LaufendeArztNummer
+	Nachname/Praxisname
+	Vorname
+	Tätigkeitsschlüssel*
+	Fachbereich/Tätigkeit
+	Straße
+	Hausnummer
+	Postleitzahl
+	Ort
+	Telefon
+	Bankname
+	BLZ
+	Kontonummer
+}
+
+Rechnungen
+{
+	LaufendeRechnungsnummer
+	LaufendeVersichertenNummer
+	LaufendeArztnummer
+	Rechnungsnummer
+	Eingliederungsdatum
+	Gesamtbetrag
+	POsitionen (Referenz auf Objekt vom Typ Positionen(Verzeigerte Liste))
+	Rechnungsdatum
+	Datum(bezahlt)
+}
+
+Positionen:
+{
+	NächstePosition (Zeigt auf weiteren Eintrag)
+	VorigePosition (Zeigt auf vorigen Eintrag)
+	LaufendeLeistungsNummer
+	Einzelbetrag
+	LeistungsBeschreibung
+}
+
+Standardleistungen:
+{
+	LaufendeLeistungsNummer
+	LeistungsBeschreibung
+	Einzelbetrag
+}
+
+Die einzelnen Variablentypen sollen den Anforderungen der anderen Gruppen
+genügen.
+
+Funktionen/Methoden:
+====================
+
+Versicherte:
+------------
+	Neu:
+	 Erstellt in der Datenbank "ChocAn" einen neuen Eintrag in der Tabelle
+	 "Versicherte". Die Methode speichert dabei alle Daten aus dem Objekt
+	 "Versicherte" in die Tabelle. Die Daten werden zuvor auf korrektes
+	 Format geprüft, und Vollständigkeit geprüft. Einträge in den Feldern
+	 LaufendeVersichertenNummer, Name, Vorname, Straße, Hausnummer,
+	 Postleitzahl, Ort und Eintrittsdatum werden erwartet, ggf. wir eine 
+	 entsprechende Exception ausgegeben. Ebenfalls für den
+	 Fall, daß die Datenbank keine weiteren Einträge aufnehmen kann, wird
+	 eine Exception ausgegeben. Die laufende VersichertenNummer 
+	 wird vorher von der Funktion "BerechneVersichertennummer" eindeutig
+	 vergeben und muß durch den Nutzer der Methode übergeben werden.
+	 Das Austrittsdatum wird automatisch auf einen ungültigen Wert
+	 gesetzt (falls kein anderer Wert angegeben).
+
+	Ändern:
+	 Überschreibt in der Datenbank "ChocAn" in der Tabelle "Versicherte"
+	 den Eintrag eines Versicherten. Die Daten werden ebenfalls wie unter
+	 "Neu" auf richtiges Format und Vollständigkeit geprüft. Einträge wie
+	 LaufendeVersichertennummer, Geburtsdatum, Eintrittsdatum dürfen nicht
+	 geändert werden. Eine entsprechende Exception wird ansonsten 
+	 ausgegeben.
+
+	DatenHolen:
+	 Erwartet als Parameter eine gültige Versichertennummer und holt 
+	 die Daten aus der Datenbank "ChocAn", Tabelle "Versicherte" und
+	 übergibt diese in das Objekt. Wird kein gültiger Eintrag gefunden,
+	 wird eine Exception ausgegeben.
+	
+//	Suchen(Maske): (diese Funktion wird anscheinend nicht benötigt)
+//	 Durchsucht die Datenbank anhand der Maske und liefert Treffer
+
+Ärzte:
+------
+//	Neu, Ändern: 
+//	 Wird nicht benötigt, da Liste mit Ärzten bereits vorhanden.
+
+	DatenHolen:
+	 Erwartet als Parameter eine gültige Arztnummer und holt 
+	 die Daten aus der Datenbank "ChocAn", Tabelle "Ärzte" und
+	 übergibt diese in das Objekt. Wird kein gültiger Eintrag gefunden,
+	 wird eine Exception ausgegeben.
+
+Rechnungen:
+-----------
+
+	Neu:
+	 Erstellt entsprechend dem Rechnungsdatum einen neuen Eintrag in der 
+	 Datenbank "ChocAn" in der Tabelle "Arztrechnungen Q JJJJ"
+	 (Quartal, Jahr) und fügt die Rechnungsdaten nach Verifikation ein.
+	 (d.h. Überprüfung der Daten auf richtigen Datentyp, Überprüfung
+	 der Existenz von Arzt- und Versichertennummer, Überprüfung des Datums
+	 auf Gültigkeit & entsprechende Fehlermeldungen).
+	 Existiert für ein neues Quartal noch keine Tabelle,
+	 so wird diese erstellt. Die Rechnungsnummern werden nach der
+	 Eintragsposition in der Tabelle fortlaufend und eindeutig vergeben,
+	 sie werden in jedem Quartal neu vergeben. Sollten keine Daten 
+	 in der Tabelle mehr aufgenommen werden können, wird eine entsprechende
+	 Exception ausgegeben. Die verzeigerte Liste der Rechnungspositionen
+	 wird in einer weiteren Tabelle "Positionen Q JJJJ" aufgenommen, welche
+	 bei Nichtexistenz ebenfalls automatisch generiert wird. Auch hier
+	 wird ggf. bei Überfüllung eine Exception Ausgegeben.
+
+	DatenHolen:
+	 Erwartet als Parameter eine gültige Rechnungsnummer sowie das Quartal
+	 und das Jahr. Existiert in "ChocAn" keine entsprechende Tabelle, oder
+	 die Rechnung nicht, wird eine Fehhlermeldung ausgegeben. Anschließend
+	 werden die Daten aus der entspr. Tabelle der Datenbank geholt und den
+	 Feldern des Objektes zugewiesen.
+
+	RechnungBezahlt:
+	 Erwartet im Objekt die Rechnungsnummer und das Datum, (so kann die
+	 Rechnung eindeutig identifiziert werden), sowie das Überweisungsdatum.
+	 Existiert in "ChocAn" keine entsprechende Tabelle, oder die Rechnung 
+	 nicht, oder die Rechnung ist bereits bezahlt, wird eine 
+	 Fehhlermeldung ausgegeben. Das Überweisungsdatum der Rechnung wird 
+	 entsprechend gesetzt. 
+
+Standardleistungen:
+-------------------
+
+	DatenHolen:
+	 Erwartet gültige LeistungsNummer als Parameter und holt aus der
+	 Tabelle "Standardleistungen" der Datenbank "ChocAn" die entsprechenden
+	 Einträge und belegt das Objekt damit. Ist die Leistungsnummer
+	 ungültig, wird eine Fehlermeldung ausgegeben.
+
+Zusätzlich werden folgende Funktionen bereitgestellt:
+-----------------------------------------------------
+
+	TabellenErstellen:
+	 Erstellt bei Fehlen in der Datenbank "ChocAn" die Tabellen 
+	 Versicherte, Ärzte und/oder Standardleistungen mit den entsprechenden
+	 Feldern und gibt eine Erfolgsmeldung aus.
+
+	BerechneVersichertennummer:
+	 Ermittelt eine freie, positive(!) Versichertennummer und gibt diese
+	 als Double-Variable zurück. Es wird dabei besonderer Wert auf
+	 Eindeutigkeit gelegt! Ist keine Nummer mehr frei, wird eine
+	 Fehlermeldung ausgegeben.
