@@ -5,10 +5,10 @@ public class DBChocAn
 {
 
  
-    private Connection connection;
-    private Statement  statement; 
+    private static Connection connection;
+    private static Statement  statement; 
  
-    public void openChocAn() throws SQLException
+    public static void openChocAn() throws SQLException
     {
      
 	try
@@ -35,7 +35,7 @@ public class DBChocAn
 	    }
     }
 
-    public void closeChocAn() throws SQLException
+    public static void closeChocAn() throws SQLException
     {
 	try
 	    {
@@ -48,7 +48,7 @@ public class DBChocAn
     }
  
 
-    public  void mitgliedTableCreation() throws Exception
+    public static void mitgliedTableCreation() throws Exception
     {
 	try
 	    {
@@ -66,7 +66,7 @@ public class DBChocAn
 		throw new Exception("MitgliedTableCreationFailed.");
 	    }     
     }
-  public  void medizinerTableCreation() throws Exception
+  public static void medizinerTableCreation() throws Exception
     {
 	try
 	    {
@@ -86,7 +86,7 @@ public class DBChocAn
     }
 
 
-    public void mitgliedTableDeletion() throws SQLException
+    public static void mitgliedTableDeletion() throws SQLException
     {
 	try
 	    {
@@ -103,7 +103,7 @@ public class DBChocAn
 	    }
     }
 
-    public void medizinerTableDeletion() throws SQLException
+    public static void medizinerTableDeletion() throws SQLException
     {
 	try
 	    {
@@ -120,7 +120,7 @@ public class DBChocAn
 	    }
     }
 
-    public Mitglied getMitglied(int id) throws Exception
+    public static Mitglied getMitglied(int id) throws Exception
     {
 	String findbyid = "SELECT * FROM Mitglied WHERE id = "+id;
  	
@@ -169,7 +169,7 @@ public class DBChocAn
 		return null;
 	    }
     }
- public Mediziner getMediziner(int id) throws Exception
+ public static Mediziner getMediziner(int id) throws Exception
     {
 	String findbyid = "SELECT * FROM Mediziner WHERE id = "+id;
  	
@@ -219,7 +219,7 @@ public class DBChocAn
     }
 
 
-    public synchronized void newMitglied(Mitglied xyz) throws Exception 
+    public static synchronized void newMitglied(Mitglied xyz) throws Exception 
     { 
     	int id;
 	id=genMitgliedId(); 
@@ -244,7 +244,7 @@ public class DBChocAn
 		throw new Exception("NewMitgliedFailedException.");
 	    }   
     } 
- public synchronized void newMediziner(Mediziner xyz) throws Exception 
+ public static synchronized void newMediziner(Mediziner xyz) throws Exception 
     { 
     	int id;
 	id=genMedizinerId(); 
@@ -271,7 +271,7 @@ public class DBChocAn
     } 
 
   
-    public void changeMitglied(Mitglied xyz) throws SQLException 
+    public static void changeMitglied(Mitglied xyz) throws SQLException 
     { 
 	String change = 
 	"UPDATE Mitglied SET nachname='"+xyz.getNachname()+
@@ -297,7 +297,7 @@ public class DBChocAn
 	closeChocAn(); 
     } 
  
- public void changeMediziner(Mediziner xyz) throws SQLException 
+ public static void changeMediziner(Mediziner xyz) throws SQLException 
     { 
 	String change = 
 	"UPDATE Mitglied SET nachname='"+xyz.getNachname()+
@@ -324,7 +324,7 @@ public class DBChocAn
     } 
 
 
-    public int genMitgliedId() 
+    public static int genMitgliedId() 
     {
 	int newid=1;
 	String findbyid = "SELECT id FROM Mitglied";
@@ -351,7 +351,7 @@ public class DBChocAn
     
 	return newid;	
     }
- public int genMedizinerId() 
+ public static int genMedizinerId() 
     {
 	int newid=1;
 	String findbyid = "SELECT id FROM Mediziner";
