@@ -1,6 +1,6 @@
 package database;
 public class Rechnungen {
-    // Felder:
+    // felder:
     protected long     LaufendeNummer;
     protected long     VersichertenNummer;
     protected long     ArztNummer;
