@@ -1,4 +1,4 @@
-ackage protocol;
+package protocol;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -16,9 +16,9 @@ public final class ShowMitglied extends MitgliedMakro{
 
     private boolean loaded;
   private boolean changing = false; //true wenn geaendert werden soll
-    private String Titel;
-    private javax.swing.JButton ChangeButton;
-    private database.DBChocAn Database;
+  private String Titel;
+  private javax.swing.JButton ChangeButton;
+  //  private database.DBChocAn Database = new database.DBChocAn(); 
 
   /**
    *@param pane Hauptfenster in dem Innere Fenster geoeffnet werden.
@@ -91,50 +91,50 @@ public final class ShowMitglied extends MitgliedMakro{
      *
      *@return <code> true </code> wenn Mitglied aus der datenbank geholt wurde <code false </code> bei Abbruch.
      */
-    protected boolean fetchMitglied(){
-	database.Mitglied newmitglied;
-	boolean noanswer = true;
-	boolean cancel = false;
-	int id;
-
-	while(noanswer){
-	String idnmbr = JOptionPane.showInternalInputDialog(this, new String[]{"Mitgliedsnummer eingeben :"}, "Mitglied bearbeiten", 3);
-	if(idnmbr == null) { noanswer = false; cancel = true; }
-	else {
-	    try{ 
-		Integer idWrap = new Integer(idnmbr);
-		id = idWrap.parseInt(idnmbr);
-		newmitglied = Database.getMitglied(id);
-		loaded = true;
-		setMitglied( newmitglied );
-		noanswer = false;
-		setChanging(false);
-		fillMakro();
-	    }//ende try
-	    catch(NumberFormatException e){
-		JOptionPane.showInternalMessageDialog(this, new String[] {"Nur Zahlen eingeben!"});
-	    } 
-	    catch(Exception e){
-	JOptionPane.showInternalMessageDialog(this, new String[] {"Eintrag nicht gefunden"}, "Datanebankfehler", JOptionPane.ERROR_MESSAGE);
-	    }
-	}//ende else
-	}//ende while
-	if(cancel = true) return false;
-	else return true;
-    }//ende fetchMitglied
-
-    protected void specialButtonClicked(){ fetchMitglied(); }
+  protected boolean fetchMitglied(){
+    database.Mitglied newmitglied = new database.Mitglied();
+    boolean noanswer = true;
+    boolean cancel = false;
+    int id;
     
-    protected void actByValidity(boolean condition){
+    while(noanswer){
+      String idnmbr = JOptionPane.showInternalInputDialog(this, new String[]{"Mitgliedsnummer eingeben :"}, "Mitglied bearbeiten", 3);
+      if(idnmbr == null) { noanswer = false; cancel = true; }
+      else {
+	try{ 
+	  Integer idWrap = new Integer(idnmbr);
+	  id = idWrap.parseInt(idnmbr);
+	  newmitglied = database.DBChocAn.getMitglied(id);
+	  loaded = true;
+	  setMitglied( newmitglied );
+	  noanswer = false;
+	  setChanging(false);
+	  fillMakro();
+	}//ende try
+	catch(NumberFormatException e){
+	  JOptionPane.showInternalMessageDialog(this, new String[] {"Nur Zahlen eingeben!"});
+	} 
+	catch(Exception e){
+	  JOptionPane.showInternalMessageDialog(this, new String[] {"Eintrag nicht gefunden"}, "Datenbankfehler", JOptionPane.ERROR_MESSAGE);
+	}
+      }//ende else
+    }//ende while
+    if(cancel = true) return false;
+    else return true;
+  }//ende fetchMitglied
+  
+  protected void specialButtonClicked(){ fetchMitglied(); }
+  
+  protected void actByValidity(boolean condition){
       ChangeButton.setEnabled(condition);
  }
 
   protected void changeButtonAction(){
     setChanging(true);
     checkAllTextField();
-    if((changing == true) && queryValidity) {
+    if((changing == true) && queryValidity() ) {
       try{
-	Database.changeMitglied( getMitglied() );
+	database.DBChocAn.changeMitglied( getMitglied() );
       }
       catch(java.sql.SQLException e){
 	 InfoLabel.setText("Speicherung Fehlschlag!");

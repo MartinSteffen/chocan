@@ -52,7 +52,7 @@ public class DBChocAn
     {
 	try
 	    {
-		String mitgliedTabelle = "CREATE TABLE Mitglied ( nachname VARCHAR(20), vorname  VARCHAR(20), strasse  VARCHAR(25),hausnummer VARCHAR(5),postleitzahl VARCHAR(5), ort VARCHAR(25), telefonnummer VARCHAR(14), bankname VARCHAR(25), blz VARCHAR(15), kontonummer VARCHAR(15), id INTEGER, eintritt DATE, austritt DATE)";
+		String mitgliedTabelle = "CREATE TABLE Mitglied ( nachname VARCHAR(20), vorname  VARCHAR(20), strasse  VARCHAR(25),hausnummer VARCHAR(5),postleitzahl VARCHAR(5), ort VARCHAR(25), telefonnummer VARCHAR(14), bankname VARCHAR(25), blz VARCHAR(15), kontonummer VARCHAR(15), id INTEGER, eintritt VARCHAR(10), austritt VARCHAR(10))";
 
 		openChocAn();
 		statement = connection.createStatement();
@@ -154,8 +154,8 @@ public class DBChocAn
 		xyz.setBlz(r.getString(9));
 		xyz.setKontonummer(r.getString(10));
 		xyz.setId(r.getInt(11));
-		xyz.setEintritt(r.getDate(12));
-		xyz.setAustritt(r.getDate(13));
+		xyz.setEintritt(r.getString(12));
+		xyz.setAustritt(r.getString(13));
 	
 		statement.close();
 		closeChocAn();
@@ -223,24 +223,31 @@ public class DBChocAn
     { 
     	int id;
 	id=genMitgliedId(); 
-	 
+	System.out.println("Id generated"); 
 	   
 	
 	xyz.setId(id);  
 	try 
 	    { 
 		openChocAn(); 
-    
+    	System.out.println("Database opened ");
 
 		statement = connection.createStatement(); 
+	System.out.println("statement created ");
 		String insert = "INSERT into Mitglied values('"+xyz.getNachname()+"','"+xyz.getVorname()+"','"+xyz.getStrasse()+"','"+xyz.getHausnummer()+"','"+xyz.getPostleitzahl()+"','"+xyz.getOrt()+"','"+xyz.getTelefonnummer()+"','"+xyz.getBankname()+"','"+xyz.getBlz()+"','"+xyz.getKontonummer()+"',"+xyz.getId()+","+xyz.getEintritt()+","+xyz.getAustritt()+")"; 
-		statement.executeUpdate(insert);  
+	System.out.println("String generated ");
+		statement.executeUpdate(insert);
+	System.out.println("wrote to DB ");  
 		statement.close();     
+	System.out.println("Statement dismissed ");
 		closeChocAn();    
+	System.out.println("DB closed ");
+	System.out.println("All good!! ");
 	    } 
 
 	catch (SQLException err)
 	    {
+	System.out.println(err);
 		throw new Exception("NewMitgliedFailedException.");
 	    }   
     } 

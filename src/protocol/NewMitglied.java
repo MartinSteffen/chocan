@@ -11,7 +11,7 @@ package protocol;
 public final class NewMitglied extends MitgliedMakro{
 
     private boolean savingstatus = false;
-    private database.DBChocAn Database;
+  //    private database.DBChocAn Database = new database.DBChocAn();
 
   public NewMitglied(javax.swing.JDesktopPane pane, javax.swing.JInternalFrame caller){
     setMakroEnvironment(pane, caller);
@@ -39,32 +39,36 @@ public final class NewMitglied extends MitgliedMakro{
     checkAllTextField();
     if(queryValidity()){
       try{
-	  if(savingstatus == false){
-	    getMitglied().setAustritt( getMitglied().getEintritt() );
-	      Database.newMitglied(getMitglied());
-	      savingstatus = true;
-	      InfoLabel.setText("Speicherung Erfolgreich");
-	      InfoLabelClock.start();
-	  }//ende if
-	  else{
-	      Database.changeMitglied(getMitglied());
-	      InfoLabel.setText("Speicherung Erfolgreich");
-	      InfoLabelClock.start();
-	  }//ende else
+	if(savingstatus == false){
+	  getMitglied().setAustritt( getMitglied().getEintritt() );
+	  database.DBChocAn.newMitglied(getMitglied());
+	  savingstatus = true;
+	  InfoLabel.setText("Speicherung Erfolgreich");
+	  InfoLabelClock.start();
+	}//ende if
+	else{
+	  database.DBChocAn.changeMitglied(getMitglied());
+	  InfoLabel.setText("Speicherung Erfolgreich");
+	  InfoLabelClock.start();
+	}//ende else
       }//ende try
+      catch(NullPointerException ss){System.out.println("Nulll");}
       catch(java.sql.SQLException se){
-	  InfoLabel.setText("Speicherung Fehlschlag!");
-	  javax.swing.JOptionPane.showInternalMessageDialog(this.getParent(), new String[]{"Datenbankzugriff fehlgeschlagen!"});
-	  } 
+	InfoLabel.setText("Speicherung Fehlschlag!");
+	javax.swing.JOptionPane.showInternalMessageDialog(this.getParent(), new String[]{"Datenbankzugriff fehlgeschlagen!"});
+      } 
       catch(java.lang.Exception e){
-	  InfoLabel.setText("Speicherung fehlgeschlagen!");
-	  javax.swing.JOptionPane.showInternalMessageDialog(this.getParent(), new String[]{"Datenbankkapazität erschöpft oder Verbindung fehlgeschlagen!"},"Datenbank Fehler",0); 
+	InfoLabel.setText("Speicherung fehlgeschlagen!");
+	javax.swing.JOptionPane.showInternalMessageDialog(this.getParent(), new String[]{"Datenbankkapazität erschöpft oder Verbindung fehlgeschlagen!"},"Datenbank Fehler",0); 
       }
     }
-else   javax.swing.JOptionPane.showInternalMessageDialog(this.getParent(), new String[]{"Es existieren noch fehlerhafte Eintraege!"},"Fehler",0);
-  };//ende SpecialButtonClicked
-
-    protected void actByValidity(boolean condition){
+    else {
+      InfoLabel.setText("Alle Eintraege muessen gueltig sein!");
+      javax.swing.JOptionPane.showInternalMessageDialog(this.getParent(), new String[]{"Es existieren noch fehlerhafte Eintraege!"},"Fehler",0);
+    }
+  }//ende SpecialButtonClicked
+  
+  protected void actByValidity(boolean condition){
 	enableSpecialButton(condition);
     };
 

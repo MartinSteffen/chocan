@@ -602,7 +602,10 @@ public abstract class MitgliedMakro extends JInternalFrame{
 
 	EintrittsdatumText = new MitgliedMakroTextField(){ 
 	    protected void auslesen(){
-	      try{
+	      mitglied.setEintritt(this.getText().trim());
+
+	      //kein Datum mehr
+	      /* try{
 		  mitglied.setEintritt( DateConcept.parse( this.getText().trim() ) );
 	      }
 	      catch(java.text.ParseException e){
@@ -612,7 +615,8 @@ public abstract class MitgliedMakro extends JInternalFrame{
 		  contentvalid = false;
 		  entryIsAuthentic(contentvalid);
 		}
-	      }
+		}*/
+
 	    }//Ende auslesen
 
 	    protected void beschreiben(){
@@ -672,6 +676,9 @@ public abstract class MitgliedMakro extends JInternalFrame{
 
         AustrittsdatumText = new MitgliedMakroTextField(){ 
 	    protected void auslesen(){
+	      mitglied.setAustritt( this.getText().trim());
+	      //kein date mehr
+	      /*
 	      try{
 	      mitglied.setAustritt( DateConcept.parse( this.getText().trim() ) );
 	      }
@@ -682,7 +689,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
 		  contentvalid = false;
 		  entryIsAuthentic(contentvalid);
 		}
-	      }
+		}*/
 	    }//Ende auslesen
 
 	    protected void beschreiben(){

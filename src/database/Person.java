@@ -1,4 +1,5 @@
 package database;
+
 public abstract class Person
 { 
   protected  int[] maxima = { 20,20,25,5,5,25,14,25,15,15 };
