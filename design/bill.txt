@@ -1,0 +1,105 @@
+Gruppe: Gunnar Schaefer & Stefan Schaefer - zustaendig für Rechnungen
+
+
+Es wird eine graphische Oberflaeche fuer die Aerzte zur Eingabe von
+Rechnungen erstellt. Diese Oberflaeche hat 10 Felder, die vom
+jeweiligen Arzt ausgefuellt werden. Die ersten vier Felder muessen auf
+jeden Fall ausgefuellt werden: Arzt-Nummer (Integer), Patienten-Nummer
+(Integer), Behandlungs-Datum (Datum), Code-Nummer der ersten
+erbrachten Leistung (Integer). Weitere erbrachte Leistungen (ebenfalls
+Integers) koennen in die restlichen sechs Felder eingetragen
+werden. Alle auszufuellenden Felder sind entsprechend gekennzeichnet
+und beschriftet, so dass keine Unklarheiten bestehen.
+
+Im Folgenden wird der genaue Aufbau der Eingabe beschrieben. Dieser
+gliedert sich in sieben Module. Alle erwaehnten Tabellen befinden sich
+in der Datenbank "choc".
+
+Arzt-Modul:
+In das erste Feld, in dem zu Begin auch schon der Cursor steht, wird
+die Arzt-Nummer eingegeben und mit Enter bestaetigt. Es wird eine
+Funktion mit der Arzt-Nummer als Parameter aufgerufen. Sie
+ueberprueft, ob die eingegebene Nummer in der Tabelle "aerzte"
+enthalten ist. Ist die Nummer in der Tabelle "aerzte" enthalten, wird
+der Arztname und seine Adresse zurueckgegeben und der Cursor wandert
+zum nächsten Feld. Ist die Nummer in der Tabelle "aerzte" nicht
+vorhanden, wird eine Fehlermeldung zurueckgegeben. Der Cursor wandert
+nicht weiter, und die Eingabe kann korrigiert werden.
+
+Patienten-Modul:
+Im naechsten Feld wird die Patienten-Nummer eingegeben und mit Enter
+bestaetigt. Es wird eine Funktion mit der Patienten-Nummer als
+Parameter aufgerufen. Sie ueberprueft, ob die Nummer mit einer in der
+Tabelle "patienten" vorhandenen Nummer uebereinstimmt. Wenn dem so
+ist, wird der Patientenname, dessen Adresse, das Eintritts-Datum in
+die Versicherung und das Austritts-Datum aus der Versicherung
+zurueckgegeben und der Cursor wandert zum naechsten Feld. Ist die
+Nummer in der Tabelle "patienten" nicht vorhanden, wird eine
+Fehlermeldung zurueckgegeben. Der Cursor wandert nicht weiter, und die
+Eingabe kann korrigiert werden.
+
+Datums-Modul:
+Im dritten Feld wird das Behandlungs-Datum eingegeben und mit Enter
+bestaetigt. Eine Funktion, die folgende Ueberpruefungen an Hand der
+Ein- und Austritts-Daten des Patienten durchfuehrt, wird mit dem
+Behandlungs-Datum als Parameter aufgerufen: 1. die Behandlung muss am
+oder vor dem aktuellen Tag erfolgt sein (Behandlungs-Datum aelter als
+oder gleich dem aktuellen Datum); 2. der Patient muss vor oder an dem
+Behandlungs-Datum der Versicherung beigetreten sein (Eintritts-Datum
+aelter als oder gleich dem Behandlungs-Datum); 3. der Patient darf
+nicht vor oder an dem Behandlungs-Datum aus der Versicherung
+ausgetreten sein (Behandlungs-Datum aelter als oder gleich dem
+Austritts-Datum); 4. falls das aktuelle Datum innerhalb der ersten 3
+Wochen eines Quartals liegt, dann muss die Behandlung nach dem Begin
+des vorherigen Quartals erfolgt sein, sonst muss die Behandlung nach
+dem Begin des aktuellen Quartals erfolgt sein. Sind alle Bedingungen
+erfuellt, springt der Cursor in das Feld. Ansonsten gibt die
+aufgerufene Funktion eine Fehlermeldung zurueck, und der Cursor bleibt
+im Datums-Feld, und die Eingabe kann korrigiert werden.
+
+Behandlungs-Modul:
+Im vierten Feld wird die Code-Nummer der ersten erbrachten Leistung
+eingegeben und mit Enter bestaetigt. Es wird eine Funktion mit der
+Code-Nummer als Parameter aufgerufen. Diese ueberprueft, ob die
+Code-Nummer in der Tabelle "behandlungen" enthalten ist. Ist sie
+vorhanden, werden sowohl Preis (float), als auch Beschreibung der
+Leistung (string) zurueckgegeben, und der Cursor wandert zum naechsten
+Feld. Ist die Nummer in der Tabelle "behandlungen" nicht vorhanden,
+wird eine Fehlermeldung zurueckgegeben. Der Cursor wandert nicht
+weiter, und die Eingabe kann korrigiert werden. In den uebrigen
+Feldern findet ein Ablauf statt, der mit dem im vierten Feld identisch
+ist.
+
+Summen-Modul:
+Jedes mal wenn die Funktion, die im Behandlungs-Modul aufgerufen wird,
+ohne Fehlermeldung terminiert, wird eine weitere Funktion aufgerufen,
+die die Summe (float) aller Behandlungs-Preise bildet. Diese Funktion
+greift auf die Felder zu, in denen die Behandlungs-Preise stehen, und
+addiert sie. Felder ohne Eingabe erhalten hierbei den Wert "Null".
+
+Aenderungs-Modul:
+Außerdem ist es moeglich, jederzeit die Eingabe zu aendern. Dies kann
+durch die "TAB"- oder die "ESC"-Taste geschehen. Im ersten Fall
+springt der Cursor in das vorherige Feld zur Korrektur der Eingabe
+zurueck. Im zweiten Fall werden saemtliche Eingaben geloescht und der
+Cursor springt in das erste Feld zurueck.
+
+Speicher-Modul:
+Sobald in den ersten vier Feldern korrekte Eingaben gemacht wurden,
+ist es moeglich die Rechnung mit einem Maus-Klick auf einen
+entsprechend gekennzeichneten Button zur Datenbank zu tranferieren,
+allerdings nur dann, wenn auch der letzte eingegebene Code gueltig
+ist. Die Rechnung wird in einer der quartalsweisen erstellten
+Rechnungs-tabellen "rechnungen_quartal_jahr" gespeichert.
+
+
+Es stehen folgende Code-Nummern fuer vom Arzt erbrachte Leistungen zur
+Verfuegung:
+
+0815 - Haende schuetteln - DM 21.83
+4711 - Fett absaugen - DM 481.65
+1583 - Magen auspumpen - DM 123.45
+9834 - neues Gebiss - DM 934.99
+2223 - Pickel ausdruecken - DM 89.63
+3858 - Hormonbehandlung - DM 257.30
+9999 - Gehirn OP - DM 3777.04
