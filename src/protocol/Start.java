@@ -7,6 +7,8 @@
 package protocol;
 
 import java.util.*;
+import javax.swing.*;
+import java.lang.*;
 
 /**
  *
@@ -96,7 +98,10 @@ public class Start extends javax.swing.JFrame {
   }//GEN-LAST:event_BeendenButtonMouseClicked
 
   private void DateneingabeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DateneingabeButtonMouseClicked
- Dateneingabe Test = new Dateneingabe();
+     Dateneingabe Test = new Dateneingabe();
+    //    Start Test = new Start();
+ Test.show();
+ Test.setSize(300, 300);
  System.out.println(Test);
   }//GEN-LAST:event_DateneingabeButtonMouseClicked
 
