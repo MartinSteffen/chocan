@@ -1,3 +1,5 @@
+//author: Thorsten Voelkel
+
 package protocol;
 
 public class StringTest{
