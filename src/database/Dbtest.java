@@ -4,13 +4,12 @@ public class Dbtest{
 
   public static void main (String[] args ){
 
-    DBChocAn chocan;
-    chocan = new DBChocAn();
+    
     Mitglied xyz;
     xyz = new Mitglied();
-    try {chocan.mitgliedTableDeletion();}
+    try {DBChocAn.mitgliedTableDeletion();}
     catch ( SQLException err ){System.out.println(err); }
-    try {chocan.mitgliedTableCreation();}
+    try {DBChocAn.mitgliedTableCreation();}
     catch ( Exception err ){System.out.println(err); }
     xyz.setNachname("Wurst");
     xyz.setVorname("Hans");
@@ -24,29 +23,29 @@ public class Dbtest{
     xyz.setKontonummer("0001");
    	Mitglied him1 = new database.Mitglied();
 	
-try {chocan.newMitglied(xyz);}
+try {DBChocAn.newMitglied(xyz);}
 catch ( Exception err) { System.out.println(err); }
 	
-try {chocan.newMitglied(xyz);}
+try {DBChocAn.newMitglied(xyz);}
 catch ( Exception err) { System.out.println(err); }
 	
-try {chocan.newMitglied(xyz);}
+try {DBChocAn.newMitglied(xyz);}
 catch ( Exception err) { System.out.println(err); }
 
 
-try {him1 = chocan.getMitglied(1);}
+try {him1 = DBChocAn.getMitglied(1);}
 catch ( Exception err ) {System.out.println(err);}
 System.out.println(him1.getNachname());
 System.out.println(him1.getVorname()); 
 System.out.println(him1.getId());
 System.out.println(him1.getBankname());
-try {him1 = chocan.getMitglied(2);}
+try {him1 = DBChocAn.getMitglied(2);}
 catch ( Exception err ) {System.out.println(err);}
 System.out.println(him1.getNachname());
 System.out.println(him1.getVorname()); 
 System.out.println(him1.getId());
 System.out.println(him1.getBankname());
-try {him1 = chocan.getMitglied(3);}
+try {him1 = DBChocAn.getMitglied(3);}
 catch ( Exception err ) {System.out.println(err);}
 System.out.println(him1.getNachname());
 System.out.println(him1.getVorname()); 
@@ -54,10 +53,10 @@ System.out.println(him1.getId());
 System.out.println(him1.getBankname());
 
 	xyz.setBankname("KKB BANK");
-try {chocan.changeMitglied(xyz);}
+try {DBChocAn.changeMitglied(xyz);}
 catch ( Exception err) { System.out.println(err); }
 
-try {him1 = chocan.getMitglied(3);}
+try {him1 = DBChocAn.getMitglied(3);}
 catch ( Exception err ) {System.out.println(err);}
 System.out.println(him1.getNachname());
 System.out.println(him1.getVorname()); 
