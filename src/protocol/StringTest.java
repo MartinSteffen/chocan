@@ -12,17 +12,17 @@ public class StringTest{
     
     char feld[] = stringToTest.toCharArray();
     int i=0; //Zählvariable für die while-Schleife
+    Character getChar = new Character(feld[i]);
     
     //Überprüfungsschleife auf unerwünschte Zahlen im String
-    while(i<length) {
-      Character getChar = new Character(feld[i]);
-      if(getChar.isDigit(feld[i])==true) {
-        return false;
-      }
+    //Wenn Digits im String vorhanden sind, dann wird i nicht bis
+    //length hochgezaehlt, sondern bleibt kleiner
+    while(i<length && getChar.isDigit(feld[i])==false) { 
       i++;
     }
     
-    return true;
+    if(i<length) return false;
+    else return true;
   }
 
 } 
