@@ -79,7 +79,7 @@ public class Rechnungen {
     }
 
     protected int GetJahr() {
-	return this.Rechnungsdatum.get(1)-1; }
+	return this.Rechnungsdatum.get(1); }
 
 
     // Die folgenden Methoden dienen zum Schreiben
