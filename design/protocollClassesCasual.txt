@@ -1,0 +1,335 @@
+** Klassen die im Packet <ChocAn>.protocoll auftauchen und Verknüpfungen **
+
+Es wird von der Datenabnk die Klasse Mitglied zur Verfügung gestellt.
+
+Diese enthält sämtliche wichtigen Member und Methoden zum Lesen und
+Schreiben der Member, ferner zum auslesen eines Mitglieds aus der Datenbank
+anhand einer Kundennummer und Rückschreiben auf den Selben Eintrag. Ausserdem
+kann ein neuer Mitgliedeintrag in der Datenbank aus einer Instanz von
+Mitglied heraus getätigt werden.
+
+Das Packet <ChocAn>.protocoll soll eine Objekt von Mitglied auf den Monitor
+dem Benutzer zur Verfügung stellen. Entweder um einen neuen Eintrag in der
+Datenbank zu erzeugen oder einen bestehenden auszulesen und evtl. zu
+verändern.
+
+Dabei wird mit AWT Klassen gearbeitet.
+
+Es existiert in der Klasse Mitglied der Standartkonstruktor. 
+Die benutzeten Methoden werfen Exeptions.
+
+Im Packet ~.protocoll wird die Klasse Mitglied vererbt an die Klassen
+   * MitgliedToBe
+   * MitgliedWakend
+
+Als offene Klassen existieren:
+    * MitgliedToBeMakro
+    * MitgliedToEditMakro
+    * MitgliedShowMakro
+
+Beide Klassen definieren Konstruktoren und Methoden, mit
+denen die OberflächenKlassen dann Arbeiten.
+
+
+
+
+import java.lang.*
+import java.awt.*
+import java.awt.event.* 
+import <ChocAn.Database.Mitglied.*>
+
+
+
+//@Brief Neues Mitglied Klasse
+
+<scope> class MitgliedToBe extends Mitglied {
+//Private Members
+	  private const int PossibleEntries = 11;
+	  private int AuthenticEntries = 0;
+
+//Methods : package
+	  package void Authentic() {AuthenticEntries++;}
+	  package void NotAuthentic() {AuthenticEntrie--;}
+	  	  
+/* Konstruktor */
+        MitgliedToBe(){ 
+       	       super();
+	      < Fülle alle Member mit Null; >
+	      
+	       }
+	       
+	  }     
+	       
+	       
+	       
+/*@Brief Neues Mitglied Oberfläche */
+
+/*Zeige alle Member in Oberfläche an.
+ *Änderungen werden sofort geprüft. Sind alle änderungen vollständig ist
+ *speichern erlaubt. Enter Überprüft. Wenn korrekt Übernahme in Objekt und
+ *Sprung zum Nächsten Feld. Sonst verbleibt der Fokus.
+ *Speichern bewirkt schreiben in Datenbank und beenden der Funktion */
+ 
+public class MitgliedToBeMakro extends Frame{
+	      
+	      <Listener Reaktionen der Textfelder der Member;
+	      if (TextField entry != NULL) Dummy.NotAuthentic();
+	      Check consistency;
+	      if (<consistent>) Dummy.Authentic();
+	      else <keep Focus>;
+	      
+	      
+	      
+	      
+//@Brief Listeners 
+  /**Speicher wenn die Anzahl Korrektereinträge gleich der Anzahl möglicher
+    *Einträge ist */
+	      class SaveToBase implements ActionListener{
+	      	   public void actionPerfomed{
+		   	  if (AuthenticEntries == PossibleEntries) {
+
+ 			   Dummy.genAndSetId();
+			   catch(NoIdAvailableExeption){
+			       <Display Dialog : NoCapacity;
+			       	Return to calling routine;>
+				}
+			   Dummy.setAustritt(Dummy.getEintritt());
+			   Dummy.newMitglied;
+			  <Dispose MitgliedToBeMakro;
+			   Return to calling routine;>
+			   }
+			  else <do nothing;> 
+			  } 
+   		}
+		
+		class ExitCurrentFrame implements ActionListener{
+		     public void actionPerformed{
+		     	    <Display Dialog : Warning;
+			     IF NOT_Canceled 
+			     	Dispose MitgliedToBeMakro;
+			     	Return to calling routine;>
+	      		     }
+		      }
+	       
+/* Konstruktor */	       
+	    MitgliedToBeMakro(){
+	    	
+		MitgliedToBe Dummy = new MitgliedToBe();
+	    
+	  // Componenten
+		/* create */
+   	        Button SaveButton = new Button("Speichern");
+		Button ExitButton = new Button("Zurück");
+		<Textfelder der Member instanziieren>
+		<Beschriftungen instanzieren>
+		
+		/* add */
+		add(SaveButton);
+		add(ExitButton);
+		<add TextFields;>
+		
+		/* make sources */
+		SaveButton.addActionListener(new SaveToBase());
+		ExitButton.addActionListener(new ExitCurrentFrame());
+		<different TextField listeners sources;>
+		
+		this.pack();   /* unelegant oder unmöglich */
+		this.show();
+		}
+		
+  }
+		
+		
+
+
+//@Brief Klasse zum Anzeigen und Ändern
+
+<scope> class MitgliedWakend extends Mitglied {
+//Private Members
+	  private const int PossibleEntries = 12;
+	  private int AuthenticEntries = 12;
+
+//Methods : package
+	  package void Authentic() {AuthenticEntries++;}
+	  package void NotAuthentic() {AuthenticEntrie--;}
+	  	  
+/* Konstruktor */
+        MitgliedWakend(long idno){ 
+       	       super();
+	       this.getMitglied(idno,this); /* exeption cought by caller */
+	       }
+	       
+  }
+
+
+
+
+
+/*@Brief Ändern Oberfläche */
+
+/*Zeige alle Member in Oberfläche an.
+ *Änderungen werden sofort geprüft. Sind alle änderungen vollständig ist
+ *speichern erlaubt. Enter Überprüft. Wenn korrekt Übernahme in Objekt und
+ *Sprung zum Nächsten Feld. Sonst verbleibt der Fokus.
+ *Speichern bewirkt schreiben in Datenbank und beenden der Funktion */
+ 
+public class MitgliedToEditMakro extends Frame{
+	      
+	      <Listener Reaktionen der Textfelder der Member;
+	      Dummy.NotAuthentic();
+	      Check consistency;
+	      if (<consistent>) Dummy.Authentic();
+	      else <keep Focus>;>
+	      
+	      
+	      
+	      
+//@Brief Listeners declared
+  /**Speicher wenn die Anzahl Korrektereinträge gleich der Anzahl möglicher
+    *Einträge ist */
+	      class SaveToBase implements ActionListener{
+	      	   public void actionPerfomed{
+		   	  if (AuthenticEntries == PossibleEntries) {
+     
+			   catch(OverwriteExeption){
+			       <Display Dialog : WritingFailure;
+			       	Return to calling routine;>
+				}
+			   Dummy.changeMitglied;
+			  <Dispose MitgliedToBeMakro;
+			   Return to calling routine;>
+			   }
+			  else <do nothing;> 
+			  } 
+   		}
+		
+		class ExitCurrentFrame implements ActionListener{
+		     public void actionPerformed{
+		     	    <Display Dialog : Warning;
+			     IF NOT_Canceled 
+			     	Dispose MitgliedToBeMakro;
+			     	Return to calling routine;>
+	      		     }
+		      }
+	       
+/* Konstruktor */	       
+   	       
+	    MitgliedToEditMakro(){
+	    	   <Display Dialog which gains long idno;>
+		   MitgliedToEditMakro(idno);
+		   }
+		   
+		   
+	    MitgliedToEditMakro(long idno){
+	    	
+		MitgliedWakend Dummy = new MitgliedWakend(idno);
+	    	 catch(MitgliedNotFoundExeption){
+		   <Return to calling routine;>
+		   
+	  // Componenten
+		/* create */
+   	        Button SaveButton = new Button("Speichern");
+		Button ExitButton = new Button("Zurück");
+		<Textfelder der Member instanziieren>
+		<Beschriftungen instanzieren>
+		
+		/* add */
+		add(SaveButton);
+		add(ExitButton);
+		<add TextFields;>
+		
+		/* make sources */
+		SaveButton.addActionListener(new SaveToBase());
+		ExitButton.addActionListener(new ExitCurrentFrame());
+		<different TextField listeners sources;>
+		
+		this.pack();   /* unelegant oder unmöglich */
+		this.show();
+		}
+		
+  }
+  
+
+
+/*@Brief Anzeigen Oberfläche */
+
+/*Zeige alle Member in Oberfläche an.
+ *Änderungen werden sofort geprüft. Sind alle änderungen vollständig ist
+ *speichern erlaubt. Enter Überprüft. Wenn korrekt Übernahme in Objekt und
+ *Sprung zum Nächsten Feld. Sonst verbleibt der Fokus.
+ *Speichern bewirkt schreiben in Datenbank und beenden der Funktion */
+ 
+public class MitgliedToShowMakro extends Frame{
+	     
+//@Brief Listeners 
+	      class EditWakendMember implements ActionListener{
+	      	   public void actionPerfomed{
+		   	
+			  <Hide MitgliedToShowMakro Frame;>
+			  
+			  MitgliedToEdit(Dummy.getId());/*EditingMakro opens*/
+			  
+			  <Dispose MitgliedToShowMakro;>
+			  <Return to calling routine;>
+		      
+			  } 
+   		}
+		
+		class ExitCurrentFrame implements ActionListener{
+		     public void actionPerformed{
+		     	    <Display Dialog : Warning;
+			     IF NOT_Canceled 
+			     	Dispose MitgliedToBeMakro;
+			     	Return to calling routine;>
+	      		     }
+		      }
+	       
+/* Konstruktor */	       
+   	       
+	    MitgliedToShowMakro(){
+	    
+	    	   <Display Dialog which gains long idno;>
+	    	
+		MitgliedWakend Dummy = new MitgliedWakend(idno);
+	    	 catch(MitgliedNotFoundExeption){
+		   <Return to calling routine;>
+		   
+	  // Componenten
+		/* create */
+   	        Button EditButton = new Button("Bearbeiten");
+		Button ExitButton = new Button("Zurück");
+		<Textfelder der Member instanziieren;
+		Textfelder alle nicht änderbar!>
+		<Beschriftungen instanzieren>
+		
+		/* add */
+		add(EditButton);
+		add(ExitButton);
+		<add TextFields;>
+		
+		/* make sources */
+		ExitButton.addActionListener(new ExitCurrentFrame());
+		EditButton.addActionListener(new EditWakendMember());
+	       
+		this.pack();   /* unelegant oder unmöglich */
+		this.show();
+		}
+		
+  }
+
+
+
+
+######
+
+
+Es müssen noch die Fansteranordnungen geschaffen werden. Am besten wohl mit
+GridBagLayout. Dann ist die Arbeit auf den textfeldern noch schwierig bzw. nicht
+ganz geklärt. 
+Die Dialoge benötigen Fenster! Wann wird ein Fenster geschlossen, und wohing
+geht java zurück? Wie ist das beim Wechsel von Show nach Edit?
+Es fehlt die Klasse die die oberen klassen aufrufft und verbindet.
+
+<scope> muss public sein oder kann man dies auch aufs packet beschränken?
+
+<...> müssen alle noch verfeinert werden!
