@@ -9,12 +9,12 @@ import java.lang.*;
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
-import database.*;
+//import database.*;
 
 
 public class Bill extends JFrame {
   public Bill() {
-    setTitle("Arzt-Rechnung");
+   setTitle("Arzt-Rechnung");
     setSize(750,600);
     getContentPane().setLayout(null);
     initComponents();
@@ -69,6 +69,7 @@ public class Bill extends JFrame {
     btnSum = new JButton();
     lblSum = new JLabel();
 
+    
     btnClear = new JButton();
     btnStore = new JButton();
 
@@ -135,6 +136,8 @@ public class Bill extends JFrame {
     getContentPane().add(lblPatientZipAndCity);
     lblPatientZipAndCity.setBounds(310, 120, 230, 20);
 
+
+    
 
     txtDay.addFocusListener(new FocusAdapter() {
       public void focusLost(FocusEvent evt) {
@@ -354,6 +357,9 @@ public class Bill extends JFrame {
     lblStatus.setText("Status:");
     getContentPane().add(lblStatus);
     lblStatus.setBounds(20, 550, 520, 20);
+
+
+    
 
   }//end of initComponents
 
