@@ -3,6 +3,7 @@ package protocol;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 
 /**
  * MitgliedMakro definiert das Basisfenster  
@@ -16,7 +17,27 @@ public abstract class MitgliedMakro extends JInternalFrame{
 
   /** Datumsformat benutzt fuer Objekt Mitglied
    */ 
-  protected java.text.SimpleDateFormat DateConcept = new java.text.SimpleDateFormat("d.M.yyyy");
+  protected java.text.DateFormat DateConcept = new java.text.SimpleDateFormat("d.M.yy");
+
+    /* Calenderobjekt zum Vergleichen mit eingegebenem Datum*/
+
+    /** Frühstes Datum */
+    private Calendar Birth = Calendar.getInstance();
+
+    /** Spätestes Datum */
+    private Calendar Death = Calendar.getInstance();
+
+    /** Setzen des zulässigen Zeitintervalls im Objekt Mitglied. 
+     *Eingegebene Daten werden nur dann vom Makro angenommen, wenn
+     *sie in diesem Zeitintervall liegen.
+     *@param startXXX Anfangsdatum des Zeitintervalls
+     *@param endXXX Enddatum des Zeitintervalls
+     */
+    protected final void setDateFrame(int startday, int startmonth, int startyear, int endday, int endmonth, int endyear){
+    Birth.set(startyear, startmonth, startday );
+    Death.set(endyear, endmonth, endday ); 
+    }
+
 
     /**Dummy: Zu bearbeitendes Objekt des Typs Mitglied*/
     private database.Mitglied mitglied;
@@ -161,7 +182,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
     protected JButton SpecialButton;
 
     /*Timer*/ 
-    protected Timer InfoLabelClock; 
+    protected javax.swing.Timer InfoLabelClock; 
 
 
     /** Initialisierung der Komponenten: initcomponents()
@@ -299,7 +320,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	InfoLabel.setBounds(30,370,580,60);
 
 	//Timer
-	InfoLabelClock = new Timer(10000,new ActionListener(){ 
+	InfoLabelClock = new javax.swing.Timer(10000,new ActionListener(){ 
 		public void actionPerformed(ActionEvent e){
 		    InfoLabel.setText("");}});
 	InfoLabelClock.setRepeats(false);
@@ -308,13 +329,14 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	/** TextFelder */
 	NameText = new MitgliedMakroTextField(){
 	    protected void auslesen(){
-	      mitglied.setNachname(this.getText());
+	      mitglied.setNachname(this.getText().trim());
 	    }
 	    protected void beschreiben(){
 	      this.setText(mitglied.getNachname());
 	    }
 	    protected boolean checkValid(){
-	      if (contentvalid == false){ 
+		String temp = this.getText().trim(); 
+	      if ((contentvalid == false) && (temp.length() > 0)){ 
 		contentvalid = true;
 		entryIsAuthentic(contentvalid);
 	      }
@@ -334,13 +356,14 @@ public abstract class MitgliedMakro extends JInternalFrame{
 
         VornameText = new MitgliedMakroTextField(){
 	    protected void auslesen(){
-	      mitglied.setVorname(this.getText());
+	      mitglied.setVorname(this.getText().trim());
 	    }
 	    protected void beschreiben(){
 	      this.setText(mitglied.getVorname());
 	    }
 	    protected boolean checkValid(){
-	      if (contentvalid == false){ 
+		String temp = this.getText().trim(); 
+	      if ((contentvalid == false) && (temp.length() > 0)){ 
 		contentvalid = true;
 		entryIsAuthentic(contentvalid);
 	      }
@@ -360,13 +383,14 @@ public abstract class MitgliedMakro extends JInternalFrame{
 
         StrasseText = new MitgliedMakroTextField(){
 	    protected void auslesen(){
-	      mitglied.setStrasse(this.getText());
+	      mitglied.setStrasse(this.getText().trim());
 	    }
 	    protected void beschreiben(){
 	      this.setText(mitglied.getStrasse());
 	    }
 	    protected boolean checkValid(){
-	      if (contentvalid == false){ 
+		String temp = this.getText().trim(); 
+	      if ((contentvalid == false)  && (temp.length() > 0)){ 
 		contentvalid = true;
 		entryIsAuthentic(contentvalid);
 	      }
@@ -409,13 +433,14 @@ public abstract class MitgliedMakro extends JInternalFrame{
 
         NummerText = new MitgliedMakroTextField(){
 	    protected void auslesen(){
-	      mitglied.setHausnummer(this.getText());
+	      mitglied.setHausnummer(this.getText().trim());
 	    }
 	    protected void beschreiben(){
 	      this.setText(mitglied.getHausnummer());
 	    }
 	    protected boolean checkValid(){
-	      if (contentvalid == false){ 
+		String temp = this.getText().trim(); 
+	      if ((contentvalid == false)  && (temp.length() > 0)){ 
 		contentvalid = true;
 		entryIsAuthentic(contentvalid);
 	      }
@@ -435,13 +460,14 @@ public abstract class MitgliedMakro extends JInternalFrame{
 
         PLZText = new MitgliedMakroTextField(){
 	    protected void auslesen(){
-	      mitglied.setPostleitzahl(this.getText());
+	      mitglied.setPostleitzahl(this.getText().trim());
 	    }
 	    protected void beschreiben(){
 	      this.setText(mitglied.getPostleitzahl());
 	    }
 	    protected boolean checkValid(){
-	      if (contentvalid == false){ 
+		String temp = this.getText().trim(); 
+	      if ((contentvalid == false) && (temp.length() > 0)){ 
 		contentvalid = true;
 		entryIsAuthentic(contentvalid);
 	      }
@@ -461,13 +487,14 @@ public abstract class MitgliedMakro extends JInternalFrame{
 
         OrtText = new MitgliedMakroTextField(){
 	    protected void auslesen(){
-	      mitglied.setOrt(this.getText());
+	      mitglied.setOrt(this.getText().trim());
 	    }
 	    protected void beschreiben(){
 	      this.setText(mitglied.getOrt());
 	    }
 	    protected boolean checkValid(){
-	      if (contentvalid == false){ 
+		String temp = this.getText().trim(); 
+	      if ((contentvalid == false) && (temp.length() > 0)) { 
 		contentvalid = true;
 		entryIsAuthentic(contentvalid);
 	      }
@@ -487,13 +514,14 @@ public abstract class MitgliedMakro extends JInternalFrame{
 
         TelefonText = new MitgliedMakroTextField(){
 	    protected void auslesen(){
-	      mitglied.setTelefonnummer(this.getText());
+	      mitglied.setTelefonnummer(this.getText().trim());
 	    }
 	    protected void beschreiben(){
 	      this.setText(mitglied.getTelefonnummer());
 	    }
 	    protected boolean checkValid(){
-	      if (contentvalid == false){ 
+		String temp = this.getText().trim(); 
+	      if ((contentvalid == false) && (temp.length() > 0)){ 
 		contentvalid = true;
 		entryIsAuthentic(contentvalid);
 	      }
@@ -516,7 +544,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	EintrittsdatumText = new MitgliedMakroTextField(){ 
 	    protected void auslesen(){
 	      try{
-		  mitglied.setEintritt( DateConcept.parse( this.getText() ) );
+		  mitglied.setEintritt( DateConcept.parse( this.getText().trim() ) );
 	      }
 	      catch(java.text.ParseException e){
 		  JOptionPane.showInternalMessageDialog(this.getParent(), new String[] {"Ein Datumsfeld muss die Form ", "TT.MM.JJJJ haben!"}, "Inkorrekter Datumseintrag!", 1);
@@ -531,15 +559,23 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	    protected void beschreiben(){
 	      this.setText(DateConcept.format(mitglied.getEintritt()));
 	    }
-	    protected boolean checkValid(){
+	    protected boolean checkValid(){ 
 	      try{
-		  java.util.Date d = DateConcept.parse( this.getText() );
-	      
-	      if (contentvalid == false){ 
-		  this.setForeground(java.awt.Color.red);
-		  contentvalid = true;
-		  entryIsAuthentic(contentvalid);
-	      }//ende if
+		  java.util.Date d = DateConcept.parse( this.getText().trim() );   
+		  Calendar dCal = Calendar.getInstance();
+		  dCal.setTime(d);
+		  if((dCal.after(Birth)) && (dCal.before(Death))){
+		      if ( contentvalid == false ){ 
+			  this.setForeground(java.awt.Color.black);
+			  contentvalid = true;
+			  entryIsAuthentic(contentvalid);}
+		  }//ende if
+		  else {
+		      if( contentvalid ){
+		      contentvalid = false;
+		      this.setForeground(java.awt.Color.red);
+		      entryIsAuthentic(contentvalid); }
+		  }//ende else
 		return contentvalid;
 	      }
 	      catch(java.text.ParseException e){
@@ -554,7 +590,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
 		return contentvalid;
 	      }//ende catch
 	     		
-	    }//ende auslesen
+	    }//ende checkValid
 	  };//ende felddefinition
 
 
@@ -573,9 +609,9 @@ public abstract class MitgliedMakro extends JInternalFrame{
         AustrittsdatumText = new MitgliedMakroTextField(){ 
 	    protected void auslesen(){
 	      try{
-	      mitglied.setAustritt( DateConcept.parse( this.getText(), new java.text.ParsePosition(0) ) );
+	      mitglied.setAustritt( DateConcept.parse( this.getText().trim() ) );
 	      }
-	      catch(Exception e){
+	      catch(java.text.ParseException e){
 		  JOptionPane.showInternalMessageDialog(this.getParent(), new String[] {"Ein Datumsfeld muss die Form ", "TT.MM.JJJJ haben!"}, "Inkorrekter Datumseintrag!", 1);
 		  this.setForeground(java.awt.Color.red);
 		  if(contentvalid == true){
@@ -590,19 +626,27 @@ public abstract class MitgliedMakro extends JInternalFrame{
 	    }
 	    protected boolean checkValid(){
 	      try{
-	      java.util.Date d = DateConcept.parse( this.getText(),new java.text.ParsePosition(0) );
-	      
-	      if (contentvalid == false){ 
-		  this.setForeground(java.awt.Color.red);
-		  contentvalid = true;
-		  entryIsAuthentic(contentvalid);
-	      }//ende if
+	      java.util.Date d = DateConcept.parse( this.getText().trim() );
+	        Calendar dCal = Calendar.getInstance();
+		  dCal.setTime(d);
+		  if((dCal.after(Birth)) && (dCal.before(Death))){
+		      if ( contentvalid == false ){ 
+			  this.setForeground(java.awt.Color.black);
+			  contentvalid = true;
+			  entryIsAuthentic(contentvalid);}
+		  }//ende if
+		  else {
+		      if( contentvalid ){
+		      contentvalid = false;
+		      this.setForeground(java.awt.Color.red);
+		      entryIsAuthentic(contentvalid); }
+		  }//ende else
 		return contentvalid;
 	      }
-	      catch(Exception e){
+	      catch(java.text.ParseException e){
 		  InfoLabel.setText("Gefordertes Format TT.MM.JJJJ");
 		  InfoLabelClock.start();
-
+		 
 		  this.setForeground(java.awt.Color.red);
 		if(contentvalid == true){
 		  contentvalid = false;
@@ -610,7 +654,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
 		}
 		return contentvalid;
 	      }//ende catch
-	    }//ende auslesen
+	    }//ende checkValid
 	  };//ende felddefinition
 
         AustrittsdatumText.setBackground(java.awt.Color.white);
@@ -679,6 +723,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
      *@see#additionalinit
      */
     protected void initMitgliedMakro(){
+	setDateFrame(31,12,1997,31,12,2004);
 	initcomponents();
 	additionalinit();
     }
@@ -692,7 +737,7 @@ public abstract class MitgliedMakro extends JInternalFrame{
 
 
     /**
-     *Der SpecialButton hat keine Bezeichnung diese Methode 
+     *Der SpecialButton hat keine Bezeichnung, diese Methode 
      *schreibt ein Wort in den Button.
      *
      *@param name Schriftzug auf dem SpecialButton

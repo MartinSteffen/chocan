@@ -23,7 +23,8 @@ public class Start extends JFrame {
     content.add(desktop, BorderLayout.CENTER);
     setBounds(10,10,1000,800);
     //setSize(getMaximumSize());
-    protocol.Menu test = new protocol.Menu(desktop);     
+    MainMitgliedMenu main = new MainMitgliedMenu(desktop);     
+    this.transferFocus();
     setVisible(true);
     
   }
