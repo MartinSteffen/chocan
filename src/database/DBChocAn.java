@@ -66,6 +66,24 @@ public class DBChocAn
 		throw new Exception("MitgliedTableCreationFailed.");
 	    }     
     }
+  public  void medizinerTableCreation() throws Exception
+    {
+	try
+	    {
+		String medizinerTabelle = "CREATE TABLE Mediziner ( nachname VARCHAR(20), vorname  VARCHAR(20), strasse  VARCHAR(25),hausnummer VARCHAR(5),postleitzahl VARCHAR(5), ort VARCHAR(25), telefonnummer VARCHAR(14), bankname VARCHAR(25), blz VARCHAR(15), kontonummer VARCHAR(15),id INTEGER, fachrichtung VARCHAR(30))";
+
+		openChocAn();
+		statement = connection.createStatement();
+		statement.executeUpdate(medizinerTabelle);
+		statement.close();
+		closeChocAn();
+	    }
+      
+	catch (SQLException err)
+	    {
+		throw new Exception("MedizinerTableCreationFailed.");
+	    }     
+    }
 
 
     public void mitgliedTableDeletion() throws SQLException
@@ -82,6 +100,23 @@ public class DBChocAn
 	catch(Exception err)
 	    {
 		throw new SQLException("MitgliedTableDeletionFailed.");
+	    }
+    }
+
+    public void medizinerTableDeletion() throws SQLException
+    {
+	try
+	    {
+		String delete = "DROP TABLE Mediziner";
+		openChocAn();
+		statement = connection.createStatement();
+		statement.executeUpdate(delete);
+		statement.close();
+		closeChocAn();
+	    }
+	catch(Exception err)
+	    {
+		throw new SQLException("MedizinerTableDeletionFailed.");
 	    }
     }
 
@@ -134,12 +169,60 @@ public class DBChocAn
 		return null;
 	    }
     }
+ public Mediziner getMediziner(int id) throws Exception
+    {
+	String findbyid = "SELECT * FROM Mediziner WHERE id = "+id;
+ 	
+	ResultSet r=null;
+	statement=null;
+	
+	try
+	    {
+		openChocAn();
+		statement=connection.createStatement();
+		r=statement.executeQuery(findbyid);
+	    }
+	
+	catch (Exception err)
+	    {
+		System.out.println(err.getMessage());
+		throw new Exception("GetMedizinerFailedException");
+	    }
+
+	if (r.next())
+	    {
+		Mediziner xyz = new Mediziner();
+		xyz.setNachname(r.getString(1));
+		xyz.setVorname(r.getString(2));
+		xyz.setStrasse(r.getString(3));
+		xyz.setHausnummer(r.getString(4));
+		xyz.setPostleitzahl(r.getString(5));
+		xyz.setOrt(r.getString(6));
+		xyz.setTelefonnummer(r.getString(7));
+		xyz.setBankname(r.getString(8));
+		xyz.setBlz(r.getString(9));
+		xyz.setKontonummer(r.getString(10));
+		xyz.setId(r.getInt(11));
+		xyz.setFachrichtung(r.getString(12));
+	
+		statement.close();
+		closeChocAn();
+		return xyz;
+	    }
+	
+	else 
+	    {
+		statement.close();
+		closeChocAn();
+		return null;
+	    }
+    }
 
 
     public synchronized void newMitglied(Mitglied xyz) throws Exception 
     { 
     	int id;
-	id=genId(); 
+	id=genMitgliedId(); 
 	 
 	   
 	
@@ -159,6 +242,31 @@ public class DBChocAn
 	catch (SQLException err)
 	    {
 		throw new Exception("NewMitgliedFailedException.");
+	    }   
+    } 
+ public synchronized void newMediziner(Mediziner xyz) throws Exception 
+    { 
+    	int id;
+	id=genMedizinerId(); 
+	 
+	   
+	
+	xyz.setId(id);  
+	try 
+	    { 
+		openChocAn(); 
+    
+
+		statement = connection.createStatement(); 
+		String insert = "INSERT into Mediziner values('"+xyz.getNachname()+"','"+xyz.getVorname()+"','"+xyz.getStrasse()+"','"+xyz.getHausnummer()+"','"+xyz.getPostleitzahl()+"','"+xyz.getOrt()+"','"+xyz.getTelefonnummer()+ "','"+xyz.getBankname()+"','"+xyz.getBlz()+"','"+xyz.getKontonummer()+"',"+xyz.getId()+","+xyz.getFachrichtung()+")";  
+ 		statement.executeUpdate(insert);  
+		statement.close();      		
+		closeChocAn();    
+	    } 
+
+	catch (SQLException err)
+	    {
+		throw new Exception("NewMedizinerFailedException.");
 	    }   
     } 
 
@@ -189,10 +297,34 @@ public class DBChocAn
 	closeChocAn(); 
     } 
  
+ public void changeMediziner(Mediziner xyz) throws SQLException 
+    { 
+	String change = 
+	"UPDATE Mitglied SET nachname='"+xyz.getNachname()+
+	"', vorname='"+xyz.getVorname()+
+	"', strasse='"+xyz.getStrasse()+
+	"', hausnummer='"+xyz.getHausnummer()+
+	"', postleitzahl='"+xyz.getPostleitzahl()+
+	"', ort='"+xyz.getOrt()+
+	"', telefonnummer='"+xyz.getTelefonnummer()+
+	"', bankname='"+xyz.getBankname()+
+	"', blz='"+xyz.getBlz()+
+	"', kontonummer='"+xyz.getKontonummer()+
+	"', fachrichtung="+xyz.getFachrichtung()+
+	
+	" WHERE  id= "+xyz.getId()+""; 
+ 
+	openChocAn(); 
+	statement = connection.createStatement(); 
+ 
+	if (statement.executeUpdate(change)!=1) 
+	    throw new SQLException("ChangeMedizinerFailedException");
+	statement.close(); 
+	closeChocAn(); 
+    } 
 
 
-
-    public int genId() 
+    public int genMitgliedId() 
     {
 	int newid=1;
 	String findbyid = "SELECT id FROM Mitglied";
@@ -219,6 +351,34 @@ public class DBChocAn
     
 	return newid;	
     }
+ public int genMedizinerId() 
+    {
+	int newid=1;
+	String findbyid = "SELECT id FROM Mediziner";
+	ResultSet r=null;
+	statement=null;
+	try{
+		openChocAn();
+		statement = connection.createStatement();
+		r=statement.executeQuery(findbyid);   
+		while(r.next())
+	    		{
+			newid=r.getInt("id");	
+			newid++;
+		
+			}
+	   
+	statement.close();
+	closeChocAn();
+	}
+	catch (SQLException err)
+	    {
+		System.out.println(err); 
+	    }   
+    
+	return newid;	
+    }
+
 }
 	
 
