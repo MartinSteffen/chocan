@@ -485,10 +485,6 @@ public class Bill extends JFrame {
       try {
         treatCode1 = Long.parseLong(txtTreatCode1.getText());
       } catch (NumberFormatException ex) {
-          lblStatus.setText("Status: ungültige Behandlungsnummer");
-          txtTreatCode1.setText("");
-          txtTreatCode1.grabFocus();
-          return;
         }
       Standardleistungen S = new Standardleistungen(treatCode1);
       if (S.GetBeschreibung() == "") {
@@ -511,10 +507,6 @@ public class Bill extends JFrame {
       try {
         treatCode2 = Long.parseLong(txtTreatCode2.getText());
       } catch (NumberFormatException ex) {
-	//          lblStatus.setText("Status: ungültige Behandlungsnummer");
-	//          txtTreatCode2.setText("");
-	//          txtTreatCode2.grabFocus();
-	//          return;
         }
       Standardleistungen S = new Standardleistungen(treatCode2);
       if (S.GetBeschreibung() == "") {
@@ -537,10 +529,6 @@ public class Bill extends JFrame {
       try {
         treatCode3 = Long.parseLong(txtTreatCode3.getText());
       } catch (NumberFormatException ex) {
-          lblStatus.setText("Status: ungültige Behandlungsnummer");
-          txtTreatCode3.setText("");
-          txtTreatCode3.grabFocus();
-          return;
         }
       Standardleistungen S = new Standardleistungen(treatCode3);
       if (S.GetBeschreibung() == "") {
@@ -563,10 +551,6 @@ public class Bill extends JFrame {
       try {
         treatCode4 = Long.parseLong(txtTreatCode4.getText());
       } catch (NumberFormatException ex) {
-          lblStatus.setText("Status: ungültige Behandlungsnummer");
-          txtTreatCode4.setText("");
-          txtTreatCode4.grabFocus();
-          return;
         }
       Standardleistungen S = new Standardleistungen(treatCode4);
       if (S.GetBeschreibung() == "") {
@@ -589,10 +573,6 @@ public class Bill extends JFrame {
       try {
         treatCode5 = Long.parseLong(txtTreatCode5.getText());
       } catch (NumberFormatException ex) {
-          lblStatus.setText("Status: ungültige Behandlungsnummer");
-          txtTreatCode5.setText("");
-          txtTreatCode5.grabFocus();
-          return;
         }
       Standardleistungen S = new Standardleistungen(treatCode5);
       if (S.GetBeschreibung() == "") {
@@ -615,10 +595,6 @@ public class Bill extends JFrame {
       try {
         treatCode6 = Long.parseLong(txtTreatCode6.getText());
       } catch (NumberFormatException ex) {
-          lblStatus.setText("Status: ungültige Behandlungsnummer");
-          txtTreatCode6.setText("");
-          txtTreatCode6.grabFocus();
-          return;
         }
       Standardleistungen S = new Standardleistungen(treatCode6);
       if (S.GetBeschreibung() == "") {
@@ -641,10 +617,6 @@ public class Bill extends JFrame {
       try {
         treatCode7 = Long.parseLong(txtTreatCode7.getText());
       } catch (NumberFormatException ex) {
-          lblStatus.setText("Status: ungültige Behandlungsnummer");
-          txtTreatCode7.setText("");
-          txtTreatCode7.grabFocus();
-          return;
         }
       Standardleistungen S = new Standardleistungen(treatCode7);
       if (S.GetBeschreibung() == "") {
@@ -673,7 +645,8 @@ public class Bill extends JFrame {
       sum += Float.parseFloat(lblTreatCost5.getText());
       sum += Float.parseFloat(lblTreatCost6.getText());
       sum += Float.parseFloat(lblTreatCost7.getText());
-    } catch (NumberFormatException ex) {}
+    } catch (NumberFormatException ex) {
+      }
       
     sum = (float) Math.round(sum * 100) / 100;
     lblSum.setText(Float.toString(sum));
