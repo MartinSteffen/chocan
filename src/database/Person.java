@@ -67,7 +67,7 @@ public abstract class Person
     { 
 	try { checkString(s,6) ;}
 	catch(Exception err){return false;}
-	telefonnummer=s
+	telefonnummer=s;
 	return true;
     }
     public boolean setBankname(String s) 

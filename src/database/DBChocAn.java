@@ -6,9 +6,9 @@ public class DBChocAn
 
  
     private Connection connection;
-    private Statement  statement;
+    private Statement  statement; 
  
-    private void openChocAn() throws SQLException
+    public void openChocAn() throws SQLException
     {
      
 	try
@@ -35,20 +35,20 @@ public class DBChocAn
 	    }
     }
 
-    private void closeChocAn() throws SQLException
+    public void closeChocAn() throws SQLException
     {
 	try
 	    {
 		connection.close();
-	    }
+	    }		
 	catch(SQLException e)
 	    {
 		throw new SQLException("CloseChocAnFailed");
 	    }
     }
+ 
 
-
-    public void mitgliedTableCreation() throws SQLException
+    public  void mitgliedTableCreation() throws Exception
     {
 	try
 	    {
@@ -63,7 +63,7 @@ public class DBChocAn
       
 	catch (SQLException err)
 	    {
-		throw new SQLException("MitgliedTableCreationFailed.");
+		throw new Exception("MitgliedTableCreationFailed.");
 	    }     
     }
 
@@ -139,12 +139,9 @@ public class DBChocAn
     public synchronized void newMitglied(Mitglied xyz) throws Exception 
     { 
     	int id;
-	try { id=genId();} 
-	catch (Exception err) 
-	    { 
-		System.err.println("There is no ID available");
-		throw new Exception ("NoIdAvailableException");
-	    }
+	id=genId(); 
+	 
+	   
 	
 	xyz.setId(id);  
 	try 
@@ -195,34 +192,32 @@ public class DBChocAn
 
 
 
-    public int genId() throws Exception
+    public int genId() 
     {
 	int newid=1;
-	String findbyid = "SELECT * FROM Mitglied WHERE id = "+newid;
+	String findbyid = "SELECT id FROM Mitglied";
 	ResultSet r=null;
 	statement=null;
-	
-	statement = connection.createStatement();
-	    
-	while(newid<1000000)
-	    {
-		findbyid = "SELECT * FROM Mitglied WHERE id = "+newid;
-		r=statement.executeQuery(findbyid);
-
-		    if(r.next()==true)
-			{
-			    newid++;
+	try{
+		openChocAn();
+		statement = connection.createStatement();
+		r=statement.executeQuery(findbyid);   
+		while(r.next())
+	    		{
+			newid=r.getInt("id");	
+			newid++;
+		
 			}
-		    else
-			{
-			    statement.close();
-			    closeChocAn();
-			    return newid;		
-			}
-	    }
+	   
 	statement.close();
 	closeChocAn();
-	throw new Exception("NoIdAvailableException");		
+	}
+	catch (SQLException err)
+	    {
+		System.out.println(err); 
+	    }   
+    
+	return newid;	
     }
 }
 	
