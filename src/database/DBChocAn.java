@@ -234,7 +234,7 @@ public class DBChocAn
 
 		statement = connection.createStatement(); 
 	System.out.println("statement created ");
-		String insert = "INSERT into Mitglied values('"+xyz.getNachname()+"','"+xyz.getVorname()+"','"+xyz.getStrasse()+"','"+xyz.getHausnummer()+"','"+xyz.getPostleitzahl()+"','"+xyz.getOrt()+"','"+xyz.getTelefonnummer()+"','"+xyz.getBankname()+"','"+xyz.getBlz()+"','"+xyz.getKontonummer()+"',"+xyz.getId()+","+xyz.getEintritt()+","+xyz.getAustritt()+")"; 
+		String insert = "INSERT into Mitglied values('"+xyz.getNachname()+"','"+xyz.getVorname()+"','"+xyz.getStrasse()+"','"+xyz.getHausnummer()+"','"+xyz.getPostleitzahl()+"','"+xyz.getOrt()+"','"+xyz.getTelefonnummer()+"','"+xyz.getBankname()+"','"+xyz.getBlz()+"','"+xyz.getKontonummer()+"',"+xyz.getId()+",'"+xyz.getEintritt()+"','"+xyz.getAustritt()+"')"; 
 	System.out.println("String generated ");
 		statement.executeUpdate(insert);
 	System.out.println("wrote to DB ");  
@@ -291,9 +291,9 @@ public class DBChocAn
 	"', bankname='"+xyz.getBankname()+
 	"', blz='"+xyz.getBlz()+
 	"', kontonummer='"+xyz.getKontonummer()+
-	"', eintritt="+xyz.getEintritt()+
-	", austritt="+xyz.getAustritt()+
-	" WHERE  id= "+xyz.getId()+""; 
+	"', eintritt='"+xyz.getEintritt()+
+	"', austritt='"+xyz.getAustritt()+
+	"' WHERE  id= "+xyz.getId()+""; 
  
 	openChocAn(); 
 	statement = connection.createStatement(); 

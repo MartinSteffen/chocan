@@ -21,7 +21,8 @@ public class Dbtest{
     xyz.setBankname("Raffzahn&Gier");
     xyz.setBlz("666");
     xyz.setKontonummer("0001");
-   	Mitglied him1 = new database.Mitglied();
+	xyz.setEintritt("01.01.01");  xyz.setAustritt("01.01.01");   	
+	 Mitglied him1 = new database.Mitglied();
 	
 try {DBChocAn.newMitglied(xyz);}
 catch ( Exception err) { System.out.println(err); }
