@@ -105,7 +105,7 @@ public class DBChocAn
 		throw new Exception("GetMitgliedFailedException");
 	    }
 
-	if (r.next()==true)
+	if (r.next())
 	    {
 		Mitglied xyz = new Mitglied();
 		xyz.setNachname(r.getString(1));
