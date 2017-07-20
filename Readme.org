@@ -4,8 +4,8 @@
 
 
 The repository collects the /sources/ of the ``chocan'' (Chocaholics
-Anonymous) project in the software programming lab course ``Programming in
-the Many'' (probably summer 2001).
+Anonymous) project in the software programming lab course about ``practical
+software engineering'' (not ``prgramming-in-the-many''), summer 2001.
 
 See also the  [[http://heim.ifi.uio.no/msteffen/teaching/softtech/ss01/projektpraktikum/][course web pages]].
 
