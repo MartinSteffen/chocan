@@ -1,0 +1,25 @@
+
+
+** Abstract: Chocaholics Anonymous
+
+
+The repository collects the /sources/ of the ``chocan'' (Chocaholics
+Anonymous) project in the software programming lab course ``Programming in
+the Many'' (probably summer 2001).
+
+See also the  [[http://heim.ifi.uio.no/msteffen/teaching/softtech/ss01/projektpraktikum/][course web pages]].
+
+
+
+
+** Historical notes
+
+The repository has been resurrected by migrating from ~cvs~ via svn (using
+~cvs2svn~) and from there to ~git~. Caveats concerning missing branches
+apply.  Also, original /authors/ have not been preserved, as the original
+development was done all via ``anonoymous'' logins; in general, the
+contributors were the different students in the course plus the course
+teachers.
+
+
+
