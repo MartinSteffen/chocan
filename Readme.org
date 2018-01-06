@@ -12,6 +12,7 @@ See also the  [[http://heim.ifi.uio.no/msteffen/teaching/softtech/ss01/projektpr
 
 
 
+
 ** Historical notes
 
 The repository has been resurrected by migrating from ~cvs~ via svn (using
@@ -19,7 +20,9 @@ The repository has been resurrected by migrating from ~cvs~ via svn (using
 apply.  Also, original /authors/ have not been preserved, as the original
 development was done all via ``anonoymous'' logins; in general, the
 contributors were the different students in the course plus the course
-teachers.
+teachers. 
+
+
 
 
 
