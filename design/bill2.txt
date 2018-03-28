@@ -1,4 +1,3 @@
-
 Gruppe: Gunnar Schaefer & Stefan Schaefer - zustaendig fuer Rechnungen
 
 Das Oberflaechen-Modul stellt die Funktionen zum Einlesen der Daten

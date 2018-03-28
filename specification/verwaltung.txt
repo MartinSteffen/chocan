@@ -2,11 +2,13 @@
 
 UEBERBLICK:
 ==========
-Das Packet ist in erster Linie Verbindungsglied zwischen Benutzer udn Datenbank zur Manipulation 
-der Datensätze "Mitglied" (siehe unten DATENSATZ)
 
-Eingabegerät für den Benutzer soll die Tastatur sein.
-Ausgaben zum Benutzer erfolgen auf den Bildschirm.
+Das Packet ist in erster Linie Verbindungsglied zwischen Benutzer udn
+Datenbank zur Manipulation der Datensätze "Mitglied" (siehe unten
+DATENSATZ)
+
+Eingabegerät für den Benutzer soll die Tastatur sein.  Ausgaben zum
+Benutzer erfolgen auf den Bildschirm.
 
 
 DATENSATZ "Mitglied":

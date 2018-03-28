@@ -92,7 +92,6 @@ allerdings nur dann, wenn auch der letzte eingegebene Code gueltig
 ist. Die Rechnung wird in einer der quartalsweisen erstellten
 Rechnungs-tabellen "rechnungen_quartal_jahr" gespeichert.
 
-
 Es stehen folgende Code-Nummern fuer vom Arzt erbrachte Leistungen zur
 Verfuegung:
 
