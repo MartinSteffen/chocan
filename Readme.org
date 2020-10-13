@@ -7,7 +7,7 @@ The repository collects the /sources/ of the ``chocan'' (Chocaholics
 Anonymous) project in the software programming lab course about ``practical
 software engineering'' (not ``prgramming-in-the-many''), summer 2001.
 
-See also the  [[http://heim.ifi.uio.no/msteffen/teaching/softtech/ss01/projektpraktikum/][course web pages]].
+See also the  [[http://martinsteffen.github.io/teaching/softtech/ss01/projektpraktikum/][course web pages]].
 
 
 
